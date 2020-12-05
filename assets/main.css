@@ -1,0 +1,38 @@
+@font-face {
+  font-family: "Manrope Regular";
+  src: url('~assets/fonts/manrope/regular.otf') format("truetype"),
+  url('~assets/fonts/manrope/regular.woff') format("woff");
+}
+
+@font-face {
+  font-family: "Manrope Semibold";
+  src: url('~assets/fonts/manrope/semibold.otf') format("truetype"),
+  url('~assets/fonts/manrope/semibold.woff') format("woff");
+}
+
+@font-face {
+  font-family: "Noir";
+  src: url('~assets/fonts/noir/noir_medium.otf') format("truetype");
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url('~assets/fonts/jetbrains/JetBrainsMono-Regular.woff') format("woff");
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Noir', sans-serif;
+}
+
+pre, pre > code {
+  font-family: "JetBrains Mono", sans-serif;
+}
+
+b {
+  font-family: "Manrope Semibold", sans-serif;
+}
+
+
+*:not(h1, h2, h3, h4, h5, h6, b, pre, code) {
+  font-family: "Manrope Regular", sans-serif;
+}
