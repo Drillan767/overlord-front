@@ -15,8 +15,7 @@ export default {
   name: 'LangSwitcher',
   computed: {
     availableLocales () {
-      const locales = this.$i18n.locales
-      return locales.filter(l => l.code !== this.$i18n.locale)
+      return this.$i18n.locales.filter(l => l.code !== this.$i18n.locale)
     }
   }
 }
