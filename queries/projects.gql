@@ -1,0 +1,25 @@
+query Projects {
+    projects {
+        data {
+            attributes {
+                title,
+                publishedAt
+                updatedAt,
+                illustration {
+                    data {
+                        attributes {
+                            url
+                        }
+                    }
+                }
+                tags {
+                    data {
+                        attributes {
+                            title
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

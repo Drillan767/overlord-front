@@ -1,0 +1,25 @@
+query FeaturedArticles {
+    articles(filters: {featured: {eq: true}}) {
+        data {
+            attributes {
+                title,
+                featured,
+                body,
+                illustration {
+                    data {
+                        attributes {
+                            url
+                        }
+                    }
+                }
+                tags {
+                    data {
+                        attributes {
+                            title
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,9 @@
+query Tags {
+    tags {
+        data {
+            attributes {
+                title
+            }
+        }
+    }
+}
