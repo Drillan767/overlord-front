@@ -4,6 +4,7 @@ query Homepage {
             attributes {
                 full_name
                 description
+                baseline
                 words {
                     word
                 }

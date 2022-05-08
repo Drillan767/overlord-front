@@ -1,5 +1,5 @@
 query FeaturedArticles {
-    articles(filters: {featured: {eq: true}}) {
+    articles(filters: {featured: {eq: true}}, pagination: {limit: 6}) {
         data {
             attributes {
                 title,

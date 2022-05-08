@@ -1,5 +1,8 @@
 <template>
     <div>
+      <Head>
+        <Title>Accueil</Title>
+      </Head>
         <pre>
           <code>
             {{ homepageData }}
