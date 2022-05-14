@@ -7,7 +7,9 @@
     "preview": "nuxt preview"
   },
   "devDependencies": {
-    "nuxt": "3.0.0-rc.1"
+    "@nuxtjs/tailwindcss": "^5.0.4",
+    "nuxt": "3.0.0-rc.1",
+    "sass": "^1.51.0"
   },
   "dependencies": {
     "graphql": "^16.4.0",
