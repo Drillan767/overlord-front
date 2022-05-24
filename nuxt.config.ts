@@ -10,5 +10,18 @@ export default defineNuxtConfig({
     tailwindcss: {
         viewer: false,
         cssPath: '~/assets/css/tailwind.css'
-    }
+    },
+
+    css: ["@/assets/styles/main.scss"],
+    /*
+    vite: {
+        css: {
+            preprocessorOptions: {
+                sass: {
+                    additionalData: '@import "@/assets/styles/_variables.sass"',
+                },
+            },
+        },
+    },
+    */
 })

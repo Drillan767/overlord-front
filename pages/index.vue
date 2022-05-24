@@ -3,15 +3,21 @@
       <Head>
         <Title>Accueil</Title>
       </Head>
-        <pre>
-          <code>
-            {{ homepageData }}
-          </code>
-        </pre>
+
+      <LandingViewport
+        :full_name="homepageData.full_name"
+        :baseline="homepageData.baseline"
+      />
 
       <LandingArticles />
 
       <LandingProjects />
+
+        <pre>
+        <code>
+          {{ homepageData }}
+        </code>
+      </pre>
     </div>
 </template>
 
