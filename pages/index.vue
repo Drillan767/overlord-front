@@ -1,5 +1,4 @@
 <template>
-    <div>
       <Head>
         <Title>Accueil</Title>
       </Head>
@@ -9,9 +8,12 @@
         :baseline="homepageData.baseline"
       />
 
+      <LandingAbout />
+
       <LandingArticles />
 
       <LandingProjects />
+
 <!--
 
           <pre>
@@ -21,7 +23,6 @@
       </pre>
  -->
 
-    </div>
 </template>
 
 <script setup lang="ts">

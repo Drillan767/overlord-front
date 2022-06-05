@@ -1,10 +1,10 @@
 <template>
   <div class="viewport">
-      <h1 class="title glitch" data-text="Joseph Levarato">Joseph Levarato</h1>
+      <h1 class="title glitch" :data-text="full_name">{{ full_name }}</h1>
       <p class="subtitle" v-html="subtitle"></p>
 
       <div class="scroll">
-        <span class="text-xl text-white font-mono typed-text">{{ typedText }}</span>
+        <span class="typed-text" @click="scrollNext">{{ typedText }}</span>
         <span class="input-cursor"></span>
       </div>
   </div>
@@ -16,6 +16,7 @@
 
 const scrollText = "Let's scroll!"
 const typedText = ref('')
+let i = 0
 
 const props = defineProps({
     full_name: String,
@@ -24,17 +25,26 @@ const props = defineProps({
 
 onMounted(() => {
   setTimeout(() => {
+    document.querySelector('.input-cursor').classList.add('typing')
     typeLetters()
+
   }, 2000)
 })
 
-let i = 0
+const scrollNext = () => {
+  console.log('oué')
+  document.getElementById('about').scrollIntoView({behavior: 'smooth'})
+}
 
 const typeLetters = () => {
   if (i < scrollText.length) {
     typedText.value += scrollText.charAt(i)
     i++
     setTimeout(typeLetters, 150)
+  } else {
+    document.querySelector('.input-cursor').classList.remove('typing')
+    document.querySelector('.typed-text').classList.add('underline', 'cursor-pointer')
+
   }
 }
 
@@ -81,6 +91,10 @@ const subtitle = computed(() => {
   background-color: white;
   margin-left: 8px;
   animation: blink .6s linear infinite alternate;
+}
+
+.typed-text {
+  @apply text-xl text-white font-mono;
 }
 
 .typing {
