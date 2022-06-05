@@ -2,11 +2,15 @@
   <p>Landing Articles lezgoooo</p>
 
   <div v-for="(article, i) in articlesData">
-    <pre>
+  <!--
+
+        <pre>
       <code>
         {{ article }}
       </code>
     </pre>
+  -->
+
   </div>
 </template>
 

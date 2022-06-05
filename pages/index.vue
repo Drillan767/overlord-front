@@ -12,12 +12,15 @@
       <LandingArticles />
 
       <LandingProjects />
+<!--
 
-        <pre>
+          <pre>
         <code>
           {{ homepageData }}
         </code>
       </pre>
+ -->
+
     </div>
 </template>
 

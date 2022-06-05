@@ -8,8 +8,22 @@
     src: url('/fonts/Emelind.ttf');
 }
 
+@font-face {
+    font-family: 'JetBrains Mono';
+    src: url('/fonts/JetBrainsMono-Regular.ttf');
+}
+
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Emelind', 'sans-serif';
+}
+
+h1 {
+    font-size: clamp(1rem, -0.875rem + 8.333333vw, 3.5rem);
+}
+
+.font-mono {
+    font-family: 'JetBrains Mono';
+    font-variant-ligatures: common-ligatures;
 }
  
  

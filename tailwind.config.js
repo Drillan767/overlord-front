@@ -2,14 +2,21 @@ const { def } = require('@vue/shared')
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
-  content: [],
+  content: [
+    `components/**/*.{vue,js,ts}`,
+    `layouts/**/*.vue`,
+    `pages/**/*.vue`,
+    `app.vue`,
+    `plugins/**/*.{js,ts}`,
+    `nuxt.config.{js,ts}`,
+  ],
   theme: {
-    fontFamily: {
-      'body': ['Space Grotesk', ... defaultTheme.fontFamily.sans],
-      'display': ['Emelind', ...defaultTheme.fontFamily.display]
+    extend: {
+      fontFamily: {
+        'sans': ['"Space Grotesk"', ...defaultTheme.fontFamily.sans],
+        'mono': ['"Jetbrains Mono"', ...defaultTheme.fontFamily.mono]
+      },
     },
-
-    extend: {},
   },
   plugins: [],
 }
