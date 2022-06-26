@@ -1,29 +1,12 @@
-query Homepage {
-    homepage {
-        data {
-            attributes {
-                full_name
-                description
-                baseline
-                words {
-                    word
-                }
-                landing {
-                    data {
-                        attributes {
-                            url
-                        }
-                    }
-                }
-                user {
-                    data {
-                        attributes {
-                            url
-                        }
-                    }
-                }
-            }
+{
+    Homepage {
+        fullname
+        baseline
+        user {
+            title
+            filename_download
         }
+        words
+        description
     }
 }
-

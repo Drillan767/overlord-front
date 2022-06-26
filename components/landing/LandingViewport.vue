@@ -58,8 +58,9 @@ const subtitle = computed(() => {
 
 <style scoped lang="scss">
 .viewport {
-  @apply bg-black text-white relative flex justify-center items-center flex-col;
+  @apply text-white relative flex justify-center items-center flex-col;
   height: 100vh;
+  background-color: #121212;
 
   .title {
     font-size: clamp(2.25rem, -2.75rem + 16vw, 6.25rem);

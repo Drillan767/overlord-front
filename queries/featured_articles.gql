@@ -1,25 +1,20 @@
-query FeaturedArticles {
-    articles(filters: {featured: {eq: true}}, pagination: {limit: 6}) {
-        data {
-            attributes {
-                title,
-                featured,
-                body,
-                illustration {
-                    data {
-                        attributes {
-                            url
-                        }
-                    }
-                }
-                tags {
-                    data {
-                        attributes {
-                            title
-                        }
-                    }
-                }
+{
+    Articles(
+        filter: {
+            featured: {_eq: true},
+            status: {_eq: "published"}
+        },
+        limit: 6
+    ) {
+        title
+        slug
+        tags {
+            Tag_id {
+                title
             }
+        }
+        illustration {
+            filename_download
         }
     }
 }

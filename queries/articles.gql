@@ -1,24 +1,14 @@
-query Articles {
-    articles {
-        data {
-            attributes {
-                title,
-                body,
-                illustration {
-                    data {
-                        attributes {
-                            url
-                        }
-                    }
-                }
-                tags {
-                    data {
-                        attributes {
-                            title
-                        }
-                    }
-                }
-            }
-        }
-    }
+{
+	Articles(filter: {status: {_eq: "published"}}) {
+		title
+		slug
+		tags {
+			Tag_id {
+				title
+			}
+		}
+		illustration {
+			filename_download
+		}
+	}
 }
