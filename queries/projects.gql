@@ -1,24 +1,19 @@
-query Projects {
-    projects {
-        data {
-            attributes {
-                title,
-                publishedAt
-                updatedAt,
-                illustration {
-                    data {
-                        attributes {
-                            url
-                        }
-                    }
-                }
-                tags {
-                    data {
-                        attributes {
-                            title
-                        }
-                    }
-                }
+{
+    Project(filter: {status: {_eq: "published"}}) {
+        title
+        website
+        repo_link
+        slug
+        body
+        illustration {
+            filename_download
+        }
+        date_created
+        date_updated
+
+        tags {
+            Tag_id {
+                title
             }
         }
     }

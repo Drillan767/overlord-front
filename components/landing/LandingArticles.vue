@@ -16,5 +16,5 @@
 
 <script setup lang="ts">
 const { data } = await useAsyncData('articless', () => GqlFeaturedArticles());
-const articlesData = data.value.articles.data
+const articlesData = data.value.Articles
 </script>

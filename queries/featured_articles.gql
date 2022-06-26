@@ -1,4 +1,4 @@
-{
+query FeaturedArticles {
     Articles(
         filter: {
             featured: {_eq: true},

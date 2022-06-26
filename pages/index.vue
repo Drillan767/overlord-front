@@ -4,30 +4,32 @@
       </Head>
 
       <LandingViewport
-        :full_name="homepageData.full_name"
+        :full_name="homepageData.fullname"
         :baseline="homepageData.baseline"
       />
 
-      <LandingAbout :description="homepageData.description" />
+      <LandingAbout
+          :description="homepageData.description"
+          :user="homepageData.user"
+          :words="homepageData.words"
+      />
 
       <LandingArticles />
 
       <LandingProjects />
 
-<!--
 
-          <pre>
+<!--  <pre>
         <code>
           {{ homepageData }}
         </code>
-      </pre>
- -->
+      </pre>-->
 
 </template>
 
 <script setup lang="ts">
 
 const { data } = await useAsyncData('homepage', () => GqlHomepage());
-const homepageData = data.value.homepage.data.attributes
+const homepageData = data.value.Homepage;
 
 </script>
