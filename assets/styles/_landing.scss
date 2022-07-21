@@ -1,0 +1,41 @@
+#about {
+    min-height: 100vh;
+    padding: 2rem;
+
+    .content {
+        
+        display: flex;
+
+        .words {
+            text-align: center;
+            position: relative;
+            height: 300px;
+
+            p {
+                position: absolute;
+                margin: 0;
+                font-size: 3rem;
+                color: rgba(45,45,45,0.8);
+                filter: blur(8px);
+                transition: filter 2s ease, color 2s ease, top 5s ease, left 5s ease;
+                transform: translateX(-50%);
+                top: calc(50% - 1ex);
+                left: 50%;
+
+                &:hover {
+                    filter: blur(1px);
+                    color: rgba(220, 220, 220, 0.6);
+                }
+            }
+        }
+
+        .prose p:last-of-type::after {
+            content: '▮';
+            color: white;
+            display: inline-block;
+            margin-left: 5px;
+            font-size: 25px;
+            animation: blink .6s linear infinite alternate;
+        }
+    }
+}

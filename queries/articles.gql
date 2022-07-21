@@ -1,4 +1,4 @@
-{
+query Articles {
 	Articles(filter: {status: {_eq: "published"}}) {
 		title
 		slug

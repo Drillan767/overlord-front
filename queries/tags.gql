@@ -1,6 +1,6 @@
-{
-    Tag {
-        title
-        description
-    }
+query Tag {
+	Tag {
+		title
+		description
+	}
 }

@@ -4,7 +4,7 @@ query FeaturedArticles {
             featured: {_eq: true},
             status: {_eq: "published"}
         },
-        limit: 6
+        limit: 3
     ) {
         title
         slug
@@ -14,7 +14,8 @@ query FeaturedArticles {
             }
         }
         illustration {
-            filename_download
+            id
+            title
         }
     }
 }

@@ -6,7 +6,7 @@
 
 <script setup>
 useHead({
-  titleTemplate: 'My App - %s',
+  titleTemplate: '%s | Joseph Levarato',
   // or, instead:
   // titleTemplate: (title) => `My App - ${title}`,
   viewport: 'width=device-width, initial-scale=1, maximum-scale=1',

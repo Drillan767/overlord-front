@@ -1,0 +1,37 @@
+html:root {
+    --bg-color: #121212;
+}
+
+@font-face {
+    font-family: 'Space Grotesk';
+    src: url('/fonts/SpaceGrotesk-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Emelind';
+    src: url('/fonts/Emelind.ttf');
+}
+
+@font-face {
+    font-family: 'JetBrains Mono';
+    src: url('/fonts/JetBrainsMono-Regular.ttf');
+}
+
+.font-mono {
+    font-family: 'JetBrains Mono';
+    font-variant-ligatures: common-ligatures;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Emelind', 'sans-serif';
+}
+
+h1 {
+    font-size: clamp(1rem, -0.875rem + 8.333333vw, 3.5rem);
+}
+
+.font-mono {
+    font-family: 'JetBrains Mono';
+    font-variant-ligatures: common-ligatures;
+}
+

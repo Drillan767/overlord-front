@@ -1,29 +1,58 @@
 <template>
     <section id="about">
-      <div class="flex">
-        <div class="container text-white mx-auto text-xl py-20 prose" v-html="description"></div>
-      </div>
-        <div>
-          <img :src="$config.apiUrl + '/' + user.filename_download" :alt="user.title">
-          <p>{{ $config.apiUrl }}</p>
-        </div>
-    </section>
+        <div class="content">
+            <div class="w-1/2">
+                <div class="flex justify-center">
+                    <img :src="`${config.apiUrl}/assets/${user.id}`" :alt="user.title" />
+                </div>
 
+                <div class="words">
+                    <p v-for="(word, i) in words" :key="i" class="text-xl text-white font-bold">
+                        {{ word.word }}
+                    </p>
+                </div>
+            </div>
+            <div class="text-white text-xl prose w-1/2" v-html="description" />
+      </div>
+    </section>
 </template>
 
 <script setup lang="ts">
+import { PropType } from 'vue';
+
+
+interface WordList {
+    word: string
+}
+
 const props = defineProps({
   description: String,
   user: Object,
-  words: Array,
+  words: Array as PropType<Array<WordList>>,
 })
-</script>
 
-<style lang="scss">
+const config = useRuntimeConfig()
 
-#about {
-    min-height: 100vh;
-    background-color: #121212;
+const randInt = (min, max) => Math.floor(Math.random() * ((max + 1) - min)) + 1
+
+const updatePositions = () => {
+    const words = document.querySelectorAll('.words p')
+
+    for (let i = 0; i < words.length; i++) {
+        let newX = randInt(30, 150)
+        let newY = randInt(20, 80)
+
+        let topValue = `calc(${newY.toString()}% - 1ex)`
+        let leftValue = `${newX.toString()}%`
+
+        words[i].style.top = topValue;
+        words[i].style.left = leftValue;
+    }
 }
 
-</style>
+onMounted(() => {
+    updatePositions()
+    setInterval(updatePositions, 5000)
+})
+
+</script>

@@ -4,9 +4,14 @@ query Homepage {
         baseline
         user {
             title
-            filename_download
+            id
+        }
+        icon {
+            title
+            id
         }
         words
         description
+        links
     }
 }

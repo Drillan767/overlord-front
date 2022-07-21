@@ -1,5 +1,6 @@
 <template>
-  <div class="viewport">
+  <header class="viewport" id="viewport">
+    <div class="content">
       <h1 class="title glitch" :data-text="full_name">{{ full_name }}</h1>
       <p class="subtitle" v-html="subtitle"></p>
 
@@ -7,9 +8,8 @@
         <span class="typed-text" @click="scrollNext">{{ typedText }}</span>
         <span class="input-cursor"></span>
       </div>
-  </div>
-
-    
+    </div>
+  </header>
 </template>
 
 <script setup lang="ts">
@@ -32,7 +32,6 @@ onMounted(() => {
 })
 
 const scrollNext = () => {
-  console.log('oué')
   document.getElementById('about').scrollIntoView({behavior: 'smooth'})
 }
 
@@ -48,38 +47,41 @@ const typeLetters = () => {
   }
 }
 
-const subtitle = computed(() => {
-  return props.baseline.replaceAll(/_([a-zA-Z]*)_/g,  (_match, group) => {
-    return `<span class="glitch" data-text="${group}">${group}</span>`
-  });
-})
+const subtitle = computed(() => 
+  props.baseline.replaceAll(/_([a-zA-Z]*)_/g, (m, g) =>
+    `<span class="glitch" data-text="${g}">${g}</span>`))
 
 </script>
 
 <style scoped lang="scss">
 .viewport {
-  @apply text-white relative flex justify-center items-center flex-col;
+  @apply text-white flex justify-center items-center flex-col;
   height: 100vh;
-  background-color: #121212;
 
-  .title {
-    font-size: clamp(2.25rem, -2.75rem + 16vw, 6.25rem);
-    font-weight: 800;
-  }
+  .content {
+    position: relative;
 
-  .subtitle {
-    color: white;
-    text-align: center;
-    font-size: clamp(1.25rem, 0.4688rem + 2.5vw, 1.875rem);
-  }
+    .title {
+      font-size: clamp(2.25rem, -2.75rem + 16vw, 6.25rem);
+      font-weight: 800;
+    }
 
-  .scroll {
-    position: absolute;
-    display: flex;
-    top: 70vh;
-
-    p {
+    .subtitle {
       color: white;
+      text-align: center;
+      font-size: clamp(1.25rem, 0.4688rem + 2.5vw, 1.875rem);
+    }
+
+    .scroll {
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      top: 38vh;
+
+      p {
+        color: white;
+      }
     }
   }
 }
@@ -100,14 +102,6 @@ const subtitle = computed(() => {
 
 .typing {
   animation: none;
-}
-
-    
-@keyframes blink {
-  0% {opacity: 1;}
-  40% {opacity: 1;}
-  60% {opacity: 0;}
-  100% {opacity: 0;}
 }
 
 </style>

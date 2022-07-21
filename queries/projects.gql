@@ -1,4 +1,4 @@
-{
+query Project {
     Project(filter: {status: {_eq: "published"}}) {
         title
         website
