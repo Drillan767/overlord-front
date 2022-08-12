@@ -36,7 +36,7 @@ const config = useRuntimeConfig()
 const randInt = (min, max) => Math.floor(Math.random() * ((max + 1) - min)) + 1
 
 const updatePositions = () => {
-    const words = document.querySelectorAll('.words p')
+    const words = document.querySelectorAll<HTMLElement>('.words p')
 
     for (let i = 0; i < words.length; i++) {
         let newX = randInt(30, 150)

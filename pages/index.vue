@@ -1,17 +1,18 @@
 <template>
-  <Head>
-    <Title>Accueil</Title>
-  </Head>
+<Head>
+  <Title>Accueil</Title>
+</Head>
 
-  <LandingViewport
-    :full_name="homepageData.fullname"
-    :baseline="homepageData.baseline"
-  />
-  <LandingAbout
-    :description="homepageData.description"
-    :user="homepageData.user"
-    :words="homepageData.words"
-  />
+<LandingViewport
+  :full_name="homepageData.fullname"
+  :baseline="homepageData.baseline"
+/>
+
+<LandingAbout
+  :description="homepageData.description"
+  :user="homepageData.user"
+  :words="homepageData.words"
+/>
 
   <LandingFeatured />
 
@@ -19,11 +20,14 @@
     :links="homepageData.links"
     :icon="homepageData.icon"
     :fullname="homepageData.fullname"
-    />
+  />
 </template>
 
 <script setup lang="ts">
 import Footer from "../components/layout/footer.vue";
+import LandingFeatured from "~/components/landing/LandingFeatured.vue";
+import LandingAbout from "~/components/landing/LandingAbout.vue";
+import LandingViewport from "~/components/landing/LandingViewport.vue";
 
 const { data } = await useAsyncData('homepage', () => GqlHomepage());
 const homepageData = data.value.Homepage;

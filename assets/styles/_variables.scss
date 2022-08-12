@@ -1,5 +1,16 @@
 html:root {
     --bg-color: #121212;
+    --bg-color-alt: #111827;
+    --landing-padding: 2rem;
+    --landing-min-height: 100vh;
+
+    --cursor-color: white;
+
+    --glitch-width: 100vw;
+    --glitch-height: 100vh;
+    --gap-vertical: 5px;
+    --gap-horizontal: 10px;
+    --time-anim: 4s;
 }
 
 @font-face {
@@ -35,3 +46,11 @@ h1 {
     font-variant-ligatures: common-ligatures;
 }
 
+@mixin cursor {
+    content: '▮';
+    color: var(--cursor-color);
+    display: inline-block;
+    margin-left: 5px;
+    font-size: 25px;
+    animation: blink .6s linear infinite alternate;
+}
