@@ -11,6 +11,9 @@ html:root {
     --gap-vertical: 5px;
     --gap-horizontal: 10px;
     --time-anim: 4s;
+
+    --tag-text-color: white;
+    --tag-bg-color: initial;
 }
 
 @font-face {
@@ -53,4 +56,16 @@ h1 {
     margin-left: 5px;
     font-size: 25px;
     animation: blink .6s linear infinite alternate;
+}
+
+@keyframes slide-in {
+    0% {
+        padding-top: 100px;
+        opacity: 0;
+    }
+
+    100% {
+        padding-top: 0;
+        opacity: 1;
+    }
 }

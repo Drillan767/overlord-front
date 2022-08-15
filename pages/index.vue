@@ -11,7 +11,6 @@
 <LandingAbout
   :description="homepageData.description"
   :user="homepageData.user"
-  :words="homepageData.words"
 />
 
   <LandingFeatured />
@@ -24,10 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import Footer from "../components/layout/footer.vue";
-import LandingFeatured from "~/components/landing/LandingFeatured.vue";
-import LandingAbout from "~/components/landing/LandingAbout.vue";
-import LandingViewport from "~/components/landing/LandingViewport.vue";
+import Footer from "~/components/layout/footer.vue";
 
 const { data } = await useAsyncData('homepage', () => GqlHomepage());
 const homepageData = data.value.Homepage;
@@ -35,17 +31,17 @@ const homepageData = data.value.Homepage;
 onMounted(() => {
   const ie = new IntersectionObserver((entries, observer) => {
     entries.forEach((e) => {
-      if (e.intersectionRatio > 0.5) {
+      if (e.intersectionRatio > 0.25) {
         e.target.classList.add('fade-in')
 
         observer.unobserve(e.target)
       }
     })
   }, {
-    threshold: [0.5]
+    threshold: [0.25]
   })
 
-  const ids = ['viewport', 'about']
+  const ids = ['viewport', 'about', 'featured']
 
   ids.forEach((id) => {
     const el = document.getElementById(id)
