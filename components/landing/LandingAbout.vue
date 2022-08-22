@@ -6,7 +6,7 @@
                     <img :src="`${config.apiUrl}/assets/${user.id}`" :alt="user.title" />
                 </div>
             </div>
-            <div class="text-white text-xl prose w-full md:w-1/2" v-html="description" />
+            <div class="text-xl prose w-full md:w-1/2" v-html="description" />
       </div>
     </section>
 </template>

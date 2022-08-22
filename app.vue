@@ -23,6 +23,10 @@ useHead({
     {rel: 'manifest', href: '/site.webmanifest'},
     {rel: 'mask-icon', href: '/icons/safari-pinned-tab.svg', color: '#312b5e'},
   ],
+
+  bodyAttrs: {
+    class: 'dark'
+  }
 })
 
 </script>

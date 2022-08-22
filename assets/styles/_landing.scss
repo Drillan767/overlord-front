@@ -11,8 +11,8 @@
 }
 
 #viewport {
-    background-color: var(--bg-color);
-    @apply text-white flex justify-center items-center flex-col;
+    @apply flex justify-center items-center flex-col;
+    background-color: var(--bg-color);  
     height: 100vh;
 
     .content {
@@ -22,10 +22,11 @@
             font-size: clamp(2.25rem, -2.75rem + 16vw, 6.25rem);
             font-weight: 800;
             text-align: center;
+            color: var(--title-color);
         }
 
         .subtitle {
-            color: white;
+            color: var(--font-color);
             text-align: center;
             font-size: clamp(1.25rem, 0.4688rem + 2.5vw, 1.875rem);
         }
@@ -53,7 +54,8 @@
     }
     
     .typed-text {
-        @apply text-xl text-white font-mono;
+        @apply text-xl font-mono;
+        color: var(--font-color);
     }
     
     .typing {
@@ -113,14 +115,14 @@
         @media (min-width: 768px) {
             display: flex;
             column-gap: 20px;
-            justify-content: space-between;
-            margin-bottom: 50px;
+            margin-bottom: 100px;
         }
     
         .title {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            color: var(--title-color);
 
             @media (max-width: 768px) {
                 margin-bottom: 20px;
@@ -129,10 +131,16 @@
             h2 {
                 font-size: clamp(2rem, 0.75rem + 4vw, 3rem);
                 text-align: right;
+                line-height: 1;
             }
 
             a {
                 @include btn-glitch;
+
+                @media (max-width: 768px) {
+                    margin-top: 15px;
+                    text-align: center;
+                }
             }
         }
 
@@ -144,6 +152,10 @@
                 flex-direction: column;
             }
 
+            @media (min-width: 769px) and (max-width: 1200px) {
+                flex-flow: row wrap;
+            }
+
             article {
                 position: relative;
 
@@ -151,7 +163,7 @@
                     width: 300px;
                 }
 
-                @media (max-width: 768px) {
+                @media (max-width: 1200px) {
                     margin-bottom: 40px;
                 }
 
@@ -258,6 +270,7 @@
     }
 
     .projects {
+        /*
         @media (max-width: 768px) {
             display: flex;
             flex-direction: column-reverse;
@@ -266,5 +279,6 @@
         .tags {
             text-align: right;
         }
+        */
     }
 }

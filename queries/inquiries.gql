@@ -1,0 +1,9 @@
+mutation SendContact($name: String!, $email: String!, $subject: String!, $content: String!) {
+	create_Inquiries_item(
+		data: {
+			name: $name,
+			email: $email,
+			subject: $subject,
+			content: $content,
+	})
+}

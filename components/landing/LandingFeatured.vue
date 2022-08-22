@@ -3,12 +3,12 @@
         <div class="content">
 			<div class="articles">
 				<div class="title">
-					<h2 class="uppercase text-white">
+					<h2 class="uppercase">
 						Featured <br />
 						<span class="glitch" data-text="ARTICLES">Articles</span>
 					</h2>
 					
-					<NuxtLink class="text-white" to="">
+					<NuxtLink to="/articles">
 						<span class="inner">
 							View all articles
 						</span>
@@ -16,7 +16,7 @@
 				</div>
 
 				<div class="list" v-for="(article, i) in Articles" :key="i">
-					<NuxtLink :to="article.slug">
+					<NuxtLink :to="`/article/${article.slug}`">
 						<article>
 							<div class="glitch-thumb">
 								<div
@@ -43,8 +43,20 @@
 			</div>
 
 			<div class="projects">
+				<div class="title">
+					<h2 class="uppercase">
+						Featured <br />
+						<span class="glitch" data-text="PROJECTS">Projects</span>
+					</h2>
+
+					<NuxtLink to="/projects">
+						<span class="inner">
+							View all projects
+						</span>
+					</NuxtLink>
+				</div>
 				<div class="list" v-for="(project, i) in Project" :key="i">
-					<NuxtLink :to="project.slug">
+					<NuxtLink :to="`/project/${project.slug}`">
 						<article>
 							<div class="glitch-thumb">
 								<div
@@ -67,19 +79,6 @@
 							</div>
 						</article>
 					</NuxtLink>
-				</div>
-
-				<div class="title">
-					<h2 class="uppercase text-white">
-						Featured <br />
-						<span class="glitch" data-text="PROJECTS">Projects</span>
-					</h2>
-
-					<a class="text-white" href="#">
-						<span class="inner">
-							View all projects
-						</span>
-					</a>
 				</div>
 			</div>
 		</div>
@@ -115,6 +114,4 @@
 
     const FeaturedProjects = await useAsyncData('projects', () => GqlFeaturedProjects())
     const { Project } = FeaturedProjects.data.value
-
-	console.log(Articles, Project)
 </script>

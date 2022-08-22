@@ -2,10 +2,10 @@
 
 <footer class="p-4 md:px-6 md:py-8">
     <div class="sm:flex sm:items-center sm:justify-between">
-        <a href="https://flowbite.com/" class="flex items-center mb-4 sm:mb-0">
+        <NuxtLink to="/" class="flex items-center mb-4 sm:mb-0">
             <img class="mr-3 h-8" :src="`${config.apiUrl}/assets/${icon.id}`" :alt="icon.title" />
-            <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">{{ fullname }}</span>
-        </a>
+            <span class="brand">{{ fullname }}</span>
+        </NuxtLink>
         <ul class="flex flex-wrap items-center mb-6 text-sm text-gray-500 sm:mb-0 dark:text-gray-400">
             <li v-for="(link, i) in footerLinks" :key="i">
                 <NuxtLink :to="link.url" class="mr-4 hover:underline md:mr-6">{{ link.title }}</NuxtLink>
@@ -61,7 +61,6 @@ const footerLinks = ref([
 
 <style lang="scss">
 .links a {
-    @apply text-white;
 
     svg {
         @apply h-5 w-5;

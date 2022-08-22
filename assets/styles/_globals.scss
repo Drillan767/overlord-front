@@ -7,4 +7,11 @@
 
 footer {
     background-color: var(--bg-color);
+
+    .brand {
+        @apply self-center text-2xl font-semibold whitespace-nowrap;
+        color: var(--title-color);
+    }
 }
+
+// self-center text-2xl font-semibold whitespace-nowrap

@@ -1,19 +1,42 @@
-html:root {
-    --bg-color: #121212;
-    --bg-color-alt: #111827;
+:root {
+    /*=== Dark theme (default) ===*/
+    --font-light: rgb(156 163 175);
+    --title-light: #fff;
+    --bg-dark: #12181b;
+    --bg-dark-alt: #111827;
+    --cursor-light: #fff;
+
+    /*=== Light theme ===*/
+    --font-dark: rgb(75 85 99);
+    --title-dark: #000;
+    --bg-light: #f8f8f8;
+    --bg-light-alt: #b2becd;
+    --cursor-dark: #000;
+    
+    /*=== Misc. === */
     --landing-padding: 2rem;
     --landing-min-height: 100vh;
-
-    --cursor-color: white;
-
     --glitch-width: 100vw;
     --glitch-height: 100vh;
     --gap-vertical: 5px;
     --gap-horizontal: 10px;
     --time-anim: 4s;
+}
 
-    --tag-text-color: white;
-    --tag-bg-color: initial;
+.dark {
+    --font-color: var(--font-light);
+    --title-color: var(--title-light);
+    --bg-color: var(--bg-dark);
+    --bg-color-alt: var(--bg-dark-alt);
+    --bg-cursor: var(--cursor-dark);
+}
+
+.light {
+    --font-color: var(--font-light);
+    --title-color: var(--title-dark)
+    --bg-color: var(--bg-light);
+    --bg-color-alt: var(--bg-light-alt);
+    --bg-cursor: var(--cursor-light);
 }
 
 @font-face {

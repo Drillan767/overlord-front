@@ -1,17 +1,17 @@
 <template>
-<Head>
-  <Title>Accueil</Title>
-</Head>
+  <Head>
+    <Title>Accueil</Title>
+  </Head>
 
-<LandingViewport
-  :full_name="homepageData.fullname"
-  :baseline="homepageData.baseline"
-/>
+  <LandingViewport
+    :full_name="homepageData.fullname"
+    :baseline="homepageData.baseline"
+  />
 
-<LandingAbout
-  :description="homepageData.description"
-  :user="homepageData.user"
-/>
+  <LandingAbout
+    :description="homepageData.description"
+    :user="homepageData.user"
+  />
 
   <LandingFeatured />
 
