@@ -17,16 +17,4 @@ export default defineNuxtConfig({
     publicRuntimeConfig: {
         apiUrl: process.env.API_URL || 'localhost:8055'
     }
-
-    /*
-    vite: {
-        css: {
-            preprocessorOptions: {
-                sass: {
-                    additionalData: '@import "@/assets/styles/_variables.sass"',
-                },
-            },
-        },
-    },
-    */
 })

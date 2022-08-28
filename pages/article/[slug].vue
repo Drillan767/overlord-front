@@ -1,6 +1,5 @@
 <template>
     <div>
-        <h1>Bienvenue sur la page article.</h1>
-        <p>Titre : ~</p>
+        <h1>Page des articles</h1>
     </div>
 </template>

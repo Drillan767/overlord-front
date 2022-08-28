@@ -1,14 +1,12 @@
-const { def } = require('@vue/shared')
+import { Config } from 'tailwindcss'
 const defaultTheme = require('tailwindcss/defaultTheme')
 
-module.exports = {
+export default <Config> {
   content: [
-    `components/**/*.{vue,js,ts}`,
+    `components/**/*.vue`,
     `layouts/**/*.vue`,
     `pages/**/*.vue`,
     `app.vue`,
-    // `plugins/**/*.{js,ts}`,
-    // `nuxt.config.{js,ts}`,
   ],
   theme: {
     extend: {

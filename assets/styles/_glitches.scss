@@ -210,7 +210,7 @@
     }
 
     &::after {
-        left: -3px;
+        left: -30px;
         text-shadow: -2px 0 blue;
         animation-name: glitch-animation-2;
         animation-duration: 2s;
@@ -218,6 +218,46 @@
         animation-delay: 0s;
         animation-iteration-count: infinite;
         animation-direction: reverse-alternate;
+    }
+}
+
+.border-glitch {
+	position: relative;
+	display: inline-block;
+	font-size: 24px;
+	text-decoration: none;
+	letter-spacing: 0.1em;
+	color: #fff;
+	font-weight: lighter;
+	z-index: 1;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.75);
+	padding-bottom: 10px;
+
+	&:focus {
+		&::before, &::after {
+			visibility: visible;
+			animation: border-glitchy 0.3s ease 0.3s infinite;
+		}
+	}
+
+	&::before, &::after {
+		content: '';
+		position: absolute;
+		bottom: -1px;
+		left: 0;
+		right: 0;
+		height: 1px;
+		visibility: hidden;
+	}
+
+	&:before {
+        color: #00ffff;
+        z-index: -1;
+    }
+
+    &:after {
+        color: #ff00ff;
+        z-index: -2;
     }
 }
 

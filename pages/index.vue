@@ -1,51 +1,41 @@
 <template>
-  <Head>
-    <Title>Accueil</Title>
-  </Head>
+    <div id="index">
+        <Head>
+            <Title>Accueil</Title>
+        </Head>
+        
+        <Navbar
 
-  <LandingViewport
-    :full_name="homepageData.fullname"
-    :baseline="homepageData.baseline"
-  />
+        />
 
-  <LandingAbout
-    :description="homepageData.description"
-    :user="homepageData.user"
-  />
+        <LandingViewport
+            :full_name="Homepage.fullname"
+            :baseline="Homepage.baseline"
+        />
 
-  <LandingFeatured />
+        <LandingAbout
+            :description="Homepage.description"
+            :user="Homepage.user"
+        />
 
-  <Footer
-    :links="homepageData.links"
-    :icon="homepageData.icon"
-    :fullname="homepageData.fullname"
-  />
+        <LandingFeatured />
+
+        <LandingContactForm />
+
+        <Footer
+            :links="Homepage.links"
+            :icon="Homepage.icon"
+            :fullname="Homepage.fullname"
+        />
+
+  </div>
 </template>
 
 <script setup lang="ts">
-import Footer from "~/components/layout/footer.vue";
-
 const { data } = await useAsyncData('homepage', () => GqlHomepage());
-const homepageData = data.value.Homepage;
+const { Homepage } = data.value;
 
-onMounted(() => {
-  const ie = new IntersectionObserver((entries, observer) => {
-    entries.forEach((e) => {
-      if (e.intersectionRatio > 0.25) {
-        e.target.classList.add('fade-in')
-
-        observer.unobserve(e.target)
-      }
-    })
-  }, {
-    threshold: [0.25]
-  })
-
-  const ids = ['viewport', 'about', 'featured']
-
-  ids.forEach((id) => {
-    const el = document.getElementById(id)
-    ie.observe(el)
-  })
-})
+definePageMeta({
+  layout: "default",
+});
 </script>

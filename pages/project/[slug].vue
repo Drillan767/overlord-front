@@ -1,6 +1,5 @@
 <template>
     <div>
-        <h1>Bienvenue sur la page Projets.</h1>
-        <p>Titre : ~</p>
+        <h1>Page des projets</h1>
     </div>
 </template>

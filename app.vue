@@ -1,10 +1,17 @@
 <template>
   <NuxtLayout>
-    <NuxtPage/>
+    <NuxtPage />
   </NuxtLayout>
 </template>
 
-<script setup>
+<script setup lang="ts">
+const route = useRoute()
+const { $bus } = useNuxtApp()
+
+onMounted(() => {
+  $bus.$on('test', () => console.log('coucou'))
+})
+
 useHead({
   titleTemplate: '%s | Joseph Levarato',
   // or, instead:
@@ -23,7 +30,6 @@ useHead({
     {rel: 'manifest', href: '/site.webmanifest'},
     {rel: 'mask-icon', href: '/icons/safari-pinned-tab.svg', color: '#312b5e'},
   ],
-
   bodyAttrs: {
     class: 'dark'
   }
