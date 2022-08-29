@@ -7,11 +7,16 @@
 <script setup lang="ts">
 onMounted(() => {
   const ie = new IntersectionObserver((entries, observer) => {
+    const navbar = document.querySelector('nav')
     entries.forEach((e) => {
       if (e.intersectionRatio > 0.25) {
         e.target.classList.add('fade-in')
 
-        observer.unobserve(e.target)
+        if (['about', 'featured', 'contact'].includes(e.target.id)) {
+          navbar.classList.add('display')
+        } else {
+          navbar.classList.remove('display')
+        }
       }
     })
   }, {

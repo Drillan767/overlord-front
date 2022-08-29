@@ -1,3 +1,15 @@
+#index nav {
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+    margin-top: 0;
+    transition: margin 0.5s ease-in-out;
+
+    &:not(.display) {
+        margin-top: -100px;
+    }
+}
+
 #viewport, #about, #featured, #contact {
     .content {
         opacity: 0;
@@ -11,7 +23,10 @@
 }
 
 #viewport {
-    @apply flex justify-center items-center flex-col;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @apply flex-col;
     background-color: var(--bg-color);  
     height: 100vh;
 

@@ -5,7 +5,8 @@
         </Head>
         
         <Navbar
-
+            :icon="Homepage.icon"
+            :fullname="Homepage.fullname"
         />
 
         <LandingViewport

@@ -5,6 +5,13 @@
     100% {opacity: 0;}
 }
 
+nav {
+    padding: 2rem 1.5rem;
+    background-color: var(--bg-color-alt);
+    border-bottom-width: 4px;
+    border-color: rgb(99 102 241);
+}
+
 form {
     .input, .textarea {
         label {
@@ -98,67 +105,67 @@ form {
     }
 }
 
+footer .first-row, nav {
+    @media (min-width: 640px) {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .brand {
+        display: flex;
+        align-items: center;
+
+        @media (max-width: 639px) {
+            margin-bottom: 1rem;
+        }
+
+        img {
+            height: 2rem;
+            margin-right: 0.75rem;
+        }
+
+        span {
+            @apply self-center text-2xl font-semibold whitespace-nowrap;
+            color: var(--title-color);
+        }
+        
+    }
+
+    .links {
+        display: flex;
+
+        ul {
+            display: flex;
+            align-items: center;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            flex-wrap: wrap;
+
+            li a {
+                margin-right: 1rem;
+                color: var(--font-color);
+
+                @media (min-width: 768px) {
+                    margin-right: 1.5rem;
+                }
+            }
+        }
+
+        .theme {
+            padding: 0.25rem;
+            border: solid 1px var(--font-color);
+            border-radius: 0.25rem;
+        }
+    }
+}
+
 footer {
     background-color: var(--bg-color);
     padding: 2rem 1.5rem;
 
     @media (min-width: 768px) {
         padding: 2rem 1.5rem;
-    }
-
-    .first-row {
-        @media (min-width: 640px) {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-
-            @media (max-width: 639px) {
-                margin-bottom: 1rem;
-            }
-
-            img {
-                height: 2rem;
-                margin-right: 0.75rem;
-            }
-
-            span {
-                @apply self-center text-2xl font-semibold whitespace-nowrap;
-                color: var(--title-color);
-            }
-            
-        }
-
-        .links {
-            display: flex;
-
-            ul {
-                display: flex;
-                align-items: center;
-                font-size: 0.875rem;
-                line-height: 1.25rem;
-                flex-wrap: wrap;
-
-                li a {
-                    margin-right: 1rem;
-                    color: var(--font-color);
-
-                    @media (min-width: 768px) {
-                        margin-right: 1.5rem;
-                    }
-                }
-            }
-
-            .theme {
-                padding: 0.25rem;
-                border: solid 1px var(--font-color);
-                border-radius: 0.25rem;
-            }
-        }
     }
     
     hr {

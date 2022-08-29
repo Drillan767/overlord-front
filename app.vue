@@ -5,17 +5,47 @@
 </template>
 
 <script setup lang="ts">
-const route = useRoute()
 const { $bus } = useNuxtApp()
 
+const switchTheme = (theme) => {
+  const oldTheme = theme === 'dark' ? 'light' : 'dark'
+  const body = document.querySelector('body')
+  body.classList.remove(oldTheme)
+  body.classList.add(theme)
+  localStorage.setItem('theme', theme)
+}
+
+const initTheme = () => {
+  const theme = localStorage.getItem('theme')
+  const body = document.querySelector('body')
+  if (!theme) {
+    const preferedTheme = window.matchMedia("(prefers-color-scheme: dark)")
+    if (preferedTheme.matches) {
+      
+    } else {
+      body.classList.remove('dark')
+      body.classList.add('light')
+      localStorage.setItem('theme', 'light')
+    }
+  }
+}
+
 onMounted(() => {
-  $bus.$on('test', () => console.log('coucou'))
+  const theme = localStorage.getItem('theme')
+  if (theme) {
+    switchTheme(theme)
+  } else {
+    const preferedTheme = window.matchMedia("(prefers-color-scheme: dark)")
+    const retrievedTheme = preferedTheme.matches ? 'dark' : 'light'
+    switchTheme(retrievedTheme)
+  }
+
+  $bus.$on('theme-switch', (type) => switchTheme(type))
 })
 
 useHead({
   titleTemplate: '%s | Joseph Levarato',
-  // or, instead:
-  // titleTemplate: (title) => `My App - ${title}`,
+
   viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
   charset: 'utf-8',
   meta: [

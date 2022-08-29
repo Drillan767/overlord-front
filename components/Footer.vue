@@ -57,24 +57,23 @@ defineProps({
 
 const { $bus } = useNuxtApp()
 
+const currentTheme = ref(localStorage.getItem('theme'))
+
 const themeSwich = () => {
-  console.log('clicked')
-  $bus.$emit('test')
+  const newTheme = currentTheme.value === 'dark' ? 'light' : 'dark'
+  $bus.$emit('theme-switch', newTheme)
+  currentTheme.value = newTheme
 }
 
 const footerLinks = ref([
-    {
-        url: '/',
-        title: 'Home',
-    },
-    {
-        url: '/articles',
-        title: 'Articles',
-    },
-    {
-        url: '/projects',
-        title: 'Projects',
-    }
+  {
+      url: '/articles',
+      title: 'Articles',
+  },
+  {
+      url: '/projects',
+      title: 'Projects',
+  }
 ])
 
 </script>
