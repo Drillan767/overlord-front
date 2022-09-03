@@ -5,7 +5,18 @@ export default defineNuxtConfig({
     modules: [
         'nuxt-graphql-client',
         '@nuxtjs/tailwindcss',
+        '@nuxtjs/color-mode',
     ],
+
+    colorMode: {
+        preference: 'system',
+        fallback: 'dark',
+        hid: 'color-mode',
+        globalName: 'color-mode-script',
+        componentName: 'ColorScheme',
+        classSuffix: '',
+        storageKey: 'ovrld-color-mode',
+    },
 
     tailwindcss: {
         viewer: false,
