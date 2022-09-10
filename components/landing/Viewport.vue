@@ -19,8 +19,8 @@ const typedText = ref('')
 let i = 0
 
 const props = defineProps({
-    full_name: String,
-    baseline: String,
+  full_name: String,
+  baseline: String,
 })
 
 onMounted(() => {
@@ -32,7 +32,7 @@ onMounted(() => {
 })
 
 const scrollNext = () => {
-  document.getElementById('about').scrollIntoView({behavior: 'smooth'})
+  document.getElementById('about').scrollIntoView({ behavior: 'smooth' })
 }
 
 const typeLetters = () => {
@@ -54,6 +54,59 @@ const subtitle = computed(() =>
 </script>
 
 <style scoped lang="scss">
+#viewport {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @apply flex-col;
+  background-color: var(--bg-color);
+  height: 100vh;
 
+  .content {
+    position: relative;
 
+    .title {
+      font-size: clamp(2.25rem, -2.75rem + 16vw, 6.25rem);
+      font-weight: 800;
+      text-align: center;
+      color: var(--title-color);
+    }
+
+    .subtitle {
+      color: var(--font-color);
+      text-align: center;
+      font-size: clamp(1.25rem, 0.4688rem + 2.5vw, 1.875rem);
+    }
+
+    .scroll {
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      top: 38vh;
+
+      p {
+        color: white;
+      }
+    }
+  }
+
+  .input-cursor {
+    display: inline-block;
+    width: 15px;
+    height: 28px;
+    background-color: white;
+    margin-left: 8px;
+    animation: blink .6s linear infinite alternate;
+  }
+
+  .typed-text {
+    @apply text-xl font-mono;
+    color: var(--font-color);
+  }
+
+  .typing {
+    animation: none;
+  }
+}
 </style>

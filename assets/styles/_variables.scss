@@ -7,7 +7,7 @@
     --cursor-light: #fff;
 
     /*=== Light theme ===*/
-    --font-dark: rgb(75 85 99);
+    --font-dark: #281130;
     --title-dark: #000;
     --bg-light: #f8f8f8;
     --bg-light-alt: #b2becd;
@@ -23,18 +23,31 @@
     --time-anim: 4s;
 }
 
+/*
+--bg-viewport
+--bg-about
+--bg-featured
+--bg-contact
+*/
+
 .dark {
+    --bg-navbar-footer: var(--bg-dark);
+    --bg-about: var(--bg-dark);
+    --bg-contact: var(--bg-dark-alt);
     --font-color: var(--font-light);
     --title-color: var(--title-light);
     --bg-color: var(--bg-dark);
+    --bg-footer: var(--bg-dark);
     --bg-color-alt: var(--bg-dark-alt);
     --bg-cursor: var(--cursor-dark);
 }
 
 .light {
-    --font-color: var(--font-light);
+    --bg-about: var(--bg-light);
+    --bg-contact: var(--bg-light);
+    --bg-footer: var(--bg-light);
+    --font-color: var(--font-dark);
     --title-color: var(--title-dark)
-    --bg-color: var(--bg-light);
     --bg-color-alt: var(--bg-light-alt);
     --bg-cursor: var(--cursor-light);
 }

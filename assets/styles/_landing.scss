@@ -1,6 +1,6 @@
 #index nav {
     position: fixed;
-    width: 100%;
+    width: 100vw;
     z-index: 1;
     margin-top: 0;
     transition: margin 0.5s ease-in-out;
@@ -22,64 +22,8 @@
     }
 }
 
-#viewport {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    @apply flex-col;
-    background-color: var(--bg-color);  
-    height: 100vh;
-
-    .content {
-        position: relative;
-
-        .title {
-            font-size: clamp(2.25rem, -2.75rem + 16vw, 6.25rem);
-            font-weight: 800;
-            text-align: center;
-            color: var(--title-color);
-        }
-
-        .subtitle {
-            color: var(--font-color);
-            text-align: center;
-            font-size: clamp(1.25rem, 0.4688rem + 2.5vw, 1.875rem);
-        }
-
-        .scroll {
-            position: absolute;
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            top: 38vh;
-
-            p {
-                color: white;
-            }
-        }
-    }
-
-    .input-cursor {
-        display: inline-block;
-        width: 15px;
-        height: 28px;
-        background-color: white;
-        margin-left: 8px;
-        animation: blink .6s linear infinite alternate;
-    }
-    
-    .typed-text {
-        @apply text-xl font-mono;
-        color: var(--font-color);
-    }
-    
-    .typing {
-        animation: none;
-    }
-}
-
 #about {
-    background-color: var(--bg-color-alt);
+    background-color: var(--bg-about);
     min-height: var(--landing-min-height);
     padding: var(--landing-padding);
 
@@ -268,7 +212,7 @@
 }
 
 #contact {
-    background-color: var(--bg-color-alt);
+    background-color: var(--bg-contact);
     min-height: var(--landing-min-height);
     padding: var(--landing-padding);
     display: flex;

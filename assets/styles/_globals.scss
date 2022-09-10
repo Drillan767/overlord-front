@@ -6,17 +6,21 @@
 }
 
 nav {
-    padding: 2rem 1.5rem;
-    background-color: var(--bg-color-alt);
+    padding: 0.875rem;
+    background-color: #000;
     border-bottom-width: 4px;
     border-color: rgb(99 102 241);
+
+    .brand span {
+        color: #fff;
+    }
 }
 
 form {
     .input, .textarea {
         label {
             position: absolute;
-            color: #fff;
+            color: var(--font-color);
             top: 0.75rem;
             z-index: –1;
             transform-origin: 0;
@@ -105,7 +109,15 @@ form {
     }
 }
 
-footer .first-row, nav {
+/*
+footer {
+    background-color: var(--bg-color);
+    padding: 2rem 1.5rem;
+
+    @media (min-width: 768px) {
+        padding: 2rem 1.5rem;
+    }
+
     @media (min-width: 640px) {
         display: flex;
         align-items: center;
@@ -129,7 +141,6 @@ footer .first-row, nav {
             @apply self-center text-2xl font-semibold whitespace-nowrap;
             color: var(--title-color);
         }
-        
     }
 
     .links {
@@ -158,15 +169,6 @@ footer .first-row, nav {
             border-radius: 0.25rem;
         }
     }
-}
-
-footer {
-    background-color: var(--bg-color);
-    padding: 2rem 1.5rem;
-
-    @media (min-width: 768px) {
-        padding: 2rem 1.5rem;
-    }
     
     hr {
         margin: 2rem auto;
@@ -181,7 +183,7 @@ footer {
         }
 
         .year {
-            color: var(--font-color); // TEXT COLOR IN DARK MODE?
+            color: var(--font-color);
             font-size: 0.875rem;
             line-height: 1.25rem;
 
@@ -209,6 +211,7 @@ footer {
     }
     
 }
+*/
 
 .theme {
     color: white;
