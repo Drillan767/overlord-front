@@ -72,47 +72,6 @@ const footerLinks = ref([
 
 const newTheme = computed(() => colorMode.value === 'light' ? 'dark' : 'light')
 
-/*
-<footer>
-    <div class="first-row">
-        <NuxtLink to="/" class="brand">
-          <img :src="`${config.apiUrl}/assets/${icon.id}`" :alt="icon.title" />
-          <span>{{ fullname }}</span>
-        </NuxtLink>
-        <div class="links">
-          <ul>
-            <li v-for="(link, i) in footerLinks" :key="i">
-              <NuxtLink :to="link.url">{{ link.title }}</NuxtLink>
-            </li>
-          </ul>
-          <ColorScheme>
-            <button class="theme" @click="$colorMode.preference = newTheme">
-            <LandingDark v-if="colorMode.value === 'dark'" />
-            <LandingLight v-if="colorMode.value === 'light'" />
-          </button>
-          </ColorScheme>
-        </div>
-    </div>
-    <hr />
-    <div class="second-row">
-      <span class="year">
-        © {{ year }}
-        <NuxtLink href="/">{{ fullname }}</NuxtLink>. All Rights Reserved.
-      </span>
-      <div class="links">
-        <a
-          v-for="(link, i) in links"
-          :href="link.url"
-          :key="i"
-          v-html="link.svg"
-          target="_blank"
-        />
-      </div>
-    </div>
-  </footer>
-
-*/
-
 </script>
 
 <style scoped lang="scss">

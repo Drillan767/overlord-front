@@ -1,5 +1,5 @@
-query Articles {
-	Articles(filter: {status: {_eq: "published"}}) {
+query Articles ($filter: Articles_filter, $limit: Int = -1) {
+	Articles(filter: $filter, limit: $limit) {
 		title
 		slug
 		tags {
@@ -8,7 +8,8 @@ query Articles {
 			}
 		}
 		illustration {
-			filename_download
+			id
+			title
 		}
 	}
 }

@@ -68,3 +68,21 @@ const submit = async () => {
 }
 
 </script>
+
+<style scoped lang="scss">
+#contact {
+    background-color: var(--bg-contact);
+    min-height: var(--landing-min-height);
+    padding: var(--landing-padding);
+    display: flex;
+    align-items: center;
+
+    h2 {
+        text-transform: uppercase;
+        font-size: clamp(2rem, 0.75rem + 4vw, 3rem);
+        text-align: right;
+        line-height: 1;
+        color: var(--title-color);
+    }
+}
+</style>

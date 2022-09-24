@@ -23,13 +23,6 @@
     --time-anim: 4s;
 }
 
-/*
---bg-viewport
---bg-about
---bg-featured
---bg-contact
-*/
-
 .dark {
     --bg-navbar-footer: var(--bg-dark);
     --bg-about: var(--bg-dark);
@@ -47,7 +40,7 @@
     --bg-contact: var(--bg-light);
     --bg-footer: var(--bg-light);
     --font-color: var(--font-dark);
-    --title-color: var(--title-dark)
+    --title-color: var(--title-dark);
     --bg-color-alt: var(--bg-light-alt);
     --bg-cursor: var(--cursor-light);
 }

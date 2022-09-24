@@ -43,3 +43,22 @@ onMounted(() => {
 })
 
 </script>
+
+<style scoped lang="scss">
+#about {
+    background-color: var(--bg-about);
+    min-height: var(--landing-min-height);
+    padding: var(--landing-padding);
+
+    .content {
+        @media (min-width: 768px) { 
+            display: flex;
+         }
+
+        .prose {
+            color: var(--font-color);
+        }
+    }
+}
+
+</style>

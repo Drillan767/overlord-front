@@ -1,0 +1,19 @@
+query Article ($search: String!) {
+	Articles(
+        search: $search,
+        filter: {status: {_eq: "published"}}
+    ) {
+		title
+		slug
+		body
+		tags {
+			Tag_id {
+				title
+			}
+		}
+		illustration {
+			id
+			title
+		}
+	}
+}

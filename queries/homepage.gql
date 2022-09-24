@@ -1,16 +1,19 @@
-query Homepage {
+query Homepage ($showInfos: Boolean = true) {
     Homepage {
         fullname
         baseline
-        user {
-            title
-            id
-        }
+        links
+
         icon {
             title
             id
         }
-        description
-        links
+
+        user @include(if: $showInfos) {
+            title
+            id
+        }
+
+        description @include(if: $showInfos)
     }
 }

@@ -1,4 +1,4 @@
-mutation SendComment($name: String!, $email: String!, $content: String!, $article_id: Int!, $comment_id: Int = null) {
+mutation SendComment($name: String!, $email: String!, $content: String!, $article_id: Int!, $comment_id: Int) {
 	create_Comments_item(
 		data: {
 			name: "Coucou les choupinous"

@@ -1,7 +1,7 @@
 <template>
     <div id="index">
         <Head>
-            <Title>Accueil</Title>
+            <Title>Landing</Title>
         </Head>
         
         <Navbar

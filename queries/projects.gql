@@ -1,20 +1,18 @@
-query Project {
-    Project(filter: {status: {_eq: "published"}}) {
-        title
-        website
-        repo_link
-        slug
-        body
-        illustration {
-            filename_download
-        }
-        date_created
-        date_updated
-
-        tags {
-            Tag_id {
-                title
-            }
-        }
+query Projects ($filter: Project_filter, $limit: Int = -1) {
+    Project(
+            filter: $filter,
+            limit: $limit
+		) {
+		title
+		slug
+		tags {
+			Tag_id {
+				title
+			}
+		}
+		illustration {
+			id
+			title
+		}
     }
 }

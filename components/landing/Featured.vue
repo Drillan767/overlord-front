@@ -89,6 +89,14 @@
 
 	const config = useRuntimeConfig()
 
+	const gqlHeaders = {
+		filter: {
+			featured: {_eq: true},
+			status: {_eq: 'published'}
+		},
+		limit: 3
+	}
+
 	onMounted(() => {
 		document.querySelectorAll('article').forEach((item) => {
 			item.addEventListener('mouseover', (e) => {
@@ -109,9 +117,9 @@
 		return `${config.apiUrl}/assets/${item.illustration.id}?width=200&height=300&fit=cover`
 	}
 
-    const FeaturedArticles = await useAsyncData('articles', () => GqlFeaturedArticles());
-    const { Articles } = FeaturedArticles.data.value
+    const FeaturedArticles = await useAsyncData('articles', () => GqlArticles(gqlHeaders));
+    const { Articles } = FeaturedArticles.data.value
 
-    const FeaturedProjects = await useAsyncData('projects', () => GqlFeaturedProjects())
+    const FeaturedProjects = await useAsyncData('projects', () => GqlProjects(gqlHeaders))
     const { Project } = FeaturedProjects.data.value
 </script>
