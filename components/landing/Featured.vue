@@ -16,29 +16,7 @@
 				</div>
 
 				<div class="list" v-for="(article, i) in Articles" :key="i">
-					<NuxtLink :to="`/article/${article.slug}`">
-						<article>
-							<div class="glitch-thumb">
-								<div
-									class="glitch-img"
-									v-for="i in 5"
-									:key="i"
-									:style="`background-image: url('${getThumb(article)}')`"
-								/>
-							</div>
-							<div class="details">
-								<p :data-text="article.title">
-									{{ article.title }}
-									<span class="cursor"></span>
-								</p>
-								<div class="tags">
-									<span v-for="(tag, j) in article.tags" :key="j">
-									{{ tag.Tag_id.title }}
-									</span>
-								</div>
-							</div>
-						</article>
-					</NuxtLink>
+					<ItemThumbnail item-type="article" :item="article" />
 				</div>
 			</div>
 
@@ -56,29 +34,7 @@
 					</NuxtLink>
 				</div>
 				<div class="list" v-for="(project, i) in Project" :key="i">
-					<NuxtLink :to="`/project/${project.slug}`">
-						<article>
-							<div class="glitch-thumb">
-								<div
-									class="glitch-img"
-									v-for="i in 5"
-									:key="i"
-									:style="`background-image: url('${getThumb(project)}')`"
-								/>
-							</div>
-							<div class="details">
-								<p :data-text="project.title">
-									{{ project.title }}
-									<span class="cursor"></span>
-								</p>
-								<div class="tags">
-									<span v-for="(tag, j) in project.tags" :key="j">
-									{{ tag.Tag_id.title }}
-									</span>
-								</div>
-							</div>
-						</article>
-					</NuxtLink>
+					<ItemThumbnail1 item-type="project" :item="project" />
 				</div>
 			</div>
 		</div>
@@ -86,6 +42,8 @@
 </template>
 
 <script setup lang="ts">
+import ItemThumbnail from '../content/ItemThumbnail.vue';
+import ItemThumbnail1 from '../content/ItemThumbnail.vue';
 
 	const config = useRuntimeConfig()
 
@@ -117,9 +75,9 @@
 		return `${config.apiUrl}/assets/${item.illustration.id}?width=200&height=300&fit=cover`
 	}
 
-    const FeaturedArticles = await useAsyncData('articles', () => GqlArticles(gqlHeaders));
-    const { Articles } = FeaturedArticles.data.value
+	const { data: FeaturedArticles } = await useAsyncGql('Articles', gqlHeaders)
+    const { Articles } = FeaturedArticles.value
 
-    const FeaturedProjects = await useAsyncData('projects', () => GqlProjects(gqlHeaders))
-    const { Project } = FeaturedProjects.data.value
+	const { data: FeaturedProjects } = await useAsyncGql('Projects', gqlHeaders)
+    const { Project } = FeaturedProjects.value
 </script>

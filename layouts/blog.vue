@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 
-const { data } = await useAsyncData('homepage', () => GqlHomepage({showInfos: false}));
+const { data } = await useAsyncGql('Homepage', {showInfos: false})
 const { Homepage } = data.value;
 
 </script>

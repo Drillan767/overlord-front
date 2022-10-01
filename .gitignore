@@ -8,3 +8,4 @@ node_modules
 gql/schema.graphql
 .env
 .DS_Store
+gql/*

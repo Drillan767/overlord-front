@@ -33,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-const { data } = await useAsyncData('homepage', () => GqlHomepage());
+const { data } = await useAsyncGql('Homepage')
 const { Homepage } = data.value;
 
 definePageMeta({
