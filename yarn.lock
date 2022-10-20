@@ -6578,9 +6578,9 @@ unixify@^1.0.0:
     normalize-path "^2.1.1"
 
 unplugin@^0.10.0:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/unplugin/-/unplugin-0.10.0.tgz#83a10e995df530ffedb117de71ac3823216efe01"
-  integrity sha512-QIoQDNxTceO8QneUMQc96qabJnPVijU9SnaWWAH60HqpkCQSFXTcDAcr8qM4Y7Nq8Q3NafyX3lG5S1g62+KD6g==
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/unplugin/-/unplugin-0.10.1.tgz#e00dc951c1901aef4124121057102a8c290e28b3"
+  integrity sha512-y1hdBitiLOJvCmer0/IGrMGmHplsm2oFRGWleoAJTRQ8aMHxHOe9gLntYlh1WNLKufBuQ2sOTrHF+KWH4xE8Ag==
   dependencies:
     acorn "^8.8.0"
     chokidar "^3.5.3"

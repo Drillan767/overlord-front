@@ -25,6 +25,10 @@
                 </div>
 
                 <div class="content">
+                    <div class="toc" v-html="articleData.toc" />
+
+                    <div class="progress"></div>
+
                     <div class="tags">
                         <h2>Tags :</h2>
 
@@ -32,8 +36,6 @@
                             Tag 1, tag 2, tag 3
                         </p>
                     </div>
-
-                    <div class="toc" v-html="articleData.toc" />
                 </div>
 
                 
@@ -43,16 +45,12 @@
                 <h1>{{ articleData.title }}</h1>
 
                 <div v-html="articleData.body" class="prose lg:prose-xl" />
-                
-
             </article>
         </main>
     </div>
 </template>
 
 <script setup lang="ts">
-
-// https://css-tricks.com/sticky-table-of-contents-with-scrolling-active-states/
 
 const route = useRoute()
 const config = useRuntimeConfig()
@@ -61,6 +59,16 @@ const articleData = ref(null)
 definePageMeta({
   layout: "blog",
 });
+
+const bodyHeaders = () => {
+    let result = [];
+
+    for (let i = 2; i <= 6; i++) {
+        result.push(`.prose h${i}`)
+    }
+
+    return result.join(',')
+}
 
 const { data } = await useAsyncGql('Article', {search: route.params.slug.toString()})
 
@@ -77,19 +85,43 @@ if (data.value.Articles.length) {
 const getIllustration = (width = 1200, height = 627) => {
     return `${config.apiUrl}/assets/${articleData.value.illustration.id}?width=${width}&height=${height}&fit=cover`
 }
+
+onMounted(() => {
+    const headers = document.querySelectorAll(bodyHeaders())
+
+    document.addEventListener('scroll', () => {
+        let scrollTop = window.scrollY;
+
+        document.querySelectorAll(`.toc li`).forEach((li) => li.classList.remove('active')) 
+
+        for (let i = headers.length -1; i >= 0; i--) {
+            const currentH = headers[i]
+            const offset = currentH.getBoundingClientRect().top + scrollTop
+
+            if (scrollTop > offset - 75) {
+                document.querySelector(`.toc li a[href="#${currentH.id}"]`).parentElement.classList.add('active')
+                break;
+            }
+        }
+    })
+})
+
 </script>
 
 <style lang="scss">
 
     main {
+        position: relative;
+        margin: 0 auto;
         display: flex;
         gap: 20px;
 
         aside {
-            position: relative;
+            position: sticky;
+            top: 0;
             z-index: 0;
             width: 25%;
-            min-height: 100vh;
+            max-height: 100vh;
 
             &::before {
                 content: "";
@@ -139,6 +171,17 @@ const getIllustration = (width = 1200, height = 627) => {
                 }
             }
 
+            .toc {
+                ul, li {
+                    color: white;
+                    margin-left: 1rem;
+                }
+
+                li.active {
+                    color: red;
+                }
+            }
+
             .content {
                 position: relative;
                 z-index: 2;
@@ -148,7 +191,7 @@ const getIllustration = (width = 1200, height = 627) => {
         }
 
         article {
-            scroll-behavior: smooth;
+            overflow-y: hidden;
 
             .prose {
                 p {

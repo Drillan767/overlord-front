@@ -60,6 +60,10 @@
     src: url('/fonts/JetBrainsMono-Regular.ttf');
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 .font-mono {
     font-family: 'JetBrains Mono';
     font-variant-ligatures: common-ligatures;
