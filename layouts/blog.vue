@@ -28,7 +28,6 @@ const { Homepage } = data.value;
     background-color: var(--bg-color);
     .content {
         min-height: var(--landing-min-height);
-        padding: var(--landing-padding);
     }
 }
 

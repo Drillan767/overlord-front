@@ -26,6 +26,7 @@ export default defineNuxtConfig({
     css: ["@/assets/styles/main.scss"],
 
     publicRuntimeConfig: {
-        apiUrl: process.env.API_URL || 'localhost:8055'
+        apiUrl: process.env.API_URL || 'localhost:8055',
+        url: process.env.URL || 'localhost:3000'
     }
 })

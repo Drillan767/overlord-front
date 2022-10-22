@@ -84,6 +84,8 @@ const tagDescription = computed(() => {
 
 <style scoped lang="scss">
 #articles {
+  padding: var(--landing-padding);
+
   h1 {
     color: var(--title-color)
   }

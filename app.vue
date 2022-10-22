@@ -12,7 +12,6 @@ useHead({
   viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
   charset: 'utf-8',
   meta: [
-    { name: 'description', content: 'My amazing site.' },
     { name: 'msapplication-Tilecolor', content: '#312b5e' },
     { name: 'theme-color', content: '#312b5e' },
   ],

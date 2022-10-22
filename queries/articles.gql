@@ -3,6 +3,8 @@ query Articles ($filter: Articles_filter, $limit: Int = -1) {
 		id
 		title
 		slug
+		date_created,
+		date_updated,
 		tags {
 			Tag_id {
 				title

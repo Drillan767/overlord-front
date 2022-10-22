@@ -5,6 +5,8 @@ query Article ($search: String!) {
     ) {
 		title
 		slug
+		description
+		toc
 		body
 		tags {
 			Tag_id {

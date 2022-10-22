@@ -26,7 +26,6 @@
 
 <script setup lang="ts">
 
-
 type Content = {
     itemType: string
     item: {
@@ -64,6 +63,6 @@ onMounted(() => {
 })
 
 const getThumb = (item) => {
-    return `${config.apiUrl}/assets/${item.illustration.id}?width=200&height=300&fit=cover`
+    return `${config.apiUrl}/assets/${item.illustration.id}?width=300&height=200&fit=cover`
 }
 </script>
