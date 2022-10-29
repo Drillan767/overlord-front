@@ -98,7 +98,7 @@ onMounted(() => {
             const currentH = headers[i]
             const offset = currentH.getBoundingClientRect().top + scrollTop
 
-            if (scrollTop > offset - 75) {
+            if (scrollTop > offset - 102) {
                 document.querySelector(`.toc li a[href="#${currentH.id}"]`).parentElement.classList.add('active')
                 break;
             }
@@ -128,7 +128,7 @@ onMounted(() => {
                 position: absolute;
                 inset: 0;
                 z-index: 1;
-                background: repeating-linear-gradient(to bottom, transparent 0%, rgba(0, 147, 255, 0.47) 0.5%, transparent 1%);
+                background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
             }
 
             .glitch-thumb {
@@ -178,7 +178,8 @@ onMounted(() => {
                 }
 
                 li.active {
-                    color: red;
+                    font-weight: bold;
+                    color: var(--purple);
                 }
             }
 

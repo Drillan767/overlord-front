@@ -21,9 +21,7 @@
     --gap-vertical: 5px;
     --gap-horizontal: 10px;
     --time-anim: 4s;
-}
-
-.dark {
+    --purple: hsl(274, 93%, 63%);
     --bg-navbar-footer: var(--bg-dark);
     --bg-about: var(--bg-dark);
     --bg-contact: var(--bg-dark-alt);
@@ -41,6 +39,7 @@
     --bg-footer: var(--bg-light);
     --font-color: var(--font-dark);
     --title-color: var(--title-dark);
+    --bg-color: var(--bg-color);
     --bg-color-alt: var(--bg-light-alt);
     --bg-cursor: var(--cursor-light);
 }

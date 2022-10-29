@@ -1,4 +1,5 @@
 import { defineNuxtConfig } from 'nuxt/config'
+import pkg from './package.json'
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
@@ -27,6 +28,7 @@ export default defineNuxtConfig({
 
     publicRuntimeConfig: {
         apiUrl: process.env.API_URL || 'localhost:8055',
-        url: process.env.URL || 'localhost:3000'
+        url: process.env.URL || 'localhost:3000',
+        version: pkg.version
     }
 })

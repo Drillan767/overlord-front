@@ -9,7 +9,7 @@ nav {
     padding: 0.875rem;
     background-color: #000;
     border-bottom-width: 4px;
-    border-color: rgb(99 102 241);
+    border-color: var(--purple);
 
     .brand span {
         color: #fff;
@@ -95,17 +95,13 @@ form {
                 --tw-scale-x: 0.75;
                 --tw-scale-y: 0.75;
                 --tw-translate-y: -1.5rem;
-                color: rgb(124 58 237);
+                color: var(--purple);
             }
         }
 
         &:focus {
             left: 0px;
         }
-    }
-
-    button {
-        @include btn-glitch($h: 5px, $w: 10px);
     }
 }
 

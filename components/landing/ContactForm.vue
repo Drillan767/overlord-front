@@ -38,11 +38,14 @@
                 />
 
                 <div class="flex justify-end col-span-2">
-                    <button type="submit">
-                        <span class="inner">
-							Send
-						</span>
-                    </button>
+                    <Button
+                        type="button"
+                        content="Send"
+                    />
+                </div>
+
+                <div class="test">
+
                 </div>
 
             </form>
@@ -52,6 +55,7 @@
 </template>
 
 <script setup lang="ts">
+import Button from "../layout/Button.vue";
 import Input from "../layout/Input.vue";
 import Textarea from "../layout/Textarea.vue";
 
