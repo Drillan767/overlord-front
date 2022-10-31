@@ -8,9 +8,14 @@
         </span>
     </button>
 
-    <a :href="link" v-else>
-        <slot />
-    </a>
+    <NuxtLink :to="link" v-else>
+        <span class="kave"></span>
+        {{ content }}
+
+        <span class="version" :data-text="config.version">
+            {{ config.version }}
+        </span>
+    </NuxtLink>
 
 </template>
 
@@ -42,8 +47,7 @@ button, a {
     text-transform: uppercase;
     font-weight: normal;
     letter-spacing: 1.8px;
-    padding: 20px 30px;
-    padding: 0;
+    padding: 20px 35px;
     transition: all 0.25s ease;
     outline: none;
 

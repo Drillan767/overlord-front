@@ -59,14 +59,14 @@
                 line-height: 1;
             }
 
-            a {
-                @include btn-glitch;
+            // a {
+            //     @include btn-glitch;
 
-                @media (max-width: 768px) {
-                    margin-top: 15px;
-                    text-align: center;
-                }
-            }
+            //     @media (max-width: 768px) {
+            //         margin-top: 15px;
+            //         text-align: center;
+            //     }
+            // }
         }
 
         .list {

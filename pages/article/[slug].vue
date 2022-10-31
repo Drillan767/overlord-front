@@ -36,14 +36,21 @@
                             Tag 1, tag 2, tag 3
                         </p>
                     </div>
-                </div>
 
+                    <div class="progress">
+                        <div class="global">
+                            {{ displayPercentage }}
+                        </div>
+                        <span class="bar">
+                            {{ progressBar }}
+                        </span>
+                    </div>
+
+                    <h1>{{ articleData.title }}</h1>
+                </div>
                 
             </aside>
             <article>
-
-                <h1>{{ articleData.title }}</h1>
-
                 <div v-html="articleData.body" class="prose lg:prose-xl" />
             </article>
         </main>
@@ -51,14 +58,27 @@
 </template>
 
 <script setup lang="ts">
-
-const route = useRoute()
-const config = useRuntimeConfig()
-const articleData = ref(null)
+import hljs from 'highlight.js'
+import 'highlight.js/styles/tokyo-night-dark.css'
 
 definePageMeta({
   layout: "blog",
 });
+
+const route = useRoute()
+const config = useRuntimeConfig()
+const articleData = ref(null)
+const barWidth = ref()
+const readPercentage = ref()
+
+const getScrollPercent = () => {
+    const h = document.documentElement
+    const b = document.body
+    const st = 'scrollTop'
+    const sh = 'scrollHeight'
+
+    return (h[st] || b[st]) / ((h[sh] || b[sh]) - h.clientHeight) * 100
+}
 
 const bodyHeaders = () => {
     let result = [];
@@ -69,6 +89,48 @@ const bodyHeaders = () => {
 
     return result.join(',')
 }
+
+const displayPercentage = computed(() => {
+    let result = 'Progress: ['
+
+    if (readPercentage.value) {
+        let spaces = 3 - readPercentage.value.toString().length
+        result += ' '.repeat(spaces)
+
+        result += readPercentage.value
+    }
+    else {
+        result += '  0'
+    }
+
+     result += '%]'
+
+    return result
+})
+
+const progressBar = computed(() => {
+    const charWidth = 9.6
+    const total = Math.floor(Math.floor(barWidth.value - 10) / charWidth) - 2
+    const progress = Math.floor((readPercentage.value / 100) * total)
+
+    // console.log(progress)
+    console.log()
+
+    let response = '['
+
+    for (let i = 0; i <= total; i++) {
+        if (i <= progress) {
+            response += '#'
+        }
+        else {
+            response += '.'
+        }
+        
+    }
+
+    return response + ']'
+    // return '#'
+})
 
 const { data } = await useAsyncGql('Article', {search: route.params.slug.toString()})
 
@@ -87,9 +149,19 @@ const getIllustration = (width = 1200, height = 627) => {
 }
 
 onMounted(() => {
+
+    setTimeout(() => {
+        document.querySelectorAll<HTMLElement>('.prose pre')
+            .forEach((block) => hljs.highlightBlock(block))
+    }, 1000)
+
+    barWidth.value = document.querySelector<HTMLElement>('.progress .bar').clientWidth
     const headers = document.querySelectorAll(bodyHeaders())
 
     document.addEventListener('scroll', () => {
+        readPercentage.value = Math.floor(getScrollPercent())
+        
+
         let scrollTop = window.scrollY;
 
         document.querySelectorAll(`.toc li`).forEach((li) => li.classList.remove('active')) 
@@ -120,7 +192,7 @@ onMounted(() => {
             position: sticky;
             top: 0;
             z-index: 0;
-            width: 25%;
+            width: 40%;
             max-height: 100vh;
 
             &::before {
@@ -172,14 +244,59 @@ onMounted(() => {
             }
 
             .toc {
-                ul, li {
-                    color: white;
-                    margin-left: 1rem;
+                padding: 1em 1.2em;
+                margin: 0 auto;
+                
+                &:before {
+                    content: "Table of Contents";
+                    color: var(--font-color);
+                    font-weight: bold;
                 }
 
-                li.active {
-                    font-weight: bold;
-                    color: var(--purple);
+                a {
+                    font-size: .85em;
+                    margin-left: 2px;
+                }
+
+                > ul {
+                    @apply m-0 p-0;
+
+                    ul {
+                        @apply m-0 p-0;
+                        margin-left: 1em;
+                    }
+
+                    li {
+                        margin-left: 0.35em;
+                        border-left: solid 1px #fff;
+
+                        &:not(.active) {
+                            color: var(--font-color);
+                        }
+
+                        &.active {
+                            color: var(--purple);
+                        }
+                        
+                        &:last-child {
+                            border-left: none;
+                            
+                            &:before {
+                                border-left: solid 1px #fff;
+
+                            }
+                        }
+                        
+                        &:before {
+                            width: 0.9em;
+                            height: 0.85em;
+                            margin-right: 0.1em;
+                            vertical-align: top;
+                            border-bottom: solid 1px #fff;
+                            content: "";
+                            display: inline-block;
+                        }
+                    }
                 }
             }
 
@@ -188,6 +305,28 @@ onMounted(() => {
                 z-index: 2;
                 height: 100%;
                 padding: 30px;
+
+                .progress {
+                    font-family: 'Jetbrains Mono', monospace;
+                    display: flex;
+                    gap: 10px;
+
+                    .global {
+                        background-color: green;
+                        flex: 0 0 auto;
+                    }
+
+                    .bar {
+                        color: #fff;
+                        flex: 1;
+                        display: inline-block;
+                    }
+                }
+
+                h1 {
+                    color: var(--title-color);
+                    line-height: 1;
+                }
             }
         }
 

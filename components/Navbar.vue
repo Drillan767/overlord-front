@@ -1,41 +1,45 @@
 <template>
-  <nav>
-    <div class="container">
-      <NuxtLink to="/">
-          <img :src="`${config.apiUrl}/assets/${icon.id}`" :title="icon.title" />
-          <span>{{ fullname }}</span>
-      </NuxtLink>
-      <button data-collapse-toggle="navbar-default" type="button" @click="showMenu = !showMenu" aria-controls="navbar-default" aria-expanded="false">
-        <span class="sr-only">Open main menu</span>
-        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
-        </svg>
-      </button>
-      <div class="link-wrapper" :class="{'hidden': !showMenu}">
-        <ul>
-          <li v-for="(link, i) in footerLinks" :key="i">
-            <NuxtLink :to="link.url">{{ link.title }}</NuxtLink>
-          </li>
-          <div class="theme">
-            <ColorScheme>
-            <button @click="$colorMode.preference = newTheme">
-                <LandingDark v-if="colorMode.value === 'dark'" />
-                <LandingLight v-if="colorMode.value === 'light'" />
+    <nav>
+        <div class="container">
+            <NuxtLink to="/">
+                <img :src="`${config.apiUrl}/assets/${icon.id}`" :title="icon.title" />
+                <span>{{ fullname }}</span>
+            </NuxtLink>
+            <button data-collapse-toggle="navbar-default" type="button" @click="showMenu = !showMenu"
+                aria-controls="navbar-default" aria-expanded="false">
+                <span class="sr-only">Open main menu</span>
+                <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                        clip-rule="evenodd" />
+                </svg>
             </button>
-          </ColorScheme>
-          </div>
-        </ul>
-      </div>
-    </div>
-  </nav>
+            <div class="link-wrapper" :class="{ 'hidden': !showMenu }">
+                <ul>
+                    <li v-for="(link, i) in footerLinks" :key="i">
+                        <NuxtLink :to="link.url">{{ link.title }}</NuxtLink>
+                    </li>
+                    <div class="theme">
+                        <ColorScheme>
+                            <button @click="$colorMode.preference = newTheme">
+                                <LandingDark v-if="colorMode.value === 'dark'" />
+                                <LandingLight v-if="colorMode.value === 'light'" />
+                            </button>
+                        </ColorScheme>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </nav>
 </template>
 
 <script setup lang="ts">
 import { PropType } from 'vue';
 
 interface Links {
-  url: string,
-  svg: string,
+    url: string,
+    svg: string,
 }
 
 defineProps({
@@ -48,14 +52,14 @@ const config = useRuntimeConfig()
 const colorMode = useColorMode()
 
 const footerLinks = ref([
-  {
-      url: '/articles',
-      title: 'Articles',
-  },
-  {
-      url: '/projects',
-      title: 'Projects',
-  }
+    {
+        url: '/articles',
+        title: 'Articles',
+    },
+    {
+        url: '/projects',
+        title: 'Projects',
+    }
 ])
 
 const newTheme = computed(() => colorMode.value === 'light' ? 'dark' : 'light')
@@ -66,77 +70,77 @@ const showMenu = ref(false)
 
 <style scoped lang="scss">
 nav {
-  .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0 auto;
-    flex-wrap: wrap;
+    .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 auto;
+        flex-wrap: wrap;
 
-    a {
-      display: flex;
-      align-items: center;
+        a {
+            display: flex;
+            align-items: center;
 
-      img {
-        height: 2.25rem;
-        margin-right: 0.75rem;
-      }
+            img {
+                height: 2.25rem;
+                margin-right: 0.75rem;
+            }
 
-      span {
-        white-space: nowrap;
-        font-size: 1.25rem;
-        line-height: 1.75rem;
-        color: #fff;
-        font-weight: 600;
-      }
-    }
-
-    > button {
-      display: inline-flex;
-      align-items: center;
-      padding: 0.5rem;
-      font-size: 0.875rem;
-      line-height: 1.25rem;
-      border-radius: 0.5rem;
-
-      @apply ring-2 ring-gray-600;
-
-      &:focus {
-        outline: none ;
-      }
-
-      @media (min-width: 768px) {
-        display: none;
-      }
-
-      svg {
-        color: #fff;
-      }
-    }
-
-    .link-wrapper {
-      @apply w-full md:block md:w-auto;
-
-      ul {
-        @apply flex flex-col p-4 mt-4 rounded-lg border border-gray-700 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:flex md:items-center;
-
-        li {
-          @apply mb-1;
-
-          a {
-            @apply block py-2 pr-4 pl-3 text-gray-400 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent;
-          }
+            span {
+                white-space: nowrap;
+                font-size: 1.25rem;
+                line-height: 1.75rem;
+                color: #fff;
+                font-weight: 600;
+            }
         }
-      }
 
-      .theme {
-        @apply text-center md:text-left;
+        >button {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            border-radius: 0.5rem;
 
-        button {
-          @apply py-2 pr-4 pl-3 border border-gray-700 rounded;
+            @apply ring-2 ring-gray-600;
+
+            &:focus {
+                outline: none;
+            }
+
+            @media (min-width: 768px) {
+                display: none;
+            }
+
+            svg {
+                color: #fff;
+            }
         }
-      }
+
+        .link-wrapper {
+            @apply w-full md:block md:w-auto;
+
+            ul {
+                @apply flex flex-col p-4 mt-4 rounded-lg border border-gray-700 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:flex md:items-center;
+
+                li {
+                    @apply mb-1;
+
+                    a {
+                        @apply block py-2 pr-4 pl-3 text-gray-400 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent;
+                    }
+                }
+            }
+
+            .theme {
+                @apply text-center md:text-left;
+
+                button {
+                    @apply py-2 pr-4 pl-3 border border-gray-700 rounded;
+                }
+            }
+        }
     }
-  }
 }
 </style>

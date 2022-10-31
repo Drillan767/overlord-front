@@ -8,11 +8,11 @@
 						<span class="glitch" data-text="ARTICLES">Articles</span>
 					</h2>
 					
-					<NuxtLink to="/articles">
-						<span class="inner">
-							View all articles
-						</span>
-					</NuxtLink>
+					<Button
+                        type="link"
+                        link="/articles"
+                        content="View all articles"
+                    />
 				</div>
 
 				<div class="list" v-for="(article, i) in Articles" :key="i">
@@ -27,14 +27,14 @@
 						<span class="glitch" data-text="PROJECTS">Projects</span>
 					</h2>
 
-					<NuxtLink to="/projects">
-						<span class="inner">
-							View all projects
-						</span>
-					</NuxtLink>
+					<Button
+                        type="link"
+                        link="/projects"
+                        content="View all projects"
+                    />
 				</div>
 				<div class="list" v-for="(project, i) in Project" :key="i">
-					<ItemThumbnail1 item-type="project" :item="project" />
+					<ItemThumbnail item-type="project" :item="project" />
 				</div>
 			</div>
 		</div>
@@ -42,8 +42,8 @@
 </template>
 
 <script setup lang="ts">
-import ItemThumbnail from '../content/ItemThumbnail.vue';
-import ItemThumbnail1 from '../content/ItemThumbnail.vue';
+    import ItemThumbnail from '../content/ItemThumbnail.vue';
+import Button from '../layout/Button.vue';
 
 	const config = useRuntimeConfig()
 
