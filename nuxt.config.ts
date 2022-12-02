@@ -6,17 +6,23 @@ export default defineNuxtConfig({
     modules: [
         'nuxt-graphql-client',
         '@nuxtjs/tailwindcss',
-        '@nuxtjs/color-mode',
     ],
 
-    colorMode: {
-        preference: 'system',
-        fallback: 'dark',
-        hid: 'color-mode',
-        globalName: 'color-mode-script',
-        componentName: 'ColorScheme',
-        classSuffix: '',
-        storageKey: 'ovrld-color-mode',
+    app: {
+        head: {
+            titleTemplate: '%s | Joseph Levarato',
+
+            viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
+            charset: 'utf-8',
+            meta: [
+                { name: 'msapplication-Tilecolor', content: '#312b5e' },
+                { name: 'theme-color', content: '#312b5e' },
+            ],
+
+            link: [
+                { rel: 'icon', type: 'image/svg+xml', href: 'icons/logo.svg' }
+            ],
+        }
     },
 
     tailwindcss: {
@@ -26,9 +32,11 @@ export default defineNuxtConfig({
 
     css: ["@/assets/styles/main.scss"],
 
-    publicRuntimeConfig: {
-        apiUrl: process.env.API_URL || 'localhost:8055',
-        url: process.env.URL || 'localhost:3000',
-        version: pkg.version
+    runtimeConfig: {
+        public: {
+            apiUrl: process.env.API_URL || 'localhost:8055',
+            url: process.env.URL || 'localhost:3000',
+            version: pkg.version
+        }
     }
 })

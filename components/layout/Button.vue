@@ -47,7 +47,7 @@ button, a {
     text-transform: uppercase;
     font-weight: normal;
     letter-spacing: 1.8px;
-    padding: 20px 35px;
+    padding: 20px 30px;
     transition: all 0.25s ease;
     outline: none;
 

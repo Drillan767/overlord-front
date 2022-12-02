@@ -12,12 +12,10 @@
           </li>
         </ul>
         <div class="theme">
-          <ColorScheme>
-            <button @click="$colorMode.preference = newTheme">
-              <LandingDark v-if="colorMode.value === 'dark'" />
-              <LandingLight v-if="colorMode.value === 'light'" />
+            <button @click="toggleTheme">
+                <LandingDark v-if="color === 'dark'" />
+                <LandingLight v-if="color === 'light'" />
             </button>
-          </ColorScheme>
         </div>
       </div>
     </div>
@@ -46,7 +44,7 @@ import { PropType } from 'vue';
 const date = new Date;
 const year = ref(date.getFullYear())
 const config = useRuntimeConfig()
-const colorMode = useColorMode()
+const color = useTheme()
 
 interface Links {
   url: string,
@@ -56,7 +54,10 @@ interface Links {
 defineProps({
   links: Array as PropType<Array<Links>>,
   fullname: String,
-  icon: Object,
+  icon: {
+    type: Object,
+    required: true,
+  },
 })
 
 const footerLinks = ref([
@@ -70,7 +71,7 @@ const footerLinks = ref([
   }
 ])
 
-const newTheme = computed(() => colorMode.value === 'light' ? 'dark' : 'light')
+const toggleTheme = () => color.value = color.value === 'dark' ? 'light' : 'dark'
 
 </script>
 

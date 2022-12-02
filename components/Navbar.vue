@@ -21,12 +21,10 @@
                         <NuxtLink :to="link.url">{{ link.title }}</NuxtLink>
                     </li>
                     <div class="theme">
-                        <ColorScheme>
-                            <button @click="$colorMode.preference = newTheme">
-                                <LandingDark v-if="colorMode.value === 'dark'" />
-                                <LandingLight v-if="colorMode.value === 'light'" />
-                            </button>
-                        </ColorScheme>
+                        <button @click="toggleTheme">
+                            <LandingDark v-if="color === 'dark'" />
+                            <LandingLight v-if="color === 'light'" />
+                        </button>
                     </div>
                 </ul>
             </div>
@@ -45,11 +43,14 @@ interface Links {
 defineProps({
     links: Array as PropType<Array<Links>>,
     fullname: String,
-    icon: Object,
+    icon: {
+        type: Object,
+        required: true,
+    },
 })
 
 const config = useRuntimeConfig()
-const colorMode = useColorMode()
+const color = useTheme()
 
 const footerLinks = ref([
     {
@@ -62,7 +63,7 @@ const footerLinks = ref([
     }
 ])
 
-const newTheme = computed(() => colorMode.value === 'light' ? 'dark' : 'light')
+const toggleTheme = () => color.value = color.value === 'dark' ? 'light' : 'dark'
 
 const showMenu = ref(false)
 
