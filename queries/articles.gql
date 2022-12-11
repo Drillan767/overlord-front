@@ -8,6 +8,7 @@ query Articles ($filter: Articles_filter, $limit: Int = -1) {
 		tags {
 			Tag_id {
 				title
+                description
 			}
 		}
 		illustration {

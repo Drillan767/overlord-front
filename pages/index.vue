@@ -1,42 +1,39 @@
 <template>
     <div id="index">
+
         <Head>
             <Title>Landing</Title>
         </Head>
-        
-        <Navbar
-            :icon="Homepage.icon"
-            :fullname="Homepage.fullname"
-        />
 
-        <LandingViewport
-            :full_name="Homepage.fullname"
-            :baseline="Homepage.baseline"
-        />
+        <Navbar :icon="homepage.icon" :fullname="homepage.fullname" />
 
-        <LandingAbout
-            :description="Homepage.description"
-            :user="Homepage.user"
-        />
+        <LandingViewport :full_name="homepage.fullname" :baseline="homepage.baseline" />
+
+        <LandingAbout :description="homepage.description" :user="homepage.user" />
 
         <LandingFeatured />
 
         <LandingContactForm />
 
-        <Footer
-            :links="Homepage.links"
-            :icon="Homepage.icon"
-            :fullname="Homepage.fullname"
-        />
+        <Footer :links="homepage.links" :icon="homepage.icon" :fullname="homepage.fullname" />
 
-  </div>
+    </div>
 </template>
 
 <script setup lang="ts">
-const { data } = await useAsyncGql('Homepage')
-const { Homepage } = data.value;
+import type { Homepage } from '~~/components/types';
+import homepageGql from '../queries/homepage.gql'
+
+type HomepageData = {
+    Homepage: Homepage
+}
+
+const { data: homepageResponse } = await useAsyncQuery<HomepageData>(homepageGql)
+const homepage = homepageResponse.value
+    ? homepageResponse.value.Homepage
+    : {} as Homepage
 
 definePageMeta({
-  layout: "default",
+    layout: "default",
 });
 </script>

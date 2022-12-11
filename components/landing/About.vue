@@ -7,20 +7,27 @@
                 </div>
             </div>
             <div class="text-xl prose w-full md:w-1/2" v-html="description" />
-      </div>
+        </div>
     </section>
 </template>
 
 <script setup lang="ts">
+import { PropType } from 'vue';
 
-const props = defineProps({
-  description: String,
-  user: Object,
+defineProps({
+    description: String,
+    user: {
+        type: Object as PropType<{id: string, title: string}>,
+        required: true,
+    },
 })
 
 const config = useRuntimeConfig()
 
-const randInt = (min, max) => Math.floor(Math.random() * ((max + 1) - min)) + 1
+const randInt = (min: number, max: number) => {
+    const random = Math.random() * ((max + 1) - min)
+    return Math.floor(random) + 1
+}
 
 const updatePositions = () => {
     const words = document.querySelectorAll<HTMLElement>('.words p')
@@ -51,14 +58,13 @@ onMounted(() => {
     padding: var(--landing-padding);
 
     .content {
-        @media (min-width: 768px) { 
+        @media (min-width: 768px) {
             display: flex;
-         }
+        }
 
         .prose {
             color: var(--font-color);
         }
     }
 }
-
 </style>

@@ -20,19 +20,22 @@ let i = 0
 
 const props = defineProps({
     full_name: String,
-    baseline: String,
+    baseline: {
+        type: String,
+        required: true,
+    },
 })
 
 onMounted(() => {
     setTimeout(() => {
-        document.querySelector('.input-cursor').classList.add('typing')
+        document.querySelector('.input-cursor')?.classList.add('typing')
         typeLetters()
 
     }, 2000)
 })
 
 const scrollNext = () => {
-    document.getElementById('about').scrollIntoView({ behavior: 'smooth' })
+    document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })
 }
 
 const typeLetters = () => {
@@ -41,8 +44,8 @@ const typeLetters = () => {
         i++
         setTimeout(typeLetters, 150)
     } else {
-        document.querySelector('.input-cursor').classList.remove('typing')
-        document.querySelector('.typed-text').classList.add('underline', 'cursor-pointer')
+        document.querySelector('.input-cursor')?.classList.remove('typing')
+        document.querySelector('.typed-text')?.classList.add('underline', 'cursor-pointer')
 
     }
 }

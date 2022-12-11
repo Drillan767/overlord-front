@@ -1,9 +1,0 @@
-query Articles_Tag {
-	Articles_Tag {
-		Tag_id {
-			title
-			description
-		}
-	}
-}
-
