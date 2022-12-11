@@ -48,11 +48,9 @@
 
             </aside>
             <div>
-                <Navbar :icon="homepage.icon" :fullname="homepage.fullname" />
-
                 <article>
-                <div v-html="article.body" class="prose lg:prose-xl" />
-            </article>
+                    <div v-html="article.body" class="prose lg:prose-xl" />
+                </article>
             </div>
         </main>
     </div>

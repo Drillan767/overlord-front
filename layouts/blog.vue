@@ -1,4 +1,5 @@
 <template>
+    <Navbar :links="homepage.links" :icon="homepage.icon" :fullname="homepage.fullname" />
     <div id="blog">
         <div class="content">
             <slot />

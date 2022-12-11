@@ -1,19 +1,20 @@
 <template>
-    <div id="articles">
+    <div id="articles" class="slide-in">
 
         <Head>
             <Title>Articles</Title>
         </Head>
 
-        <h1 class="glitch" data-text="ARTICLES">
-            ARTICLES
-        </h1>
+        <div class="content">
+            <h1 class="glitch" data-text="ARTICLES">
+                ARTICLES
+            </h1>
 
-        <div class="tags">
-            <div class="list">
-                <div v-for="(tag, i) in uniqueTags" :key="i" class="tag"
-                    :class="{ 'current': tag.title === activeTag }">
-                    <span @click="handleFilter(tag.title)" class="cursor-pointer">
+            <div class="tags">
+                <div class="list">
+                    <div v-for="(tag, i) in uniqueTags" :key="i" class="tag"
+                        :class="{ 'current': tag.title === activeTag }">
+                        <!-- <span @click="handleFilter(tag.title)" class="cursor-pointer">
                         {{ tag.title }}
                     </span>
                     <span @click="handleFilter('')" class="cursor-pointer" v-if="tag.title === activeTag">
@@ -21,20 +22,24 @@
                             stroke="currentColor" class="w-4 h-4 ml-2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                         </svg>
-                    </span>
+                    </span> -->
+                        <span>{{ tag.title }}</span> <span>/</span>
+                    </div>
                 </div>
+
+                <p v-if="tagDescription.length" class="text-white italic">
+                    {{ tagDescription }}
+                </p>
             </div>
 
-            <p v-if="tagDescription.length" class="text-white italic">
-                {{ tagDescription }}
-            </p>
+            <div class="articleList">
+                <article v-for="article in filteredArticles" :key="article.id">
+                    <ItemThumbnail :item-type="'article'" :item="article" />
+                </article>
+            </div>
         </div>
 
-        <div class="articleList">
-            <article v-for="article in filteredArticles" :key="article.id">
-                <ItemThumbnail :item-type="'article'" :item="article" />
-            </article>
-        </div>
+
     </div>
 </template>
 
@@ -96,10 +101,15 @@ const filteredArticles = computed(() => {
 
 <style scoped lang="scss">
 #articles {
-    padding: var(--landing-padding);
+    padding: 6rem var(--landing-padding);
 
     h1 {
         color: var(--title-color)
+    }
+
+    .content {
+        max-width: 1200px;
+        margin: auto;
     }
 
     .tags {
@@ -109,22 +119,22 @@ const filteredArticles = computed(() => {
         .list {
             @apply flex justify-center gap-x-5;
 
-            .tag {
-                border: solid 1px #fff;
-                display: flex;
-                padding: 4px;
-                line-height: 1;
-                align-items: center;
+            // .tag {
+            //     border: solid 1px #fff;
+            //     display: flex;
+            //     padding: 4px;
+            //     line-height: 1;
+            //     align-items: center;
 
-                &:not(.current) {
-                    color: #fff;
-                }
+            //     &:not(.current) {
+            //         color: #fff;
+            //     }
 
-                &.current {
-                    background-color: #fff;
-                    color: #000;
-                }
-            }
+            //     &.current {
+            //         background-color: #fff;
+            //         color: #000;
+            //     }
+            // }
         }
     }
 

@@ -17,7 +17,7 @@ import { PropType } from 'vue';
 defineProps({
     description: String,
     user: {
-        type: Object as PropType<{id: string, title: string}>,
+        type: Object as PropType<{ id: string, title: string }>,
         required: true,
     },
 })
@@ -58,6 +58,7 @@ onMounted(() => {
     padding: var(--landing-padding);
 
     .content {
+
         @media (min-width: 768px) {
             display: flex;
         }
