@@ -13,7 +13,7 @@ onMounted(() => {
 })
 
 const revealItems = () => {
-    const ie = new IntersectionObserver((entries, observer) => {
+    const ie = new IntersectionObserver((entries) => {
         const navbar = document.querySelector('nav')
         if (navbar) {
             entries.forEach((e) => {

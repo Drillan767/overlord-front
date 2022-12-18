@@ -39,14 +39,18 @@
     --bg-footer: var(--bg-light);
     --font-color: var(--font-dark);
     --title-color: var(--title-dark);
-    --bg-color: var(--bg-color);
+    --bg-color: var(--bg-light);
     --bg-color-alt: var(--bg-light-alt);
     --bg-cursor: var(--cursor-light);
 }
 
+body.dark, body.light {
+    background-color: var(--bg-color);
+}
+
 @font-face {
     font-family: 'Space Grotesk';
-    src: url('/fonts/SpaceGrotesk-Regular.ttf');
+    src: url('/fonts/SpaceGrotesk-Light.ttf');
 }
 
 @font-face {

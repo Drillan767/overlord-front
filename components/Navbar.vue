@@ -18,7 +18,7 @@
             <div class="link-wrapper" :class="{ 'hidden': !showMenu }">
                 <ul>
                     <li v-for="(link, i) in footerLinks" :key="i">
-                        <NuxtLink :to="link.url">{{ link.title }}</NuxtLink>
+                        <NuxtLink :to="link.url" :class="{'current': isCurrentRoute(link.item)}">{{ link.title}}</NuxtLink>
                     </li>
                     <div class="theme">
                         <button @click="toggleTheme">
@@ -34,6 +34,7 @@
 
 <script setup lang="ts">
 import { PropType } from 'vue';
+import { useRoute } from 'vue-router';
 
 interface Links {
     url: string,
@@ -51,21 +52,34 @@ defineProps({
 
 const config = useRuntimeConfig()
 const color = useTheme()
+const route = useRoute()
+const toggleTheme = () => color.value = color.value === 'dark' ? 'light' : 'dark'
+const showMenu = ref(false)
 
 const footerLinks = ref([
     {
         url: '/articles',
         title: 'Articles',
+        item: 'article',
     },
     {
         url: '/projects',
         title: 'Projects',
+        item: 'project',
     }
 ])
 
-const toggleTheme = () => color.value = color.value === 'dark' ? 'light' : 'dark'
+const isCurrentRoute = (link: string) => {
+    if (route.name) {
+        return route.name.toString().includes(link)
+    }
 
-const showMenu = ref(false)
+    return false
+}
+
+const currentRoute = computed(() => {
+    return route.name
+})
 
 </script>
 
@@ -77,6 +91,12 @@ nav {
         align-items: center;
         margin: 0 auto;
         flex-wrap: wrap;
+
+        > .link-wrapper a {
+            &.current, &.router-link-exact-activeest {
+                color: var(--purple);
+            }
+        }
 
         a {
             display: flex;

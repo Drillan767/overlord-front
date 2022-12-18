@@ -1,10 +1,21 @@
 export const getScrollPercent = () => {
-    const h = document.documentElement
-    const b = document.body
-    const st = 'scrollTop'
-    const sh = 'scrollHeight'
+    const prose = document.querySelector<HTMLDivElement>('.prose')
 
-    return (h[st] || b[st]) / ((h[sh] || b[sh]) - h.clientHeight) * 100
+    if (prose) {
+        const proseTop = prose.offsetTop
+        const proseBottom = proseTop + prose.offsetHeight
+        const browserBottom = window.scrollY + window.innerHeight
+
+        if (browserBottom < proseTop) {
+            return 0
+        } else if (browserBottom > proseTop && browserBottom < proseBottom) {
+            return (browserBottom / proseBottom) * 100
+        } else {
+            return 100
+        }
+    } else {
+        return 0
+    }
 }
 
 export const bodyHeaders = () => {
@@ -20,7 +31,7 @@ export const bodyHeaders = () => {
 export const scrollSpy = (headers: NodeListOf<Element>) => {
     let scrollTop = window.scrollY;
 
-    document.querySelectorAll(`.toc li`).forEach((li) => li.classList.remove('active'))
+    document.querySelectorAll('.toc li').forEach((li) => li.classList.remove('active'))
 
     for (let i = headers.length - 1; i >= 0; i--) {
         const currentH = headers[i]
@@ -31,4 +42,8 @@ export const scrollSpy = (headers: NodeListOf<Element>) => {
             break;
         }
     }
+}
+
+export const toBionicReading = (text: string) => {
+    
 }

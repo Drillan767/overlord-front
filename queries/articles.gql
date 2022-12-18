@@ -2,13 +2,13 @@ query Articles ($filter: Articles_filter, $limit: Int = -1) {
 	Articles(filter: $filter, limit: $limit) {
 		id
 		title
+        description
 		slug
 		date_created,
 		date_updated,
 		tags {
 			Tag_id {
 				title
-                description
 			}
 		}
 		illustration {

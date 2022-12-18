@@ -26,10 +26,6 @@
                         <span>{{ tag.title }}</span> <span>/</span>
                     </div>
                 </div>
-
-                <p v-if="tagDescription.length" class="text-white italic">
-                    {{ tagDescription }}
-                </p>
             </div>
 
             <div class="articleList">
@@ -69,7 +65,6 @@ const uniqueTags = computed<Tag[]>(() => {
             if (!allTags.some((t) => t.title === tag.Tag_id.title)) {
                 allTags.push({
                     title: tag.Tag_id.title,
-                    description: tag.Tag_id.description
                 })
             }
         })
@@ -78,18 +73,6 @@ const uniqueTags = computed<Tag[]>(() => {
 })
 
 const handleFilter = (filter: string) => activeTag.value = filter
-
-const tagDescription = computed(() => {
-    let description = '';
-    if (activeTag.value) {
-        const matchingTag = uniqueTags.value.find((t) => t.title === activeTag.value)
-        if (matchingTag) {
-            description = matchingTag.description
-        }
-    }
-
-    return description
-})
 
 const filteredArticles = computed(() => {
     return activeTag.value !== ''

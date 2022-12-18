@@ -20,15 +20,12 @@ type HomepageData = {
     Homepage: Homepage
 }
 
-const homepageState = useHomepage()
-
 const homepage = ref({} as Homepage)
 
 await useAsyncQuery<HomepageData>(homepageGql)
     .then(({ data }) => {
         if (data.value) {
             homepage.value = data.value.Homepage
-            homepageState.value = homepage.value
         }
     })
 

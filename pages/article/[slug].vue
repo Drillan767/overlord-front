@@ -15,43 +15,48 @@
         </Head>
 
         <main>
-            <aside>
+            <header>
                 <div class="glitch-thumb">
                     <div class="glitch-img" v-for="i in 5" :key="i"
                         :style="`background-image: url('${getIllustration()}')`" />
                 </div>
 
-                <div class="content">
-                    <div class="toc" v-html="article.toc" />
+                <h1>{{ article.title }}</h1>
 
-                    <div class="progress"></div>
-
-                    <div class="tags">
-                        <h2>Tags :</h2>
-
-                        <p>
-                            Tag 1, tag 2, tag 3
-                        </p>
-                    </div>
-
-                    <div class="progress">
-                        <div class="global">
-                            {{ displayPercentage }}
-                        </div>
-                        <span class="bar">
-                            {{ progressBar }}
+                <div class="meta">
+                    <p class="date">
+                        <DateSVG />
+                        <span>
+                            Last commit — 
+                            <span>10/10/2022</span>
                         </span>
-                    </div>
+                       
+                    </p>
+                    <p class="read_time">
+                        <TimeSVG />
+                        <span>
+                            6mn read
+                        </span>
+                    </p>
+                    <p class="tags">
+                        <TagSVG />
+                        <span>{{ tagList }}</span>
+                    </p>
 
-                    <h1>{{ article.title }}</h1>
                 </div>
-
-            </aside>
-            <div>
-                <article>
-                    <div v-html="article.body" class="prose lg:prose-xl" />
-                </article>
+            </header>
+            <div class="progress">
+                <span class="global">
+                    {{ displayPercentage }}
+                </span>
+                <span class="bar">
+                    {{ progressBar }}
+                </span>
             </div>
+
+            <article>
+                <div v-html="article.body" class="prose lg:prose-xl" />
+            </article>
         </main>
     </div>
 </template>
@@ -59,9 +64,13 @@
 <script setup lang="ts">
 import hljs from 'highlight.js'
 import 'highlight.js/styles/tokyo-night-dark.css'
+import type { Tag } from '~~/components/types';
 import { Article, ArticlesReceived } from '~~/components/types';
 import { scrollSpy } from '~~/utils/blog';
 import articleQuery from '../../queries/article.gql'
+import TagSVG from '~~/components/svg/Tag.vue'
+import TimeSVG from '~~/components/svg/Time.vue'
+import DateSVG from '~~/components/svg/Date.vue'
 
 definePageMeta({
     layout: "blog",
@@ -69,13 +78,13 @@ definePageMeta({
 
 const route = useRoute()
 const config = useRuntimeConfig()
-const homepage = useHomepage()
 
 const article = ref({} as Article)
-const barWidth = ref()
+const barWidth = ref(0)
 const readPercentage = ref()
+const tagList = ref('')
 
-console.log(homepage.value)
+const displayTags = (tags: {Tag_id: Tag}[]) => tagList.value = tags.map((t) => t.Tag_id.title).join(' • ')
 
 await useAsyncQuery<ArticlesReceived>(articleQuery, {
     search: route.params.slug.toString()
@@ -83,6 +92,7 @@ await useAsyncQuery<ArticlesReceived>(articleQuery, {
     .then(({ data }) => {
         if (data.value && data.value.Articles.length) {
             article.value = data.value.Articles[0]
+            displayTags(article.value.tags)
         } else {
             throw createError({
                 statusCode: 404,
@@ -94,7 +104,7 @@ await useAsyncQuery<ArticlesReceived>(articleQuery, {
 const displayPercentage = computed(() => {
     let result = 'Progress: ['
 
-    if (readPercentage.value) {
+    if (readPercentage.value && readPercentage.value >= 0) {
         let spaces = 3 - readPercentage.value.toString().length
         result += ' '.repeat(spaces)
         result += readPercentage.value
@@ -116,36 +126,37 @@ const progressBar = computed(() => {
     let response = '['
 
     for (let i = 0; i <= total; i++) {
-        if (i <= progress) {
-            response += '#'
-        }
-        else {
-            response += '.'
-        }
-
+        response += i <= progress ? '#' : '.'
     }
 
     return response + ']'
 })
 
-
 const getIllustration = (width = 1200, height = 627) => {
     return `${config.apiUrl}/assets/${article.value.illustration.id}?width=${width}&height=${height}&fit=cover`
 }
 
-onMounted(() => {
 
+
+onMounted(() => {
     setTimeout(() => {
         document.querySelectorAll<HTMLElement>('.prose pre')
             .forEach((block) => hljs.highlightBlock(block))
     }, 1000)
 
-    barWidth.value = document.querySelector<HTMLElement>('.progress .bar')?.clientWidth
+    const bar = document.querySelector<HTMLElement>('.progress .bar')
+
+    if (bar) {
+        barWidth.value = bar.clientWidth
+    }
+
     const headers = document.querySelectorAll(bodyHeaders())
 
     document.addEventListener('scroll', () => {
         readPercentage.value = Math.floor(getScrollPercent())
         scrollSpy(headers)
+
+        //TODO: display the toc on the side
     })
 })
 
@@ -154,16 +165,15 @@ onMounted(() => {
 <style lang="scss">
 main {
     position: relative;
-    margin: 0 auto;
-    display: flex;
-    gap: 20px;
 
-    aside {
-        position: sticky;
-        top: 0;
-        z-index: 0;
-        width: 40%;
-        max-height: 100vh;
+    svg {
+        display: inline;
+        margin-right: 5px;
+    }
+
+    header {
+        height: 80vh;
+        position: relative;
 
         &::before {
             content: "";
@@ -175,8 +185,8 @@ main {
 
         .glitch-thumb {
             position: absolute;
-            z-index: -1;
             inset: 0;
+            overflow: hidden;
 
             .glitch-img {
                 height: auto;
@@ -210,6 +220,47 @@ main {
                 &:nth-child(n+2) {
                     opacity: 0;
                 }
+            }
+        }
+
+        h1,
+        .meta {
+            position: absolute;
+            width: 50%;
+            left: 0;
+            right: 0;
+            margin: auto;
+            z-index: 1;
+            color: var(--title-color);
+        }
+
+        h1 {
+            line-height: 1;
+            text-align: center;
+            bottom: 65px;
+        }
+
+        .meta {
+            bottom: 5px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 0px 0px;
+            grid-template-areas:
+                "date date"
+                "read-time tags";
+
+            .date {
+                grid-area: date;
+            }
+
+            .tags {
+                text-align: right;
+                grid-area: tags;
+            }
+
+            .read-time {
+                grid-area: read-time;
             }
         }
 
@@ -276,23 +327,6 @@ main {
             height: 100%;
             padding: 30px;
 
-            .progress {
-                font-family: 'Jetbrains Mono', monospace;
-                display: flex;
-                gap: 10px;
-
-                .global {
-                    background-color: green;
-                    flex: 0 0 auto;
-                }
-
-                .bar {
-                    color: #fff;
-                    flex: 1;
-                    display: inline-block;
-                }
-            }
-
             h1 {
                 color: var(--title-color);
                 line-height: 1;
@@ -300,10 +334,35 @@ main {
         }
     }
 
+    .progress {
+        background-color: var(--bg-color);
+        position: sticky;
+        top: 0;
+        padding: 10px 0;
+        margin: 0 10px;
+        font-family: 'Jetbrains Mono', monospace;
+        display: flex;
+        gap: 10px;
+
+        .global {
+            background-color: green;
+            flex: 0 0 auto;
+        }
+
+        .bar {
+            color: var(--font-color);
+            flex: 1;
+            display: inline-block;
+        }
+    }
+
     article {
+        margin-top: 30px;
         overflow-y: hidden;
 
         .prose {
+            margin: auto;
+
             p {
                 color: var(--font-color);
             }

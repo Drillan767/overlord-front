@@ -47,7 +47,6 @@ export type Illustration = {
 
 export type Tag = {
     title: string,
-    description: string,
 }
 
 export type ArticlesReceived = {
