@@ -93,7 +93,7 @@ nav {
         flex-wrap: wrap;
 
         > .link-wrapper a {
-            &.current, &.router-link-exact-activeest {
+            &.current, &.router-link-exact-active {
                 color: var(--purple);
             }
         }

@@ -20,6 +20,7 @@ export type Article = {
     title: string,
     date_created: string,
     date_updated: string,
+    description: string,
     body: string,
     toc: string,
     id: string,
@@ -37,7 +38,9 @@ export type Project = {
     id: string,
     slug: string,
     illustration: Illustration
-    tags: Tag[]
+    tags: {
+        Tag_id: Tag
+    }[]
 }
 
 export type Illustration = {
@@ -57,6 +60,7 @@ export type ProjectsReceived = {
     Project: Project[]
 }
 
-export type TagsReceived = {
-    Articles_Tags: Tag[]
+export type TagFilter = {
+    title: string,
+    nbArticles: number,
 }

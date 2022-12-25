@@ -1,40 +1,36 @@
 <template>
-  <footer>
-    <div class="first-row">
-      <a href="https://flowbite.com/">
-        <img :src="`${config.apiUrl}/assets/${icon.id}`" :alt="icon.title" />
-        <span>{{ fullname }}</span>
-      </a>
-      <div class="links">
-        <ul>
-          <li v-for="(link, i) in footerLinks" :key="i">
-            <NuxtLink :to="link.url">{{ link.title }}</NuxtLink>
-          </li>
-        </ul>
-        <div class="theme">
-            <button @click="toggleTheme">
-                <LandingDark v-if="color === 'dark'" />
-                <LandingLight v-if="color === 'light'" />
-            </button>
+    <footer>
+        <div class="first-row">
+            <a href="https://flowbite.com/">
+                <img :src="`${config.apiUrl}/assets/${icon.id}`" :alt="icon.title" />
+                <span>{{ fullname }}</span>
+            </a>
+            <div class="links">
+                <ul>
+                    <li v-for="(link, i) in footerLinks" :key="i">
+                        <NuxtLink :to="link.url" :class="{ 'current': isCurrentRoute(link.item) }">
+                            {{ link.title }}
+                        </NuxtLink>
+                    </li>
+                </ul>
+                <div class="theme">
+                    <button @click="toggleTheme">
+                        <LandingDark v-if="color === 'dark'" />
+                        <LandingLight v-if="color === 'light'" />
+                    </button>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <hr />
-    <div class="second-row">
-      <span>
-        © {{ year }} <NuxtLink href="/">{{ fullname }}</NuxtLink>. All Rights Reserved.
-      </span>
-      <div class="socials">
-        <a
-          v-for="(link, i) in links"
-          :href="link.url"
-          :key="i"
-          v-html="link.svg"
-          target="_blank"
-        />
-      </div>
-    </div>
-  </footer>
+        <hr />
+        <div class="second-row">
+            <span>
+                © {{ year }} <NuxtLink href="/">{{ fullname }}</NuxtLink>. All Rights Reserved.
+            </span>
+            <div class="socials">
+                <a v-for="(link, i) in links" :href="link.url" :key="i" v-html="link.svg" target="_blank" />
+            </div>
+        </div>
+    </footer>
 
 </template>
 
@@ -45,31 +41,42 @@ const date = new Date;
 const year = ref(date.getFullYear())
 const config = useRuntimeConfig()
 const color = useTheme()
+const route = useRoute()
 
 interface Links {
-  url: string,
-  svg: string,
+    url: string,
+    svg: string,
 }
 
 defineProps({
-  links: Array as PropType<Array<Links>>,
-  fullname: String,
-  icon: {
-    type: Object,
-    required: true,
-  },
+    links: Array as PropType<Array<Links>>,
+    fullname: String,
+    icon: {
+        type: Object,
+        required: true,
+    },
 })
 
 const footerLinks = ref([
-  {
-    url: '/articles',
-    title: 'Articles',
-  },
-  {
-    url: '/projects',
-    title: 'Projects',
-  }
+    {
+        url: '/articles',
+        title: 'Articles',
+        item: 'article',
+    },
+    {
+        url: '/projects',
+        title: 'Projects',
+        item: 'project',
+    }
 ])
+
+const isCurrentRoute = (link: string) => {
+    if (route.name) {
+        return route.name.toString().includes(link)
+    }
+
+    return false
+}
 
 const toggleTheme = () => color.value = color.value === 'dark' ? 'light' : 'dark'
 
@@ -77,72 +84,77 @@ const toggleTheme = () => color.value = color.value === 'dark' ? 'light' : 'dark
 
 <style scoped lang="scss">
 footer {
-  background-color: var(--bg-footer);
-  @apply p-4 sm:p-6;
+    background-color: var(--bg-footer);
+    @apply p-4 sm:p-6;
 
-  .first-row {
-    @apply md:flex md:justify-between;
+    .first-row {
+        @apply md:flex md:justify-between;
 
-    a {
-      @apply flex items-center mb-6 md:mb-0;
+        a {
+            @apply flex items-center mb-6 md:mb-0;
 
-      img {
-        @apply mr-3 h-8;
-      }
+            img {
+                @apply mr-3 h-8;
+            }
 
-      span {
-        color: var(--title-color);
-        @apply self-center text-2xl font-semibold whitespace-nowrap;
-      }
-    }
-
-    .links {
-      @apply flex justify-between sm:justify-start;
-
-
-      ul {
-        @apply flex flex-wrap items-center mb-6 text-sm text-gray-500 sm:mb-0;
-
-        li a {
-          color: var(--font-color);
-          @apply mr-4 md:mr-6;
+            span {
+                color: var(--title-color);
+                @apply self-center text-2xl font-semibold whitespace-nowrap;
+            }
         }
-      }
 
-      .theme {
-        @apply flex items-center;
+        .links {
+            @apply flex justify-between sm:justify-start;
 
-        button {
-          color: var(--font-color);
-          @apply py-2 pr-4 pl-3 border border-gray-700 rounded;
+            ul {
+                @apply flex flex-wrap items-center mb-6 text-sm text-gray-500 sm:mb-0;
+
+                li a {
+                    @apply mr-4 md:mr-6;
+
+                    &:not(.current), &:not(.router-link-exact-active) {
+                        color: var(--font-color);
+                    }
+                    &.current, &.router-link-exact-active {
+                        color: var(--purple);
+                    }
+                }
+            }
+
+            .theme {
+                @apply flex items-center;
+
+                button {
+                    color: var(--font-color);
+                    @apply py-2 pr-4 pl-3 border border-gray-700 rounded;
+                }
+            }
         }
-      }
-    }
-  }
-
-  hr {
-    @apply my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8;
-  }
-
-  .second-row {
-    @apply sm:flex sm:items-center sm:justify-between;
-
-    span {
-      color: var(--font-color);
-      @apply text-sm sm:text-center;
     }
 
-    .socials {
-      @apply flex mt-4 space-x-6 sm:justify-center sm:mt-0;
+    hr {
+        @apply my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8;
+    }
 
-      a {
-        color: var(--font-color);
+    .second-row {
+        @apply sm:flex sm:items-center sm:justify-between;
 
-        svg {
-          @apply w-5 h-5;
+        span {
+            color: var(--font-color);
+            @apply text-sm sm:text-center;
         }
-      }
+
+        .socials {
+            @apply flex mt-4 space-x-6 sm:justify-center sm:mt-0;
+
+            a {
+                color: var(--font-color);
+
+                svg {
+                    @apply w-5 h-5;
+                }
+            }
+        }
     }
-  }
 }
 </style>

@@ -6,6 +6,8 @@ query Article ($search: String!) {
 		title
 		slug
 		description
+        date_created
+        date_updated
 		toc
 		body
 		tags {

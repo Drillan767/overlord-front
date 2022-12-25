@@ -2,7 +2,7 @@ article.content-item {
     position: relative;
 
     @media (min-width: 768px) {
-        width: 300px;
+        width: 350px;
     }
 
     @media (max-width: 1200px) {
@@ -59,7 +59,7 @@ article.content-item {
         margin: 0 auto;
 
         @media (min-width: 768px) {
-            width: 300px;
+            width: 350px;
         }
     
         .glitch-img {
@@ -83,7 +83,7 @@ article.content-item {
                 opacity: 0;
             }
         }
-    }  
+    }
 
     .details {
         padding: 0.5rem 0 0 0.25rem;

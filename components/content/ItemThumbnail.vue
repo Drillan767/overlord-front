@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Article, Project } from '../types'
+import type { Article, Project } from '~~/types'
 
 type propsType = {
     itemType: string,

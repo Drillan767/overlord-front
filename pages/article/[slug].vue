@@ -27,15 +27,14 @@
                     <p class="date">
                         <DateSVG />
                         <span>
-                            Last commit — 
-                            <span>10/10/2022</span>
+                            Last commit — {{ lastCommit }}
                         </span>
                        
                     </p>
                     <p class="read_time">
                         <TimeSVG />
                         <span>
-                            6mn read
+                            {{ minuteRead }}mn read
                         </span>
                     </p>
                     <p class="tags">
@@ -55,7 +54,7 @@
             </div>
 
             <article>
-                <div v-html="article.body" class="prose lg:prose-xl" />
+                <div v-html="articleBody" class="prose lg:prose-xl" />
             </article>
         </main>
     </div>
@@ -64,9 +63,8 @@
 <script setup lang="ts">
 import hljs from 'highlight.js'
 import 'highlight.js/styles/tokyo-night-dark.css'
-import type { Tag } from '~~/components/types';
-import { Article, ArticlesReceived } from '~~/components/types';
-import { scrollSpy } from '~~/utils/blog';
+import { Article, ArticlesReceived } from '~~/types';
+import { getReadingTime, scrollSpy } from '~~/utils/blog';
 import articleQuery from '../../queries/article.gql'
 import TagSVG from '~~/components/svg/Tag.vue'
 import TimeSVG from '~~/components/svg/Time.vue'
@@ -81,10 +79,11 @@ const config = useRuntimeConfig()
 
 const article = ref({} as Article)
 const barWidth = ref(0)
-const readPercentage = ref()
+const readPercentage = ref(0)
+const lastCommit = ref('')
+const minuteRead = ref(0)
 const tagList = ref('')
-
-const displayTags = (tags: {Tag_id: Tag}[]) => tagList.value = tags.map((t) => t.Tag_id.title).join(' • ')
+const brEnabled = ref(false)
 
 await useAsyncQuery<ArticlesReceived>(articleQuery, {
     search: route.params.slug.toString()
@@ -92,7 +91,10 @@ await useAsyncQuery<ArticlesReceived>(articleQuery, {
     .then(({ data }) => {
         if (data.value && data.value.Articles.length) {
             article.value = data.value.Articles[0]
-            displayTags(article.value.tags)
+            tagList.value = article.value.tags.map((t) => t.Tag_id.title).join(' • ')
+            const field = article.value.date_updated ?? article.value.date_created
+            lastCommit.value = new Intl.DateTimeFormat('fr-FR').format(new Date(field))
+            minuteRead.value = getReadingTime(article.value.body)
         } else {
             throw createError({
                 statusCode: 404,
@@ -132,11 +134,15 @@ const progressBar = computed(() => {
     return response + ']'
 })
 
+const articleBody = computed(() => {
+    return brEnabled
+        ? article.value.body
+        : toBionicReading(article.value.body)
+})
+
 const getIllustration = (width = 1200, height = 627) => {
     return `${config.apiUrl}/assets/${article.value.illustration.id}?width=${width}&height=${height}&fit=cover`
 }
-
-
 
 onMounted(() => {
     setTimeout(() => {

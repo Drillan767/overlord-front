@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Homepage } from '~~/components/types';
+import type { Homepage } from '~~/types';
 import homepageGql from '../queries/homepage.gql'
 
 type HomepageData = {

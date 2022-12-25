@@ -10,74 +10,131 @@
                 ARTICLES
             </h1>
 
-            <div class="tags">
-                <div class="list">
-                    <div v-for="(tag, i) in uniqueTags" :key="i" class="tag"
-                        :class="{ 'current': tag.title === activeTag }">
-                        <!-- <span @click="handleFilter(tag.title)" class="cursor-pointer">
-                        {{ tag.title }}
+            <div class="tagList">
+                <template v-for="(tag, i) in uniqueTags" :key="i" class="tag">
+                    <span v-if="i !== 0" class="mx-2 separator">/</span>
+                    <span :class="{ 'current': tag.title === activeTag }" class="cursor-pointer"
+                        @click="handleFilter(tag.title)">
+                        {{ tag.title }} ({{ tag.nbArticles }})
                     </span>
-                    <span @click="handleFilter('')" class="cursor-pointer" v-if="tag.title === activeTag">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="w-4 h-4 ml-2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </span> -->
-                        <span>{{ tag.title }}</span> <span>/</span>
-                    </div>
-                </div>
+                </template>
             </div>
 
-            <div class="articleList">
+            <div class="articlesList mx-auto">
                 <article v-for="article in filteredArticles" :key="article.id">
-                    <ItemThumbnail :item-type="'article'" :item="article" />
+                    <a :href="`/article/${article.slug}`" class="w-1/5">
+                        <div class="glitch-thumb">
+                            <div class="glitch-img" v-for="i in 5" :key="i"
+                                :style="`background-image: url('${getThumb(article.illustration)}')`" />
+                        </div>
+                    </a>
+
+                    <div class="details w-4/5">
+                        <h2 :data-text="article.title">
+                            <a :href="`/article/${article.slug}`">
+                                {{ article.title }}
+                            </a>
+                        </h2>
+                        <p class="mt-4">
+                            {{ article.description }}
+                        </p>
+
+                        <p class="time mt-4">
+                            {{ lastCommit(article.date_created, article.date_updated) }}
+                        </p>
+                        <p class="tags mt-3">
+                            <template v-for="(tag, i) in article.tags" :key="i">
+                                <span v-if="i !== 0" class="mx-2 separator">/</span>
+                                <span
+                                    class="cursor-pointer"
+                                    @click="handleFilter(tag.Tag_id.title)"
+                                    :class="{ 'current': tag.Tag_id.title === activeTag }" 
+                                >
+                                    {{ tag.Tag_id.title }}
+                                </span>
+                            </template>
+                        </p>
+                    </div>
                 </article>
             </div>
         </div>
-
-
     </div>
 </template>
 
 <script setup lang="ts">
-import type { Article, Tag, TagsReceived, ArticlesReceived } from '~~/components/types';
-import articles from '../queries/articles.gql'
-import ItemThumbnail from '~~/components/content/ItemThumbnail.vue';
+import type { Article, TagFilter, ArticlesReceived } from '~~/types';
+import articlesQuery from '../queries/articles.gql'
 
 definePageMeta({
     layout: "blog",
 });
 
+const config = useRuntimeConfig()
 const articleList = ref([] as Article[])
 const activeTag = ref('')
 
-await useAsyncQuery<ArticlesReceived>(articles)
+await useAsyncQuery<ArticlesReceived>(articlesQuery)
     .then(({ data }) => {
         if (data.value) {
             articleList.value = data.value.Articles
         }
     })
 
-const uniqueTags = computed<Tag[]>(() => {
-    const allTags: Tag[] = []
+const uniqueTags = computed<TagFilter[]>(() => {
+    const allTags: TagFilter[] = []
     articleList.value.forEach((article) => {
         article.tags.forEach((tag) => {
-            if (!allTags.some((t) => t.title === tag.Tag_id.title)) {
-                allTags.push({
-                    title: tag.Tag_id.title,
-                })
+            const { Tag_id: { title } } = tag
+            const nbArticles = articleList.value.filter((a) => {
+                return a.tags.some((t) => t.Tag_id.title === title)
+            }).length
+
+            if (!allTags.some((at) => at.title === title)) {
+                allTags.push({ title, nbArticles })
             }
         })
     })
+
     return allTags
 })
 
-const handleFilter = (filter: string) => activeTag.value = filter
+const handleFilter = (filter: string) => {
+    if (activeTag.value === '') {
+        activeTag.value = filter
+    } else if (activeTag.value === filter) {
+        activeTag.value = ''
+    } else {
+        activeTag.value = filter
+    }
+}
 
 const filteredArticles = computed(() => {
     return activeTag.value !== ''
         ? articleList.value.filter((a) => a.tags.some((t) => t.Tag_id.title === activeTag.value))
         : articleList.value
+})
+
+const lastCommit = (created: string, updated: string | null) => {
+    const date = updated ?? created
+    return new Intl.DateTimeFormat('fr-FR').format(new Date(date))
+}
+
+const getThumb = (illustration: Article['illustration']) => {
+    return `${config.apiUrl}/assets/${illustration.id}?width=300&height=200&fit=cover`
+}
+
+onMounted(() => {
+    const articles = document.querySelectorAll('article')
+    articles.forEach((article) => {
+        article.addEventListener('mouseenter', () => {
+            article.classList.add('animate')
+            article.querySelector('h2')?.classList.add('glitch')
+        })
+        article.addEventListener('mouseleave', () => {
+            article.classList.remove('animate')
+            article.querySelector('h2')?.classList.remove('glitch')
+        })
+    })
 })
 
 </script>
@@ -95,31 +152,149 @@ const filteredArticles = computed(() => {
         margin: auto;
     }
 
+    .tagList {
+        @apply w-1/2 mx-auto my-8 flex justify-center;
+    }
+
+    .tagList,
     .tags {
-        @apply w-1/2 mx-auto my-8 flex flex-col justify-between;
-        height: 150px;
+        span {
+            @apply transition-colors;
+            color: var(--font-color);
 
-        .list {
-            @apply flex justify-center gap-x-5;
-
-            // .tag {
-            //     border: solid 1px #fff;
-            //     display: flex;
-            //     padding: 4px;
-            //     line-height: 1;
-            //     align-items: center;
-
-            //     &:not(.current) {
-            //         color: #fff;
-            //     }
-
-            //     &.current {
-            //         background-color: #fff;
-            //         color: #000;
-            //     }
-            // }
+            &.current,
+            &:not(.separator):hover {
+                color: var(--purple);
+            }
         }
     }
+
+    .articlesList {
+        max-width: calc(100% - 40px);
+        width: 800px;
+
+        article {
+            @apply transition-colors flex gap-x-5 mb-10;
+            color: var(--font-color);
+
+            h2 {
+                line-height: 1;
+                font-size: clamp(1.25rem, 0.6338rem + 1.9718vw, 3rem);
+            }
+
+            .glitch-thumb {
+                position: relative;
+                height: 200px;
+                overflow: hidden;
+                margin: 0 auto;
+
+                @media (min-width: 768px) {
+                    // width: 350px;
+                }
+
+                .glitch-img {
+                    position: absolute;
+                    top: calc(-1 * var(--gap-vertical));
+                    left: calc(-1 * var(--gap-horizontal));
+                    width: calc(100% + var(--gap-horizontal) * 2);
+                    height: calc(100% + var(--gap-vertical) * 2);
+                    background-size: cover;
+                    background-color: transparent;
+                    background-repeat: no-repeat;
+                    background-position: 50% 0;
+                    background-blend-mode: initial;
+
+                    &:nth-child(5) {
+                        background-color: #af4949;
+                        background-blend-mode: overlay;
+                    }
+
+                    &:nth-child(n+2) {
+                        opacity: 0;
+                    }
+                }
+            }
+
+            .details {
+                .tags {}
+            }
+
+            &.animate {
+                .glitch-thumb {
+                    &::before {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 200px;
+                        z-index: 1;
+                        background: repeating-linear-gradient(to bottom, transparent 0%, rgba(0, 147, 255, 0.47) 1.75%, transparent 1%);
+                    }
+
+                    .glitch-img {
+                        &:nth-child(n+2) {
+                            opacity: 1;
+                        }
+
+                        &:nth-child(2) {
+                            transform: translate3d(10px, 0, 0);
+                            animation: glitch-anim-1 4s infinite linear alternate;
+                        }
+
+                        &:nth-child(3) {
+                            transform: translate3d(calc(-1 * 10px), 0, 0);
+                            animation: glitch-anim-2 4s infinite linear alternate;
+                        }
+
+                        &:nth-child(4) {
+                            transform: translate3d(0, calc(-1 * 5px), 0) scale3d(-1, -1, 1);
+                            animation: glitch-anim-3 4s infinite linear alternate;
+                        }
+
+                        // Hover flash animation on last image.
+                        &:nth-child(5) {
+                            animation: glitch-anim-flash 0.5s steps(1, end) infinite;
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+    /*
+
+        .glitch-thumb {
+            cursor: pointer;
+
+            .glitch-img {
+                height: 200px;
+                &:nth-child(n+2) {
+                    opacity: 1;
+                }                  
+    
+                &:nth-child(2) {
+                    transform: translate3d(10px,0,0);
+                    animation: glitch-anim-1 4s infinite linear alternate;
+                }
+    
+                &:nth-child(3) {
+                    transform: translate3d(calc(-1 * 10px),0,0);
+                    animation: glitch-anim-2 4s infinite linear alternate;
+                }
+    
+                &:nth-child(4) {
+                    transform: translate3d(0, calc(-1 * 5px), 0) scale3d(-1,-1,1);
+                    animation: glitch-anim-3 4s infinite linear alternate;
+                }
+    
+                // Hover flash animation on last image.
+                &:nth-child(5) {
+                    animation: glitch-anim-flash 0.5s steps(1, end) infinite;
+                }
+            }
+        }
 
     .articleList {
         max-width: 1200px;
@@ -131,5 +306,6 @@ const filteredArticles = computed(() => {
         align-items: baseline;
 
     }
+    */
 }
 </style>
