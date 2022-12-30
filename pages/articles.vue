@@ -21,7 +21,14 @@
             </div>
 
             <div class="articlesList mx-auto">
-                <article v-for="article in filteredArticles" :key="article.id">
+                <article
+                    v-for="(article, index) in filteredArticles"
+                    :key="article.id"
+                    ref="articleRefs"
+                    :ref-key="index"
+                    @mouseenter="handleClass(index, 'add')"
+                    @mouseleave="handleClass(index, 'remove')"
+                    >
                     <a :href="`/article/${article.slug}`" class="w-1/5">
                         <div class="glitch-thumb">
                             <div class="glitch-img" v-for="i in 5" :key="i"
@@ -70,6 +77,7 @@ definePageMeta({
 });
 
 const config = useRuntimeConfig()
+const articleRefs = ref<HTMLDivElement[]>([])
 const articleList = ref([] as Article[])
 const activeTag = ref('')
 
@@ -114,6 +122,11 @@ const filteredArticles = computed(() => {
         : articleList.value
 })
 
+watch(
+    filteredArticles.value,
+    () => articleRefs.value = []
+)
+
 const lastCommit = (created: string, updated: string | null) => {
     const date = updated ?? created
     return new Intl.DateTimeFormat('fr-FR').format(new Date(date))
@@ -123,19 +136,11 @@ const getThumb = (illustration: Article['illustration']) => {
     return `${config.apiUrl}/assets/${illustration.id}?width=300&height=200&fit=cover`
 }
 
-onMounted(() => {
-    const articles = document.querySelectorAll('article')
-    articles.forEach((article) => {
-        article.addEventListener('mouseenter', () => {
-            article.classList.add('animate')
-            article.querySelector('h2')?.classList.add('glitch')
-        })
-        article.addEventListener('mouseleave', () => {
-            article.classList.remove('animate')
-            article.querySelector('h2')?.classList.remove('glitch')
-        })
-    })
-})
+const handleClass = (index: number, action: 'add'|'remove') => {
+    const hoveredArticle = articleRefs.value[index]
+    hoveredArticle.classList[action]('animate')
+    hoveredArticle.querySelector('h2')?.classList[action]('glitch')
+}
 
 </script>
 
