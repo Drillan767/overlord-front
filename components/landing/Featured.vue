@@ -38,7 +38,7 @@ import articles from '../../queries/articles.gql'
 import projects from '../../queries/projects.gql'
 import ItemThumbnail from '../content/ItemThumbnail.vue';
 import Button from '../layout/Button.vue';
-import type { Article, ArticlesReceived, Project, ProjectsReceived } from '../types';
+import type { Article, ArticlesReceived, Project, ProjectsReceived } from '~~/types';
 
 const gqlHeaders = {
     filter: {
@@ -48,8 +48,8 @@ const gqlHeaders = {
     limit: 3
 }
 
-const featuredArticles = ref([] as Article[])
-const featuredProjects = ref([] as Project[])
+const featuredArticles = ref<Article[]>([])
+const featuredProjects = ref<Project[]>([])
 
 await useAsyncQuery<ArticlesReceived>(articles, gqlHeaders)
     .then(({ data }) => {

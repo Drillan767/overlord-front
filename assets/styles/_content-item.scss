@@ -2,7 +2,7 @@ article.content-item {
     position: relative;
 
     @media (min-width: 768px) {
-        width: 350px;
+        width: 300px;
     }
 
     @media (max-width: 1200px) {
@@ -59,7 +59,7 @@ article.content-item {
         margin: 0 auto;
 
         @media (min-width: 768px) {
-            width: 350px;
+            width: 300px;
         }
     
         .glitch-img {

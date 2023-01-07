@@ -62,5 +62,6 @@ export type ProjectsReceived = {
 
 export type TagFilter = {
     title: string,
-    nbArticles: number,
+    nbArticles?: number,
+    nbProjects?: number,
 }
