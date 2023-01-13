@@ -53,3 +53,37 @@ const getThumb = (item: Article|Project) => {
     return `${config.apiUrl}/assets/${item.illustration.id}?width=300&height=200&fit=cover`
 }
 </script>
+
+<style scoped lang="scss">
+@import '~~/assets/styles/mixins';
+
+article {
+    @include content-item(300px);
+
+    .details {
+        padding: 0.5rem 0 0 0.25rem;
+        height: 130px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        p {
+            color: var(--title-color);
+            font-size: clamp(1rem, 0.0625rem + 3vw, 1.75rem);;
+            line-height: 1;
+        }
+
+        .tags {
+            span {
+                border: solid 1px var(--title-color);
+                background-color: white;
+                padding: 2px 4px;
+                
+                &:not(:last-child) {
+                    margin-right: 6px;
+                }
+            }
+        }
+    }
+}
+</style>

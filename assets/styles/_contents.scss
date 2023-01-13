@@ -26,4 +26,9 @@
             }
         }
     }
+
+    .projectsList, .articlesList {
+        max-width: calc(100% - 40px);
+        width: 800px;
+    }
 }

@@ -88,13 +88,7 @@ const filteredArticles = computed(() => {
 </script>
 
 <style scoped lang="scss">
-#articles {
-    .articlesList {
-        max-width: calc(100% - 40px);
-        width: 800px;
-    }
-
-    /*
+/*
 
         .glitch-thumb {
             cursor: pointer;
@@ -138,5 +132,4 @@ const filteredArticles = computed(() => {
 
     }
     */
-}
 </style>

@@ -1,6 +1,6 @@
 <template>
     <NuxtLink :to="`/project/${project.slug}`">
-        <article class="content-item">
+        <article>
             <div class="glitch-thumb">
                 <div class="glitch-img" v-for="i in 5" :key="i" :style="`background-image: url('${getThumb(project)}')`" />
             </div>
@@ -48,3 +48,12 @@ const getThumb = (item: Project) => {
     return `${config.apiUrl}/assets/${item.illustration.id}?width=300&height=200&fit=cover`
 }
 </script>
+
+<style scoped lang="scss">
+@import '~~/assets/styles/mixins';
+
+article {
+    @include content-item(300px);
+}
+
+</style>

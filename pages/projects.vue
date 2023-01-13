@@ -87,7 +87,3 @@ const filteredProjects = computed(() => {
 })
 
 </script>
-
-<style scoped lang="scss">
-
-</style>
