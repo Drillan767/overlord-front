@@ -21,13 +21,8 @@
             </div>
 
             <div class="projectsList mx-auto">
-                <SingleProject
-                    v-for="(project, i) in filteredProjects"
-                    :key="i"
-                    :activeTag="activeTag"
-                    :project="project"
-                    @change-tag="handleFilter"
-                />
+                <SingleProject v-for="(project, i) in filteredProjects" :key="i" :activeTag="activeTag"
+                    :project="project" @change-tag="handleFilter" />
             </div>
         </div>
     </div>
@@ -87,3 +82,13 @@ const filteredProjects = computed(() => {
 })
 
 </script>
+
+<style scoped lang="scss">
+.projectsList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 300px));
+    grid-gap: 25px;
+    justify-content: center;
+    align-items: baseline;
+}
+</style>

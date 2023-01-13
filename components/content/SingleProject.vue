@@ -4,11 +4,11 @@
             <div class="glitch-thumb">
                 <div class="glitch-img" v-for="i in 5" :key="i" :style="`background-image: url('${getThumb(project)}')`" />
             </div>
-            <div class="details">
-                <p :data-text="project.title">
+            <div class="details mt-2">
+                <h2>
                     {{ project.title }}
                     <span class="cursor"></span>
-                </p>
+                </h2>
                 <div class="tags">
                     <span v-for="(tag, j) in project.tags" :key="j">
                         {{ tag.Tag_id.title }}
@@ -54,6 +54,12 @@ const getThumb = (item: Project) => {
 
 article {
     @include content-item(300px);
+
+    h2 {
+        color: var(--font-color);
+        line-height: 1;
+        font-size: clamp(1.25rem, 0.9859rem + 0.8451vw, 2rem);
+    }
 }
 
 </style>
