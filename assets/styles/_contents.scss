@@ -14,8 +14,7 @@
         @apply w-1/2 mx-auto my-8 flex justify-center;
     }
 
-    .tagList,
-    .tags {
+    .tagList {
         span {
             @apply transition-colors;
             color: var(--font-color);

@@ -68,6 +68,18 @@ article {
         font-size: clamp(1.25rem, 0.6338rem + 1.9718vw, 3rem);
     }
 
+    .tags {
+        span {
+            @apply transition-colors;
+            color: var(--font-color);
+
+            &.current,
+            &:not(.separator):hover {
+                color: var(--purple);
+            }
+        }
+    }
+
     @include content-item(100%, false);
 
     &.animate {

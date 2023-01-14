@@ -2,7 +2,8 @@
     <NuxtLink :to="`/project/${project.slug}`">
         <article>
             <div class="glitch-thumb">
-                <div class="glitch-img" v-for="i in 5" :key="i" :style="`background-image: url('${getThumb(project)}')`" />
+                <div class="glitch-img" v-for="i in 5" :key="i"
+                    :style="`background-image: url('${getThumb(project)}')`" />
             </div>
             <div class="details mt-2">
                 <h2>
@@ -22,7 +23,7 @@
 <script setup lang="ts">
 import type { Project } from '~~/types'
 
-defineProps<{project: Project, activeTag: string}>()
+defineProps<{ project: Project, activeTag: string }>()
 
 const config = useRuntimeConfig()
 
@@ -56,10 +57,21 @@ article {
     @include content-item(300px);
 
     h2 {
+        height: 56px;
         color: var(--font-color);
         line-height: 1;
         font-size: clamp(1.25rem, 0.9859rem + 0.8451vw, 2rem);
     }
-}
 
+    .tags {
+        @apply flex justify-end gap-x-2 mt-2;
+
+        span {
+            border: solid 1px var(--title-color);
+            background-color: white;
+            padding: 2px 4px;
+        }
+
+    }
+}
 </style>
