@@ -72,7 +72,7 @@ import DateSVG from '~~/components/svg/Date.vue'
 
 definePageMeta({
     layout: "blog",
-});
+})
 
 const route = useRoute()
 const config = useRuntimeConfig()
@@ -237,7 +237,7 @@ main {
             right: 0;
             margin: auto;
             z-index: 1;
-            color: var(--title-color);
+            color: white;
         }
 
         h1 {

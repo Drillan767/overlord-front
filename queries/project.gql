@@ -1,13 +1,18 @@
-query Project {
-    Project(filter: {status: {_eq: "published"}}) {
+query Project ($search: String!) {
+    Project(
+        search: $search,
+        filter: {status: {_eq: "published"}}
+    ) {
         title
         website
         repo_link
         slug
+        description
         body
         illustration {
-            filename_download
-        }
+			id
+			title
+		}
         date_created
         date_updated
 

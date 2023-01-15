@@ -32,11 +32,15 @@ export type Article = {
 }
 
 export type Project = {
+    id: string,
     title: string,
+    slug: string,
+    body?: string,
+    description: string,
+    website?: string,
+    repo_link?: string,
     date_created: string,
     date_updated: string,
-    id: string,
-    slug: string,
     illustration: Illustration
     tags: {
         Tag_id: Tag
