@@ -46,9 +46,7 @@
         }
     
         .title {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            @apply flex flex-col justify-between;
             color: var(--title-color);
 
             @media (max-width: 768px) {
@@ -57,18 +55,8 @@
 
             h2 {
                 font-size: clamp(2rem, 0.75rem + 4vw, 3rem);
-                text-align: right;
-                line-height: 1;
+                @apply uppercase text-right leading-none mb-2 md:mb-0;
             }
-
-            // a {
-            //     @include btn-glitch;
-
-            //     @media (max-width: 768px) {
-            //         margin-top: 15px;
-            //         text-align: center;
-            //     }
-            // }
         }
 
         .list {

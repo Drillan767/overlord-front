@@ -17,7 +17,7 @@
             </div>
             <div class="projects">
                 <div class="title">
-                    <h2 class="uppercase">
+                    <h2>
                         Featured <br />
                         <span class="glitch" data-text="PROJECTS">Projects</span>
                     </h2>

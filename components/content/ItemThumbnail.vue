@@ -69,7 +69,7 @@ article {
 
         p {
             color: var(--title-color);
-            font-size: clamp(1rem, 0.0625rem + 3vw, 1.75rem);;
+            font-size: clamp(1.5rem, 1.3239rem + 0.5634vw, 2rem);;
             line-height: 1;
         }
 
