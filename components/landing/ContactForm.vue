@@ -43,21 +43,15 @@
                         content="Send"
                     />
                 </div>
-
-                <div class="test">
-
-                </div>
-
             </form>
         </div>
     </section>
-
 </template>
 
 <script setup lang="ts">
-import Button from "../layout/Button.vue";
-import Input from "../layout/Input.vue";
-import Textarea from "../layout/Textarea.vue";
+import Button from "~~/components/layout/Button.vue";
+import Input from "~~/components/layout/Input.vue";
+import Textarea from "~~/components/layout/Textarea.vue";
 
 const form = ref({
     name: '',

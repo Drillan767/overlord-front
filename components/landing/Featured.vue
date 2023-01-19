@@ -34,10 +34,10 @@
 
 <script setup lang="ts">
 
-import articles from '../../queries/articles.gql'
-import projects from '../../queries/projects.gql'
-import ItemThumbnail from '../content/ItemThumbnail.vue';
-import Button from '../layout/Button.vue';
+import articles from '~~/queries/articles.gql'
+import projects from '~~/queries/projects.gql'
+import ItemThumbnail from '~~/components/content/ItemThumbnail.vue';
+import Button from '~~/components/layout/Button.vue';
 import type { Article, ArticlesReceived, Project, ProjectsReceived } from '~~/types';
 
 const gqlHeaders = {

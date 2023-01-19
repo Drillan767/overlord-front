@@ -43,7 +43,6 @@ button, a {
     border: solid 1px rgba(172, 73, 248, 0.3);
     background: none;
     color: rgba(172, 73, 248, 0.7);
-    font-family: "Roboto", sans-serif;
     text-transform: uppercase;
     font-weight: normal;
     letter-spacing: 1.8px;
@@ -56,7 +55,7 @@ button, a {
         position: absolute;
         width: 60px;
         height: 1px;
-        background: rgba(172, 73, 248, 1);
+        background: var(--purple);
         transition: all 0.25s ease;
     }
 
@@ -74,7 +73,7 @@ button, a {
 
     &:hover {
         box-shadow: 1px 1px 8px rgba(172, 73, 248, 0.3);
-        color: rgba(172, 73, 248, 1);
+        color: var(--purple);
         text-shadow: 0 0 8px rgba(172, 73, 248, 0.4);
 
         &::before {
@@ -105,7 +104,7 @@ button, a {
             width: 1px;
             height: 20px;
             transform: translateX(1px);
-            background: rgba(172, 73, 248, 1);
+            background: var(--purple);
             transition: all 0.25s ease;
         }
 

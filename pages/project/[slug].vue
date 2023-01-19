@@ -31,6 +31,11 @@
         </header>
 
         <article v-html="project.body" />
+
+        <div class="links">
+            <Button type="link" :link="project.repo_link" content="Github repo" target="_blank" />
+            <Button type="link" :link="project.website" content="View site" target="_blank" />
+        </div>
     </div>
 </template>
 
@@ -38,6 +43,7 @@
 import hljs from 'highlight.js'
 import 'highlight.js/styles/tokyo-night-dark.css'
 import projectQuery from '~~/queries/project.gql'
+import Button from '~~/components/layout/Button.vue';
 import type { Project, ProjectsReceived } from '~~/types';
 
 definePageMeta({
@@ -69,6 +75,13 @@ await useAsyncQuery<ProjectsReceived>(projectQuery, {
             })
         }
     })
+
+onMounted(() => {
+    setTimeout(() => {
+        document.querySelectorAll<HTMLElement>('.prose pre')
+            .forEach((block) => hljs.highlightBlock(block))
+    }, 1000)
+})
 
 </script>
 
@@ -108,7 +121,12 @@ header {
 }
 
 article {
+    @apply prose lg:prose-xl mx-auto mt-4 prose-img:mx-auto;
     color: var(--font-color);
-    @apply prose lg:prose-xl mx-auto mt-4;
 }
+
+.links {
+    @apply max-w-prose mx-auto flex justify-between text-xl mt-4;
+}
+
 </style>
