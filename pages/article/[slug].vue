@@ -53,7 +53,7 @@
                 </span>
             </div>
 
-            <article>
+            <article class="px-2">
                 <div v-html="articleBody" class="prose lg:prose-xl" />
             </article>
         </main>
@@ -238,12 +238,20 @@ main {
             margin: auto;
             z-index: 1;
             color: white;
+
+            @media (max-width: 768px) {
+                width: 90%;
+            }
         }
 
         h1 {
             line-height: 1;
             text-align: center;
             bottom: 65px;
+            
+            @media (max-width: 768px) {
+                bottom: 50%;
+            }
         }
 
         .meta {
@@ -255,6 +263,10 @@ main {
             grid-template-areas:
                 "date date"
                 "read-time tags";
+
+            @media (max-width: 768px) {
+                bottom: 40%;
+            }
 
             .date {
                 grid-area: date;

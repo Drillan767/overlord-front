@@ -90,5 +90,9 @@ const filteredProjects = computed(() => {
     grid-gap: 25px;
     justify-content: center;
     align-items: baseline;
+
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 400px));
+    }
 }
 </style>

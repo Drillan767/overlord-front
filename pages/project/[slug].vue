@@ -17,7 +17,7 @@
         <header >
             <div :style="`background-image: url('${getIllustration()}')`" class="banner "></div>
 
-            <div class="info text-center text-white">
+            <div class="info">
                 <h1>
                     {{ project.title }}
                 </h1>
@@ -103,14 +103,14 @@ header {
     }
 
     .info {
-        @apply relative z-10 w-1/2;
+        @apply relative z-10 w-11/12 md:w-1/2 text-center text-white;
 
         h1 {
             @apply leading-none mb-2;
         }
 
         .description {
-            @apply text-xl;
+            @apply text-base md:text-xl;
         }
 
         .tags {
@@ -121,12 +121,12 @@ header {
 }
 
 article {
-    @apply prose lg:prose-xl mx-auto mt-4 prose-img:mx-auto;
+    @apply prose lg:prose-xl mx-auto mt-4 prose-img:mx-auto px-2;
     color: var(--font-color);
 }
 
 .links {
-    @apply max-w-prose mx-auto flex justify-between text-xl mt-4;
+    @apply max-w-prose mx-auto flex justify-evenly md:justify-between md:text-xl mt-4 flex-row;
 }
 
 </style>

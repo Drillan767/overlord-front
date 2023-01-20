@@ -54,7 +54,7 @@ const getThumb = (item: Project) => {
 @import '~~/assets/styles/mixins';
 
 article {
-    @include content-item(300px);
+    @include content-item(100%);
 
     h2 {
         height: 56px;
@@ -71,7 +71,6 @@ article {
             background-color: white;
             padding: 2px 4px;
         }
-
     }
 }
 </style>

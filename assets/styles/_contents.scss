@@ -1,6 +1,10 @@
 #articles, #projects {
     padding: 6rem var(--landing-padding);
 
+    @media (max-width: 768px) {
+        padding: var(--landing-padding);
+    }
+
     h1 {
         color: var(--title-color)
     }
@@ -11,7 +15,7 @@
     }
 
     .tagList {
-        @apply w-1/2 mx-auto my-8 flex justify-center;
+        @apply md:w-1/2 mx-auto my-8 flex flex-wrap justify-center;
     }
 
     .tagList {
@@ -26,15 +30,14 @@
         }
     }
 
-    .projectsList, .articlesList {
+    .articlesList {
+        width: 800px;
         max-width: calc(100% - 40px);
     }
 
-    .articlesList {
-        width: 800px;
-    }
-
     .projectsList {
-        width: 1000px;
+        @media (min-width: 768px) {
+            width: 1000px;
+        }
     }
 }

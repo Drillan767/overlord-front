@@ -44,6 +44,12 @@
     --bg-cursor: var(--cursor-light);
 }
 
+@media (max-width: 768px) {
+    :root {
+        --landing-padding: 10px;
+    }
+}
+
 body.dark, body.light {
     background-color: var(--bg-color);
 }
@@ -77,7 +83,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-    font-size: clamp(1rem, -0.875rem + 8.333333vw, 3.5rem);
+    font-size: clamp(2.5rem, 2.1479rem + 1.1268vw, 3.5rem);
 }
 
 .font-mono {

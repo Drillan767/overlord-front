@@ -1,18 +1,14 @@
 <template>
-    <article
-        @mouseenter="isHovered = true"
-        @mouseleave="isHovered = false"
-        :class="{'animate': isHovered}"
-    >
-        <a :href="`/article/${article.slug}`" class="w-1/5">
+    <article @mouseenter="isHovered = true" @mouseleave="isHovered = false" :class="{'animate': isHovered}">
+        <a :href="`/article/${article.slug}`" class="w-full md:w-1/5">
             <div class="glitch-thumb">
                 <div class="glitch-img" v-for="i in 5" :key="i"
                     :style="`background-image: url('${getThumb(article.illustration)}')`" />
             </div>
         </a>
 
-        <div class="details w-4/5">
-            <h2 :data-text="article.title" :class="{'glitch': isHovered}">
+        <div class="details">
+            <h2 :data-text="article.title" :class="{ 'glitch': isHovered }">
                 <a :href="`/article/${article.slug}`">
                     {{ article.title }}
                 </a>
@@ -44,7 +40,7 @@ const config = useRuntimeConfig()
 const emit = defineEmits(['changeTag'])
 const isHovered = ref(false)
 
-defineProps<{article: Article, activeTag: string}>()
+defineProps<{ article: Article, activeTag: string }>()
 
 const lastCommit = (created: string, updated: string | null) => {
     const date = updated ?? created
@@ -60,12 +56,16 @@ const getThumb = (illustration: Article['illustration']) => {
 @import '~~/assets/styles/mixins';
 
 article {
-    @apply transition-colors flex gap-x-5 mb-10;
+    @apply transition-colors flex gap-x-5 mb-10 flex-col md:flex-row;
     color: var(--font-color);
 
-    h2 {
-        line-height: 1;
-        font-size: clamp(1.25rem, 0.6338rem + 1.9718vw, 3rem);
+    .details {
+        @apply w-full md:w-4/5 mt-2 md:mt-0;
+
+        h2 {
+            line-height: 1;
+            font-size: clamp(1.25rem, 0.6338rem + 1.9718vw, 3rem);
+        }
     }
 
     .tags {
