@@ -22,6 +22,14 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
+      - name: Creating env file 🔑
+        uses: uses: SpicyPizza/create-envfile@v1.3
+        with:
+          fail_on_empty: true
+          envkey_API_URL: ${{ secrets.API_URL }}
+          envkey_GQL_HOST: ${{ secrets.GQL_HOST }}
+          envkey_URL: ${{ secrets.URL }}
+
       - name: Building the Docker Image 🐳🚧
         id: docker_build
         uses: docker/build-push-action@v2
