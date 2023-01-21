@@ -3,7 +3,7 @@
         <div class="content">
             <div class="w-full md:w-1/2">
                 <div class="flex justify-center">
-                    <img :src="`${config.apiUrl}/assets/${user.id}`" :alt="user.title" />
+                    <nuxt-img format="webp" :src="`${config.apiUrl}/assets/${user.id}`" :alt="user.title" />
                 </div>
             </div>
             <div class="text-xl prose w-full md:w-1/2" v-html="description" />

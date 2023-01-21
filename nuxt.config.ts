@@ -1,5 +1,4 @@
 import { defineNuxtConfig } from 'nuxt/config'
-import { env } from 'process'
 import pkg from './package.json'
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
@@ -7,10 +6,14 @@ export default defineNuxtConfig({
     modules: [
         '@nuxtjs/tailwindcss',
         '@nuxtjs/apollo',
+        '@nuxt/image-edge',
     ],
 
     app: {
         head: {
+            htmlAttrs: {
+                lang: 'en'
+            },
             titleTemplate: '%s | Joseph Levarato',
 
             viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
@@ -24,6 +27,10 @@ export default defineNuxtConfig({
                 { rel: 'icon', type: 'image/svg+xml', href: 'icons/logo.svg' }
             ],
         }
+    },
+
+    nitro: {
+        compressPublicAssets: true,
     },
 
     apollo: {

@@ -1,10 +1,10 @@
 <template>
     <footer>
         <div class="first-row">
-            <a href="https://flowbite.com/">
-                <img :src="`${config.apiUrl}/assets/${icon.id}`" :alt="icon.title" />
+            <NuxtLink to="/">
+                <nuxt-img format="webp" :src="`${config.apiUrl}/assets/${icon.id}`" :alt="icon.title" />
                 <span>{{ fullname }}</span>
-            </a>
+            </NuxtLink>
             <div class="links">
                 <ul>
                     <li v-for="(link, i) in footerLinks" :key="i">
@@ -14,7 +14,7 @@
                     </li>
                 </ul>
                 <div class="theme">
-                    <button @click="toggleTheme">
+                    <button @click="toggleTheme" :aria-label="`toggle ${color === 'dark' ? 'light' : 'dark'} theme`">
                         <LandingDark v-if="color === 'dark'" />
                         <LandingLight v-if="color === 'light'" />
                     </button>

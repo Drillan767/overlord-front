@@ -2,10 +2,10 @@
     <nav>
         <div class="container">
             <NuxtLink to="/">
-                <img :src="`${config.apiUrl}/assets/${icon.id}`" :title="icon.title" />
+                <nuxt-img format="webp" :src="`${config.apiUrl}/assets/${icon.id}`" :title="icon.title" />
                 <span>{{ fullname }}</span>
             </NuxtLink>
-            <button data-collapse-toggle="navbar-default" type="button" @click="showMenu = !showMenu"
+            <button data-collapse-toggle="navbar-default" aria-label="Display menu" type="button" @click="showMenu = !showMenu"
                 aria-controls="navbar-default" aria-expanded="false">
                 <span class="sr-only">Open main menu</span>
                 <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
@@ -18,14 +18,16 @@
             <div class="link-wrapper" :class="{ 'hidden': !showMenu }">
                 <ul>
                     <li v-for="(link, i) in footerLinks" :key="i">
-                        <NuxtLink :to="link.url" :class="{'current': isCurrentRoute(link.item)}">{{ link.title}}</NuxtLink>
+                        <NuxtLink :to="link.url" :class="{ 'current': isCurrentRoute(link.item) }">{{ link.title }}
+                        </NuxtLink>
                     </li>
-                    <div class="theme">
-                        <button @click="toggleTheme">
+
+                    <li class="theme">
+                        <button @click="toggleTheme" :aria-label="`toggle ${color === 'dark' ? 'light' : 'dark'} theme`">
                             <LandingDark v-if="color === 'dark'" />
                             <LandingLight v-if="color === 'light'" />
                         </button>
-                    </div>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -92,8 +94,10 @@ nav {
         margin: 0 auto;
         flex-wrap: wrap;
 
-        > .link-wrapper a {
-            &.current, &.router-link-exact-active {
+        >.link-wrapper a {
+
+            &.current,
+            &.router-link-exact-active {
                 color: var(--purple);
             }
         }
