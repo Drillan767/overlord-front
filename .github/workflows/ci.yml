@@ -5,6 +5,11 @@ on:
     branches:
       - main
 
+env:
+  API_URL: ${{ secrets.API_URL }}
+  GQL_HOST: ${{ secrets.GQL_HOST }}
+  URL: ${{ secrets.URL }}
+
 jobs:
   ci:
     runs-on: ${{ matrix.os }}
@@ -14,25 +19,17 @@ jobs:
 
     steps:
       - name: Checkout 🛎
-        uses: actions/checkout@master
+        uses: actions/checkout@v3
 
       - name: Login to DockerHub 🐋
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Creating env file 🔑
-        uses: SpicyPizza/create-envfile@v1.3
-        with:
-          fail_on_empty: true
-          envkey_API_URL: ${{ secrets.API_URL }}
-          envkey_GQL_HOST: ${{ secrets.GQL_HOST }}
-          envkey_URL: ${{ secrets.URL }}
-
       - name: Building the Docker Image 🐳🚧
         id: docker_build
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/overlord-front:latest
