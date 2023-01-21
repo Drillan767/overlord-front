@@ -23,7 +23,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Creating env file 🔑
-        uses: uses: SpicyPizza/create-envfile@v1.3
+        uses: SpicyPizza/create-envfile@v1.3
         with:
           fail_on_empty: true
           envkey_API_URL: ${{ secrets.API_URL }}
