@@ -1,13 +1,13 @@
 FROM node:18-alpine
 
 ARG API_URL
-ENV API_URL = ${API_URL}
+ENV API_URL=${API_URL}
 
 ARG GQL_HOST
 ENV GQL_HOST=${GQL_HOST}
 
 ARG URL
-ENV URL = ${URL}
+ENV URL=${URL}
 
 RUN mkdir -p /usr/src/nuxt-app
 WORKDIR /usr/src/nuxt-app
