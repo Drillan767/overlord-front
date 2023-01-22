@@ -24,7 +24,7 @@ export default defineNuxtConfig({
                 { name: 'og:title', content: 'Joseph Levarato' },
                 { name: 'twitter:title', content: 'Joseph Levarato' },
                 { property: 'og:type', content: 'website' },
-                { property: 'og:image', content: `${process.env.API_URL}/icons/logo.svg` }
+                { property: 'og:image', content: `${process.env.URL}/icons/logo.svg` }
             ],
 
             link: [
