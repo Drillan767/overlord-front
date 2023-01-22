@@ -27,7 +27,14 @@
                 © {{ year }} <NuxtLink href="/">{{ fullname }}</NuxtLink>. All Rights Reserved.
             </span>
             <div class="socials">
-                <a v-for="(link, i) in links" :href="link.url" :key="i" v-html="link.svg" target="_blank" />
+                <a
+                    v-for="(link, i) in links"
+                    :href="link.url"
+                    :key="i"
+                    :aria-label="link.display"
+                    v-html="link.svg"
+                    target="_blank"
+                />
             </div>
         </div>
     </footer>
@@ -44,6 +51,7 @@ const color = useTheme()
 const route = useRoute()
 
 interface Links {
+    display: string,
     url: string,
     svg: string,
 }

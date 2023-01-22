@@ -1,6 +1,6 @@
 {
   "private": true,
-  "version": "0.9.6",
+  "version": "0.9.7",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
@@ -9,6 +9,7 @@
   },
   "devDependencies": {
     "@nuxt/image-edge": "^1.0.0-27840416.dc1ed65",
+    "@nuxt/types": "^2.15.8",
     "@nuxtjs/apollo": "^5.0.0-alpha.4",
     "@nuxtjs/color-mode": "^3.2.0",
     "@nuxtjs/tailwindcss": "^6.1.3",

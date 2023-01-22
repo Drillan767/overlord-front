@@ -9,6 +9,7 @@ export type Homepage = {
     links: {
         url: string,
         svg: string,
+        display: string,
     }[],
     user: {
         id: string,
