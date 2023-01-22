@@ -35,26 +35,14 @@
 </template>
 
 <script setup lang="ts">
-import { PropType } from 'vue';
 import { useRoute } from 'vue-router';
-
-interface Links {
-    url: string,
-    svg: string,
-}
-
-defineProps({
-    links: Array as PropType<Array<Links>>,
-    fullname: String,
-    icon: {
-        type: Object,
-        required: true,
-    },
-})
 
 const config = useRuntimeConfig()
 const color = useTheme()
 const route = useRoute()
+const homepage = useHomepage()
+
+const { fullname, icon } = homepage.value
 const toggleTheme = () => color.value = color.value === 'dark' ? 'light' : 'dark'
 const showMenu = ref(false)
 
@@ -78,10 +66,6 @@ const isCurrentRoute = (link: string) => {
 
     return false
 }
-
-const currentRoute = computed(() => {
-    return route.name
-})
 
 </script>
 

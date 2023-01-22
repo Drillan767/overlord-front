@@ -42,28 +42,14 @@
 </template>
 
 <script setup lang="ts">
-import { PropType } from 'vue';
 
 const date = new Date;
 const year = ref(date.getFullYear())
 const config = useRuntimeConfig()
 const color = useTheme()
 const route = useRoute()
-
-interface Links {
-    display: string,
-    url: string,
-    svg: string,
-}
-
-defineProps({
-    links: Array as PropType<Array<Links>>,
-    fullname: String,
-    icon: {
-        type: Object,
-        required: true,
-    },
-})
+const homepage = useHomepage()
+const { fullname, links, icon } = homepage.value
 
 const footerLinks = ref([
     {

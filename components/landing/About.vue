@@ -12,15 +12,9 @@
 </template>
 
 <script setup lang="ts">
-import { PropType } from 'vue';
 
-defineProps({
-    description: String,
-    user: {
-        type: Object as PropType<{ id: string, title: string }>,
-        required: true,
-    },
-})
+const homepage = useHomepage()
+const { description, user } = homepage.value
 
 const config = useRuntimeConfig()
 

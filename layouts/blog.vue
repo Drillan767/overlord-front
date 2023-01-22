@@ -1,35 +1,12 @@
 <template>
-    <Navbar :links="homepage.links" :icon="homepage.icon" :fullname="homepage.fullname" />
+    <Navbar />
     <div id="blog">
         <div class="content">
             <slot />
         </div>
-        <Footer
-            :links="homepage.links"
-            :icon="homepage.icon"
-            :fullname="homepage.fullname"
-        />
+        <Footer />
     </div>
 </template>
-
-<script setup lang="ts">
-import type { Homepage } from '~~/types';
-import homepageGql from '../queries/homepage.gql'
-
-type HomepageData = {
-    Homepage: Homepage
-}
-
-const homepage = ref({} as Homepage)
-
-await useAsyncQuery<HomepageData>(homepageGql)
-    .then(({ data }) => {
-        if (data.value) {
-            homepage.value = data.value.Homepage
-        }
-    })
-
-</script>
 
 <style scoped lang="scss">
 

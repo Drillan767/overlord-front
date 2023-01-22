@@ -1,7 +1,6 @@
 import { defineNuxtConfig } from 'nuxt/config'
 import pkg from './package.json'
 
-// https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
     modules: [
         '@nuxtjs/tailwindcss',
@@ -21,6 +20,9 @@ export default defineNuxtConfig({
             meta: [
                 { name: 'msapplication-Tilecolor', content: '#312b5e' },
                 { name: 'theme-color', content: '#312b5e' },
+                { name: 'twitter:card', content: 'summary_large_image' },
+                { property: 'og:type', content: 'website' },
+                { property: 'og:image', content: `${process.env.API}/icons/logo.svg` }
             ],
 
             link: [

@@ -1,16 +1,15 @@
 <template>
     <div id="index">
-        <Navbar :icon="homepage.icon" :fullname="homepage.fullname" />
+        <Head>
+            <Title>Landing</Title>
+        </Head>
 
-        <LandingViewport :full_name="homepage.fullname" :baseline="homepage.baseline" />
-
-        <LandingAbout :description="homepage.description" :user="homepage.user" />
-
+        <Navbar />
+        <LandingViewport />
+        <LandingAbout />
         <LandingFeatured />
-
         <LandingContactForm />
-
-        <Footer :links="homepage.links" :icon="homepage.icon" :fullname="homepage.fullname" />
+        <Footer />
     </div>
 </template>
 
@@ -23,20 +22,13 @@ type HomepageData = {
 }
 
 const homepage = ref({} as Homepage)
-let baseline = ''
 
 await useAsyncQuery<HomepageData>(homepageGql)
     .then(({ data }) => {
         if (data.value) {
             homepage.value = data.value.Homepage
-            baseline = homepage.value.baseline
         }
     })
-
-useHead({
-    title: 'Landing',
-    meta: [{name: 'description', content: baseline.replace(/_/g, '')}]
-})
 
 definePageMeta({
     layout: "default",

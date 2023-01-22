@@ -1,7 +1,7 @@
 <template>
     <header id="viewport">
         <div class="content">
-            <h1 class="title glitch" :data-text="full_name">{{ full_name }}</h1>
+            <h1 class="title glitch" :data-text="fullname">{{ fullname }}</h1>
             <p class="subtitle" v-html="subtitle"></p>
 
             <div class="scroll">
@@ -14,17 +14,11 @@
 
 <script setup lang="ts">
 
+const homepage = useHomepage()
+const { fullname, baseline } = homepage.value
 const scrollText = "Let's scroll!"
 const typedText = ref('')
 let i = 0
-
-const props = defineProps({
-    full_name: String,
-    baseline: {
-        type: String,
-        required: true,
-    },
-})
 
 onMounted(() => {
     setTimeout(() => {
@@ -51,7 +45,7 @@ const typeLetters = () => {
 }
 
 const subtitle = computed(() =>
-    props.baseline.replaceAll(/_([a-zA-Z]*)_/g, (m, g) =>
+    baseline.replaceAll(/_([a-zA-Z]*)_/g, (m, g) =>
         `<span class="glitch" data-text="${g}">${g}</span>`))
 
 </script>
