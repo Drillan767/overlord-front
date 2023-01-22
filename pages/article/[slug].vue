@@ -7,7 +7,9 @@
             <Meta property="og:type" content="article" />
             <Meta property="og:title" :content="article.title" />
             <Meta property="og:image" :content="getIllustration()"/>
+            <Meta property="twitter:image" :content="getIllustration()"/>
             <Meta property="og:description" :content="article.description" />
+            <Meta property="twitter:description" :content="article.description" />
             <Meta property="article:author" content="Joseph Levarato" />
             <Meta property="og:url" :content="`${config.url}/article/${article.slug}`" />
             <Meta property="article:published_time" :content="article.date_created" />

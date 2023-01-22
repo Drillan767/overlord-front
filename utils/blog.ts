@@ -1,6 +1,4 @@
 import { parse } from 'node-html-parser'
-import type { Article, Project } from '~~/types'
-// const { config } = useRuntimeConfig()
 
 export const getScrollPercent = () => {
     const prose = document.querySelector<HTMLDivElement>('.prose')
@@ -70,7 +68,3 @@ export const toBionicReading = (text: string) => {
     */
     return ''
 }
-
-// export const getThumb = (item: Article | Project) => {
-//     return `${config.apiUrl}/assets/${item.illustration.id}?width=300&height=200&fit=cover`
-// }

@@ -3,15 +3,18 @@
 
         <Head>
             <Title>{{ project.title }}</Title>
-            <Meta property="og:type" content="project" />
+            <Meta property="description" :content="project.description" />
+            <Meta property="og:type" content="article" />
             <Meta property="og:title" :content="project.title" />
+            <Meta property="og:image" :content="getIllustration()"/>
+            <Meta property="twitter:image" :content="getIllustration()"/>
+            <Meta property="og:description" :content="project.description" />
+            <Meta property="twitter:description" :content="project.description" />
             <Meta property="article:author" content="Joseph Levarato" />
-            <Meta property="og:url" :content="`${config.url}/project/${project.slug}`" />
+            <Meta property="og:url" :content="`${config.url}/article/${project.slug}`" />
             <Meta property="article:published_time" :content="project.date_created" />
-            <Meta property="article:modified_time" v-if="project.date_created" :content="project.date_created" />
-            <Meta property="article:section" content="PHP" />
-            <Meta property="article:tag" content="test" />
-            <Link rel="canonical" :href="`${config.url}/project/${project.slug}`" />
+            <Meta property="article:modified_time" v-if="project.date_created" :content="project.date_updated" />
+            <Link rel="canonical" :href="`${config.url}/article/${project.slug}`" />
         </Head>
 
         <header >

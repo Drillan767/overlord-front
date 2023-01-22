@@ -12,7 +12,6 @@ type HomepageData = {
     Homepage: Homepage
 }
 
-const config = useRuntimeConfig()
 const color = useTheme()
 const homepage = useHomepage()
 
@@ -31,6 +30,14 @@ useHead({
     meta: [
         {
             name: 'description',
+            content: homepage.value.baseline.replace(/_/g, '')
+        },
+        {
+            name: 'og:description',
+            content: homepage.value.baseline.replace(/_/g, '')
+        },
+        {
+            name: 'twitter:description',
             content: homepage.value.baseline.replace(/_/g, '')
         },
 
