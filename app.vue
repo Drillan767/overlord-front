@@ -33,15 +33,13 @@ useHead({
             content: homepage.value.baseline.replace(/_/g, '')
         },
         {
-            name: 'og:description',
+            property: 'og:description',
             content: homepage.value.baseline.replace(/_/g, '')
         },
         {
             name: 'twitter:description',
             content: homepage.value.baseline.replace(/_/g, '')
         },
-
-
     ]
 })
 
