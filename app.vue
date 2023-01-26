@@ -26,21 +26,6 @@ useHead({
     bodyAttrs: {
         class: color
     },
-
-    /* meta: [
-        {
-            name: 'description',
-            content: homepage.value.baseline.replace(/_/g, '')
-        },
-        {
-            property: 'og:description',
-            content: homepage.value.baseline.replace(/_/g, '')
-        },
-        {
-            name: 'twitter:description',
-            content: homepage.value.baseline.replace(/_/g, '')
-        },
-    ] */
 })
 
 </script>

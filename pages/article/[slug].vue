@@ -1,19 +1,7 @@
 <template>
     <div class="article">
-
         <Head>
             <Title>{{ article.title }}</Title>
-            <Meta property="description" :content="article.description" />
-            <Meta property="og:type" content="article" />
-            <Meta property="og:title" :content="article.title" />
-            <Meta property="og:url" :content="`${config.url}/article/${article.slug}`" />
-            <Meta property="og:image" :content="getIllustration()"/>
-            <Meta property="og:description" :content="article.description" />
-
-            <Meta name="twitter:title" :content="article.title" />
-            <Meta name="twitter:image" :content="getIllustration()"/>
-            <Meta name="twitter:description" :content="article.description" />
-
             <Meta property="article:author" content="Joseph Levarato" />
             <Meta property="article:published_time" :content="article.date_created" />
             <Meta property="article:modified_time" v-if="article.date_updated" :content="article.date_updated" />
@@ -67,10 +55,11 @@
 </template>
 
 <script setup lang="ts">
+import { useSeoMeta } from '@unhead/vue'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/tokyo-night-dark.css'
-import { Article, ArticlesReceived } from '~~/types';
-import { getReadingTime, scrollSpy } from '~~/utils/blog';
+import { Article, ArticlesReceived } from '~~/types'
+import { getReadingTime, scrollSpy } from '~~/utils/blog'
 import articleQuery from '../../queries/article.gql'
 import TagSVG from '~~/components/svg/Tag.vue'
 import TimeSVG from '~~/components/svg/Time.vue'
@@ -170,6 +159,17 @@ onMounted(() => {
 
         //TODO: display the toc on the side
     })
+})
+
+useSeoMeta({
+    ogTitle: article.value.title,
+    ogType: 'article',
+    ogImage: getIllustration(),
+    description: article.value.description,
+    ogDescription: article.value.description,
+    twitterTitle: article.value.title,
+    twitterImage: getIllustration(),
+    twitterDescription: article.value.description,
 })
 
 </script>

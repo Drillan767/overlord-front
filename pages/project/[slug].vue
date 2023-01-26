@@ -3,17 +3,6 @@
 
         <Head>
             <Title>{{ project.title }}</Title>
-            <Meta property="description" :content="project.description" />
-            <Meta property="og:type" content="article" />
-            <Meta property="og:title" :content="project.title" />
-            <Meta property="og:url" :content="`${config.url}/article/${project.slug}`" />
-            <Meta property="og:image" :content="getIllustration()"/>
-            <Meta property="og:description" :content="project.description" />
-
-            <Meta name="twitter:title" :content="project.title" />
-            <Meta name="twitter:image" :content="getIllustration()"/>
-            <Meta name="twitter:description" :content="project.description" />
-
             <Meta property="article:author" content="Joseph Levarato" />
             <Meta property="article:published_time" :content="project.date_created" />
             <Meta property="article:modified_time" v-if="project.date_updated" :content="project.date_updated" />
@@ -46,6 +35,7 @@
 </template>
 
 <script setup lang="ts">
+import { useSeoMeta } from '@unhead/vue'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/tokyo-night-dark.css'
 import projectQuery from '~~/queries/project.gql'
@@ -87,6 +77,18 @@ onMounted(() => {
         document.querySelectorAll<HTMLElement>('.prose pre')
             .forEach((block) => hljs.highlightBlock(block))
     }, 1000)
+})
+
+
+useSeoMeta({
+    ogTitle: project.value.title,
+    ogType: 'article',
+    ogImage: getIllustration(),
+    description: project.value.description,
+    ogDescription: project.value.description,
+    twitterTitle: project.value.title,
+    twitterImage: getIllustration(),
+    twitterDescription: project.value.description,
 })
 
 </script>

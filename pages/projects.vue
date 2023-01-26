@@ -29,6 +29,7 @@
 </template>
 
 <script setup lang="ts">
+import { useSeoMeta } from '@unhead/vue'
 import type { TagFilter, Project, ProjectsReceived } from '~~/types'
 import projectQuery from '~~/queries/projects.gql'
 import SingleProject from '~~/components/content/SingleProject.vue';
@@ -37,8 +38,22 @@ definePageMeta({
     layout: "blog",
 })
 
+const { url } = useRuntimeConfig()
+const homepage = useHomepage()
+const { baseline } = homepage.value
 const projectList = ref<Project[]>([])
 const activeTag = ref('')
+
+useSeoMeta({
+    ogTitle: 'Projects',
+    ogType: 'website',
+    ogImage: url + '/icons/logo.svg',
+    description: baseline.replace(/_/g, ''),
+    ogDescription: baseline.replace(/_/g, ''),
+    twitterTitle: 'Projects',
+    twitterImage: url + '/icons/logo.svg',
+    twitterDescription: baseline.replace(/_/g, '')
+})
 
 const uniqueTags = computed<TagFilter[]>(() => {
     const allTags: TagFilter[] = []

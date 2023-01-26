@@ -27,6 +27,7 @@ useSeoMeta({
     ogTitle: fullname,
     ogType: 'website',
     ogImage: url + '/icons/logo.svg',
+    description: baseline.replace(/_/g, ''),
     ogDescription: baseline.replace(/_/g, ''),
     twitterTitle: fullname,
     twitterImage: url + '/icons/logo.svg',

@@ -33,6 +33,7 @@
 </template>
 
 <script setup lang="ts">
+import { useSeoMeta } from '@unhead/vue'
 import type { Article, TagFilter, ArticlesReceived } from '~~/types';
 import SingleArticle from '~~/components/content/SingleArticle.vue'
 import articlesQuery from '~~/queries/articles.gql'
@@ -41,8 +42,22 @@ definePageMeta({
     layout: "blog",
 })
 
+const { url } = useRuntimeConfig()
+const homepage = useHomepage()
+const { baseline } = homepage.value
 const articleList = ref([] as Article[])
 const activeTag = ref('')
+
+useSeoMeta({
+    ogTitle: 'Articles',
+    ogType: 'website',
+    ogImage: url + '/icons/logo.svg',
+    description: baseline.replace(/_/g, ''),
+    ogDescription: baseline.replace(/_/g, ''),
+    twitterTitle: 'Articles',
+    twitterImage: url + '/icons/logo.svg',
+    twitterDescription: baseline.replace(/_/g, '')
+})
 
 await useAsyncQuery<ArticlesReceived>(articlesQuery)
     .then(({ data }) => {
