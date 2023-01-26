@@ -19,7 +19,7 @@
     @media (max-width: 768px) {
         margin-bottom: 20px;
     }
-    
+
     .glitch-thumb {
         position: relative;
         height: 200px;
@@ -29,7 +29,7 @@
         @media (min-width: 768px) {
             width: #{$width};
         }
-    
+
         .glitch-img {
             position: absolute;
             top: calc(-1 * var(--gap-vertical));
@@ -41,12 +41,12 @@
             background-repeat: no-repeat;
             background-position: 50% 0;
             background-blend-mode: initial;
-    
+
             &:nth-child(5) {
                 background-color: #af4949;
                 background-blend-mode: overlay;
             }
-    
+
             &:nth-child(n+2) {
                 opacity: 0;
             }
@@ -66,14 +66,14 @@
             width: 100%;
             height: 200px;
             z-index: 1;
-            background: repeating-linear-gradient(to bottom, transparent 0%, rgba(0, 147, 255, 0.47) 0.5%, transparent 1%);
+            background: repeating-linear-gradient(to bottom, transparent 0%, rgba(0, 147, 255, 0.47) 1%, transparent 1%);
         }
     }
 
     .glitch-img {
         &:nth-child(n+2) {
             opacity: 1;
-        }                  
+        }
 
         &:nth-child(2) {
             transform: translate3d(10px,0,0);

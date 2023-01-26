@@ -66,22 +66,4 @@ await useAsyncQuery<ProjectsReceived>(projects, gqlHeaders)
         }
     })
 
-onMounted(async () => applyGlitch())
-
-const applyGlitch = () => {
-    document.querySelectorAll('article').forEach((item) => {
-        item.addEventListener('mouseover', (e) => {
-            const target = e.target as HTMLDivElement
-            const p = target.querySelector('p')
-            if (p) p.classList.add('glitch')
-        })
-
-        item.addEventListener('mouseleave', (e) => {
-            const target = e.target as HTMLDivElement
-            const p = target.querySelector('p')
-            if (p) p.classList.remove('glitch')
-        })
-    })
-}
-
 </script>

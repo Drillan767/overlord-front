@@ -1,6 +1,6 @@
 <template>
     <NuxtLink :to="`/project/${project.slug}`">
-        <article>
+        <article @mouseenter="isHovered = true" @mouseleave="isHovered = false" :class="{'animate': isHovered}">
             <div class="glitch-thumb">
                 <div class="glitch-img" v-for="i in 5" :key="i"
                     :style="`background-image: url('${getThumb(project)}')`" />
@@ -26,6 +26,7 @@ import type { Project } from '~~/types'
 defineProps<{ project: Project, activeTag: string }>()
 
 const config = useRuntimeConfig()
+const isHovered = ref(false)
 
 onMounted(() => {
     const article = document.querySelector('article')
@@ -70,6 +71,12 @@ article {
             border: solid 1px var(--title-color);
             background-color: white;
             padding: 2px 4px;
+        }
+    }
+
+    &.animate {
+        .glitch-thumb {
+            @include glitch-items(true);
         }
     }
 }

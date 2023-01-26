@@ -1,11 +1,11 @@
 <template>
     <NuxtLink :to="`/${itemType}/${item.slug}`">
-        <article class="content-item">
+        <article class="content-item" @mouseenter="isHovered = true" @mouseleave="isHovered = false" :class="{'animate': isHovered}">
             <div class="glitch-thumb">
                 <div class="glitch-img" v-for="i in 5" :key="i" :style="`background-image: url('${getThumb(item)}')`" />
             </div>
             <div class="details">
-                <p :data-text="item.title">
+                <p :data-text="item.title" :class="{'glitch': isHovered}">
                     {{ item.title }}
                     <span class="cursor"></span>
                 </p>
@@ -30,6 +30,7 @@ type propsType = {
 defineProps<propsType>()
 
 const config = useRuntimeConfig()
+const isHovered = ref(false)
 
 onMounted(() => {
     const article = document.querySelector('article')
@@ -78,11 +79,17 @@ article {
                 border: solid 1px var(--title-color);
                 background-color: white;
                 padding: 2px 4px;
-                
+
                 &:not(:last-child) {
                     margin-right: 6px;
                 }
             }
+        }
+    }
+
+    &.animate {
+        .glitch-thumb {
+            @include glitch-items(true);
         }
     }
 }
