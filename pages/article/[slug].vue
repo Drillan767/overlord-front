@@ -385,6 +385,8 @@ main {
         overflow-y: hidden;
 
         .prose {
+            @apply prose-a:text-violet-600 prose-img:mx-auto;
+
             margin: auto;
 
             p {

@@ -25,7 +25,7 @@
             </div>
         </header>
 
-        <article v-html="project.body" />
+        <article v-html="project.body" class="prose" />
 
         <div class="links">
             <Button type="link" :link="project.repo_link" content="Github repo" target="_blank" />
@@ -128,7 +128,7 @@ header {
 }
 
 article {
-    @apply prose lg:prose-xl mx-auto mt-4 prose-img:mx-auto px-2;
+    @apply lg:prose-xl mx-auto mt-4 prose-img:mx-auto prose-a:text-violet-600 px-2;
     color: var(--font-color);
 }
 
