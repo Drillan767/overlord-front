@@ -1,7 +1,7 @@
 <template>
     <section id="featured" v-if="(featuredArticles.length || featuredProjects.length)">
         <div class="content">
-            <div class="articles">
+            <div class="articles" v-if="featuredArticles.length">
                 <div class="title">
                     <h2 class="uppercase">
                         Featured <br />
@@ -15,7 +15,7 @@
                     <ItemThumbnail item-type="article" :item="article" />
                 </div>
             </div>
-            <div class="projects">
+            <div class="projects" v-if="featuredProjects.length">
                 <div class="title">
                     <h2>
                         Featured <br />
@@ -43,7 +43,7 @@ import type { Article, ArticlesReceived, Project, ProjectsReceived } from '~~/ty
 const gqlHeaders = {
     filter: {
         featured: { _eq: true },
-        status: { _eq: 'published' }
+        status: { _eq: 'published' },
     },
     limit: 3
 }

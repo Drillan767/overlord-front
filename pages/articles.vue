@@ -28,6 +28,10 @@
                     @change-tag="handleFilter"
                 />
             </div>
+
+            <p v-if="filteredArticles.length === 0" class="text-center text-white text-xl">
+                Nothing to see here for now...
+            </p>
         </div>
     </div>
 </template>
@@ -59,7 +63,7 @@ useSeoMeta({
     twitterDescription: baseline.replace(/_/g, '')
 })
 
-await useAsyncQuery<ArticlesReceived>(articlesQuery)
+await useAsyncQuery<ArticlesReceived>(articlesQuery, {filter: {status: {_eq: 'published'}}})
     .then(({ data }) => {
         if (data.value) {
             articleList.value = data.value.Articles

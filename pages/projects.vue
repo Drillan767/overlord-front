@@ -24,6 +24,10 @@
                 <SingleProject v-for="(project, i) in filteredProjects" :key="i" :activeTag="activeTag"
                     :project="project" @change-tag="handleFilter" />
             </div>
+
+            <p v-if="filteredProjects.length === 0" class="text-center text-white text-xl">
+                Nothing to see here for now...
+            </p>
         </div>
     </div>
 </template>
