@@ -6,14 +6,17 @@
             <Meta property="description" :content="article.description" />
             <Meta property="og:type" content="article" />
             <Meta property="og:title" :content="article.title" />
-            <Meta property="og:image" :content="getIllustration()"/>
-            <Meta property="twitter:image" :content="getIllustration()"/>
-            <Meta property="og:description" :content="article.description" />
-            <Meta property="twitter:description" :content="article.description" />
-            <Meta property="article:author" content="Joseph Levarato" />
             <Meta property="og:url" :content="`${config.url}/article/${article.slug}`" />
+            <Meta property="og:image" :content="getIllustration()"/>
+            <Meta property="og:description" :content="article.description" />
+
+            <Meta name="twitter:title" :content="article.title" />
+            <Meta name="twitter:image" :content="getIllustration()"/>
+            <Meta name="twitter:description" :content="article.description" />
+
+            <Meta property="article:author" content="Joseph Levarato" />
             <Meta property="article:published_time" :content="article.date_created" />
-            <Meta property="article:modified_time" v-if="article.date_created" :content="article.date_updated" />
+            <Meta property="article:modified_time" v-if="article.date_updated" :content="article.date_updated" />
             <Link rel="canonical" :href="`${config.url}/article/${article.slug}`" />
         </Head>
 
