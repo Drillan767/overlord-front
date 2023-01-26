@@ -21,13 +21,6 @@ export default defineNuxtConfig({
                 { name: 'msapplication-Tilecolor', content: '#312b5e' },
                 { name: 'theme-color', content: '#312b5e' },
                 { name: 'twitter:card', content: 'summary_large_image' },
-
-               /*  { name: 'twitter:card', content: 'summary_large_image' },
-                { property: 'og:title', content: 'Joseph Levarato' },
-                { name: 'twitter:title', content: 'Joseph Levarato' },
-                { property: 'og:type', content: 'website' },
-                { property: 'og:image', content: `${process.env.URL}/icons/logo.svg` },
-                { property: 'twitter:image', content: `${process.env.URL}/icons/logo.svg` }, */
             ],
 
             link: [

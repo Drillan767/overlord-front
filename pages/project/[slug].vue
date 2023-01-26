@@ -79,7 +79,6 @@ onMounted(() => {
     }, 1000)
 })
 
-
 useSeoMeta({
     ogTitle: project.value.title,
     ogType: 'article',
