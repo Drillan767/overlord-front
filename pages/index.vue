@@ -3,7 +3,6 @@
         <Head>
             <Title>Landing</Title>
         </Head>
-
         <Navbar />
         <LandingViewport />
         <LandingAbout />
@@ -14,23 +13,24 @@
 </template>
 
 <script setup lang="ts">
-import type { Homepage } from '~~/types';
-import homepageGql from '../queries/homepage.gql'
+import { useSeoMeta } from '@unhead/vue';
 
-type HomepageData = {
-    Homepage: Homepage
-}
-
-const homepage = ref({} as Homepage)
-
-await useAsyncQuery<HomepageData>(homepageGql)
-    .then(({ data }) => {
-        if (data.value) {
-            homepage.value = data.value.Homepage
-        }
-    })
+const { url } = useRuntimeConfig()
+const homepage = useHomepage()
+const { fullname, baseline} = homepage.value
 
 definePageMeta({
     layout: "default",
 });
+
+useSeoMeta({
+    ogTitle: fullname,
+    ogType: 'website',
+    ogImage: url + '/icons/logo.svg',
+    ogDescription: baseline.replace(/_/g, ''),
+    twitterTitle: fullname,
+    twitterImage: url + '/icons/logo.svg',
+    twitterDescription: baseline.replace(/_/g, '')
+})
+
 </script>

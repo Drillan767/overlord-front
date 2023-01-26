@@ -27,7 +27,7 @@ useHead({
         class: color
     },
 
-    meta: [
+    /* meta: [
         {
             name: 'description',
             content: homepage.value.baseline.replace(/_/g, '')
@@ -40,7 +40,7 @@ useHead({
             name: 'twitter:description',
             content: homepage.value.baseline.replace(/_/g, '')
         },
-    ]
+    ] */
 })
 
 </script>
