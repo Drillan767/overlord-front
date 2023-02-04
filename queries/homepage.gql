@@ -1,19 +1,26 @@
-query Homepage ($showInfos: Boolean = true) {
+query Homepage ($locale: String!) {
     Homepage {
         fullname
         baseline
         links
+        description
+
+        translations(filter: {languages_code: {code: {_eq: $locale}}}) {
+            baseline
+            description
+            legal
+        }
 
         icon {
             title
             id
         }
 
-        user @include(if: $showInfos) {
+        user {
             title
             id
         }
 
-        description @include(if: $showInfos)
+        
     }
 }

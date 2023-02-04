@@ -1,10 +1,12 @@
 <template>
     <footer>
         <div class="first-row">
-            <NuxtLink to="/">
-                <nuxt-img format="webp" :src="`${config.apiUrl}/assets/${icon.id}`" :alt="icon.title" />
-                <span>{{ fullname }}</span>
-            </NuxtLink>
+            <div class="flex gap-x-5">
+                <NuxtLink to="/">
+                    <nuxt-img format="webp" :src="`${config.apiUrl}/assets/${icon.id}`" :alt="icon.title" />
+                    <span>{{ fullname }}</span>
+                </NuxtLink>
+            </div>
             <div class="links">
                 <ul>
                     <li v-for="(link, i) in footerLinks" :key="i">
@@ -13,6 +15,7 @@
                         </NuxtLink>
                     </li>
                 </ul>
+                <LanguageSwitcher />
                 <div class="theme">
                     <button @click="toggleTheme" :aria-label="`toggle ${color === 'dark' ? 'light' : 'dark'} theme`">
                         <LandingDark v-if="color === 'dark'" />
@@ -24,9 +27,12 @@
         <hr />
         <div class="second-row">
             <span>
-                © {{ year }} <NuxtLink href="/">{{ fullname }}</NuxtLink>. All Rights Reserved.
+                © {{ year }} <NuxtLink href="/">{{ fullname }}</NuxtLink>. {{ t('arr') }}.
             </span>
             <div class="socials">
+
+                <span>Mentions légales</span>
+                <span>|</span>
                 <a
                     v-for="(link, i) in links"
                     :href="link.url"
@@ -42,10 +48,12 @@
 </template>
 
 <script setup lang="ts">
+import LanguageSwitcher from '~~/components/layout/LanguageSwitcher.vue'
 
 const date = new Date;
 const year = ref(date.getFullYear())
 const config = useRuntimeConfig()
+const { t, locale } = useI18n()
 const color = useTheme()
 const route = useRoute()
 const homepage = useHomepage()
@@ -116,7 +124,7 @@ footer {
             }
 
             .theme {
-                @apply flex items-center;
+                @apply flex items-center ml-2;
 
                 button {
                     color: var(--font-color);
@@ -152,3 +160,14 @@ footer {
     }
 }
 </style>
+
+<i18n lang="json">
+{
+    "fr-FR": {
+        "arr": "Tous Droits Réservés"
+    },
+    "en-US": {
+        "arr": "All Rights Reserved"
+    }
+}
+</i18n>

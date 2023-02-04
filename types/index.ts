@@ -57,12 +57,22 @@ export type Tag = {
     title: string,
 }
 
+export type Page = {
+    title: string,
+    slug: string,
+    body: string,
+}
+
 export type ArticlesReceived = {
     Articles: Article[]
 }
 
 export type ProjectsReceived = {
     Project: Project[]
+}
+
+export type PagesReceived = {
+    Pages: Page[]
 }
 
 export type TagFilter = {

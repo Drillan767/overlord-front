@@ -12,12 +12,14 @@ type HomepageData = {
     Homepage: Homepage
 }
 
+const { locale } = useI18n()
 const color = useTheme()
 const homepage = useHomepage()
 
-await useAsyncQuery<HomepageData>(homepageGql)
+await useAsyncQuery<HomepageData>(homepageGql, {locale: locale.value})
     .then(({ data }) => {
         if (data.value) {
+            console.log(data.value)
             homepage.value = data.value.Homepage
         }
     })

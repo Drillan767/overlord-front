@@ -1,0 +1,9 @@
+query Pages($language: String!) {
+    Pages {
+        translations(filter: { languages_id: { code: { _eq: $language } } }) {
+            title
+            slug
+            body
+        }
+    }
+}

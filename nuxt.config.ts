@@ -6,6 +6,7 @@ export default defineNuxtConfig({
         '@nuxtjs/tailwindcss',
         '@nuxtjs/apollo',
         '@nuxt/image-edge',
+        '@nuxtjs/i18n',
     ],
 
     app: {
@@ -47,6 +48,16 @@ export default defineNuxtConfig({
 
     nitro: {
         compressPublicAssets: true,
+    },
+
+    i18n: {
+        locales: ['fr-FR', 'en-US'],
+        strategy: 'no_prefix',
+        defaultLocale: 'en',
+        detectBrowserLanguage: {
+            useCookie: false
+            
+        }
     },
 
     apollo: {
