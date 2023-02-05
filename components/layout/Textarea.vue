@@ -10,9 +10,9 @@
 </template>
 
 <script setup lang="ts">
-const textarea = ref(null);
+const textarea = ref();
 
-const props = defineProps({
+defineProps({
     modelValue: String,
     identifier: String,
     label: String,
@@ -21,7 +21,10 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue'])
 
 const input = (e) => {
-    textarea.value.style = `height: ${e.target.scrollHeight}px;`
-    emit('update:modelValue', e.target.value)
+    if (textarea.value) {
+        textarea.value.style = `height: ${e.target.scrollHeight}px;`
+        emit('update:modelValue', e.target.value)
+    }
+
 }
 </script>
