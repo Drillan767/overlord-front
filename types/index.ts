@@ -1,6 +1,5 @@
 export type Homepage = {
-    baseline: string,
-    description: string,
+
     translations: {
         languages_code: {
             code: string
@@ -24,20 +23,30 @@ export type Homepage = {
     }
 }
 
-export type Article = {
+interface TranslatedFields {
     title: string,
+    slug: string,
+    body: string,
+    description: string,
+}
+
+interface Translation {
+    translations: TranslatedFields[]
+}
+
+type ArticlesReceivedPayload = ArticleFields & Translation
+
+interface ArticleFields {
+    id: string,
     date_created: string,
     date_updated: string,
-    description: string,
-    body: string,
-    toc: string,
-    id: string,
-    slug: string,
     illustration: Illustration
     tags: {
         Tag_id: Tag
     }[]
 }
+
+export type Article = ArticleFields & TranslatedFields
 
 export type Project = {
     id: string,
@@ -71,7 +80,7 @@ export type Page = {
 }
 
 export type ArticlesReceived = {
-    Articles: Article[]
+    Articles: ArticlesReceivedPayload[]
 }
 
 export type ProjectsReceived = {

@@ -1,11 +1,13 @@
-query Articles ($filter: Articles_filter, $limit: Int = -1) {
-	Articles(filter: $filter, limit: $limit) {
-		id
-		title
-        description
-		slug
-		date_created,
-		date_updated,
+query Articles ($status: String!, $locale: String!, $featured: Boolean!, $limit: Int = -1) {
+	Articles (filter: {status: {_eq: $status}, featured: {_eq: $featured}}, limit: $limit) {
+		translations(filter: {languages_code: {code: {_eq: $locale}}}) {
+			title
+			slug
+			description @skip(if: $featured)
+			body @skip(if: $featured)
+		}
+		date_created
+		date_updated
 		tags {
 			Tag_id {
 				title
@@ -13,7 +15,7 @@ query Articles ($filter: Articles_filter, $limit: Int = -1) {
 		}
 		illustration {
 			id
-			title
+            title
 		}
 	}
 }

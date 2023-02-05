@@ -93,7 +93,8 @@ await useAsyncQuery<ArticlesReceived>(articleQuery, {
         } else {
             throw createError({
                 statusCode: 404,
-                message: 'Article not found ya idiot'
+                message: 'Article not found ya idiot',
+                fatal: true,
             })
         }
     })
