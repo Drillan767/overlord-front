@@ -1,5 +1,9 @@
-query Articles ($status: String!, $locale: String!, $featured: Boolean!, $limit: Int = -1) {
-	Articles (filter: {status: {_eq: $status}, featured: {_eq: $featured}}, limit: $limit) {
+query Articles ($filters: Articles_filter, $locale: String! $featured: Boolean = false, $limit: Int = -1) {
+	Articles (filter: $filters, limit: $limit) {
+		title
+		slug
+		body @skip(if: $featured)
+		description @skip(if: $featured)
 		translations(filter: {languages_code: {code: {_eq: $locale}}}) {
 			title
 			slug

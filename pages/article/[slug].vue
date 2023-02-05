@@ -60,7 +60,7 @@ import hljs from 'highlight.js'
 import 'highlight.js/styles/tokyo-night-dark.css'
 import { Article, ArticlesReceived } from '~~/types'
 import { getReadingTime, scrollSpy } from '~~/utils/blog'
-import articleQuery from '../../queries/article.gql'
+import articleQuery from '../../queries/articles.gql'
 import TagSVG from '~~/components/svg/Tag.vue'
 import TimeSVG from '~~/components/svg/Time.vue'
 import DateSVG from '~~/components/svg/Date.vue'
@@ -71,6 +71,7 @@ definePageMeta({
 
 const route = useRoute()
 const config = useRuntimeConfig()
+const { locale, t } = useI18n() 
 
 const article = ref({} as Article)
 const barWidth = ref(0)
@@ -79,9 +80,16 @@ const lastCommit = ref('')
 const minuteRead = ref(0)
 const tagList = ref('')
 const brEnabled = ref(false)
+const fullLocale = locale.value === 'fr' ? 'fr-FR' : 'en-US'
 
 await useAsyncQuery<ArticlesReceived>(articleQuery, {
-    search: route.params.slug.toString()
+    search: route.params.slug.toString(),
+    locale: fullLocale,
+    filter: {
+        status: {_eq: 'published'},
+    },
+    featured: false,
+    limit: 1
 })
     .then(({ data }) => {
         if (data.value && data.value.Articles.length) {

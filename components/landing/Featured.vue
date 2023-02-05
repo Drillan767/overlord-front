@@ -41,9 +41,12 @@ const fullLocale = locale.value === 'fr' ? 'fr-FR' : 'en-US'
 
 const gqlHeaders = {
     featured: true,
-    status: 'published',
     locale: fullLocale,
-    limit: 3
+    limit: 3,
+    filters: {
+        status: {_eq: 'published'},
+        featured: {_eq: true}
+    }
 }
 
 const featuredArticles = ref<Article[]>([])
