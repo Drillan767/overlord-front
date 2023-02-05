@@ -11,9 +11,6 @@ export default defineNuxtConfig({
 
     app: {
         head: {
-            htmlAttrs: {
-                lang: 'en'
-            },
             titleTemplate: '%s | Joseph Levarato',
 
             viewport: 'width=device-width, initial-scale=1',
@@ -51,12 +48,20 @@ export default defineNuxtConfig({
     },
 
     i18n: {
-        locales: ['fr-FR', 'en-US'],
-        strategy: 'no_prefix',
+        locales: ['fr', 'en'],
+        strategy: 'prefix',
         defaultLocale: 'en',
+        customRoutes: 'config',
+        pages: {
+            projects: {
+                fr: '/projets'
+            },
+            'project/[slug]': {
+                fr: '/projet/[slug]'
+            }
+        },
         detectBrowserLanguage: {
-            useCookie: false
-            
+            useCookie: false,
         }
     },
 

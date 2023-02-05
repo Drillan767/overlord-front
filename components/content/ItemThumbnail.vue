@@ -1,6 +1,11 @@
 <template>
-    <NuxtLink :to="`/${itemType}/${item.slug}`">
-        <article class="content-item" @mouseenter="isHovered = true" @mouseleave="isHovered = false" :class="{'animate': isHovered}">
+    <NuxtLink :to="`${locale}/${t(itemType)}/${item.slug}`">
+        <article
+            class="content-item"
+            @mouseenter="isHovered = true"
+            @mouseleave="isHovered = false"
+            :class="{'animate': isHovered}"
+        >
             <div class="glitch-thumb">
                 <div class="glitch-img" v-for="i in 5" :key="i" :style="`background-image: url('${getThumb(item)}')`" />
             </div>
@@ -29,6 +34,7 @@ type propsType = {
 
 defineProps<propsType>()
 
+const { locale, t } = useI18n() 
 const config = useRuntimeConfig()
 const isHovered = ref(false)
 
@@ -94,3 +100,16 @@ article {
     }
 }
 </style>
+
+<i18n lang="json">
+{
+    "en": {
+        "project": "project",
+        "article": "article"
+    },
+    "fr": {
+        "project": "projet",
+        "article": "article"
+    }
+}
+</i18n>

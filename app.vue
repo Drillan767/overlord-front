@@ -24,6 +24,9 @@ await useAsyncQuery<HomepageData>(homepageGql, {locale: locale.value})
     })
 
 useHead({
+    htmlAttrs: {
+        lang: locale
+    },
     bodyAttrs: {
         class: color
     },

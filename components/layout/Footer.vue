@@ -165,10 +165,10 @@ footer {
 
 <i18n lang="json">
 {
-    "fr-FR": {
+    "fr": {
         "arr": "Tous Droits Réservés"
     },
-    "en-US": {
+    "en": {
         "arr": "All Rights Reserved"
     }
 }

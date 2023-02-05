@@ -30,23 +30,78 @@
 </template>
 
 <script setup lang="ts">
-import Globe from "~~/components/svg/Globe.vue";
-import ArrowDown from "~~/components/svg/ArrowDown.vue";
+import Globe from "~~/components/svg/Globe.vue"
+import ArrowDown from "~~/components/svg/ArrowDown.vue"
 
-const { locale, locales, setLocale } = useI18n();
+const { locale, locales, setLocale } = useI18n()
+
+const ids = ['viewport', 'about', 'featured', 'contact']
+
 const availableLocales = computed(() => {
-    const list = locales.value as string[];
-    return list.filter((l) => l !== locale.value);
-});
+    const list = locales.value as string[]
+    return list.filter((l) => l !== locale.value)
+})
 
-const isOpened = ref(false);
+const isOpened = ref(false)
 
 const setOption = (l: string) => {
-    setLocale(l);
-    isOpened.value = false;
+    setLocale(l)
+    isOpened.value = false
 }
 
 const format = (text: string) => text.split("-")[0].toUpperCase()
+
+const revealItems = () => {
+    const ie = new IntersectionObserver((entries) => {
+        const navbar = document.querySelector('nav')
+        if (navbar) {
+            entries.forEach((e) => {
+                if (e.intersectionRatio > 0.25) {
+                    e.target.classList.add('fade-in')
+
+                    if (['about', 'featured', 'contact'].includes(e.target.id)) {
+                        navbar.classList.add('display')
+                    } else {
+                        navbar.classList.remove('display')
+                    }
+                }
+            })
+        }
+
+    }, {
+        threshold: [0.25]
+    })
+
+    ids.forEach((id) => {
+        const el = document.getElementById(id)
+        if (el) ie.observe(el)
+    })
+}
+
+const waitForElm = (id: string) => {
+    return new Promise((resolve) => {
+        if (document.getElementById(id)) {
+            return resolve(document.getElementById(id))
+        }
+
+        const observer = new MutationObserver(() => {
+            if (document.getElementById(id)) {
+                resolve(document.getElementById(id))
+            }
+        })
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true,
+        })
+    })
+}
+
+onMounted(() => {
+    const sections = ids.map((id) => waitForElm(id))
+    Promise.all(sections).then(() => revealItems())
+})
+
 </script>
 
 <style scoped lang="scss">

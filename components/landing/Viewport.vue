@@ -110,10 +110,10 @@ const typeLetters = () => {
 
 <i18n lang="json">
 {
-    "fr-FR": {
+    "fr": {
         "scrollText": "Découvrez..."
     },
-    "en-US": {
+    "en": {
         "scrollText": "Discover..."
     }
 }

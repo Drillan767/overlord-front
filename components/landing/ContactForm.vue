@@ -88,8 +88,8 @@ const submit = async () => {
 
 <i18n lang="json">
 {
-    "fr-FR": {
-        "message": "Need help? <br />Want to ask <span class=\"glitch\" data-text=\"something\">something</span>? Talk about <span class=\"glitch\" data-text=\"anything\">anything</span>? Drop a mail!",
+    "fr": {
+        "message": "Besoin d'aide ? <br /> Ou simplement besoin de <span class=\"glitch\" data-text=\"discuter\">discuter</span> ?<br /> Envoyez-moi un <span class=\"glitch\" data-text=\"message\">message</span> !",
         "form": {
             "fullName": "Nom complet",
             "email": "Adresse email",
@@ -97,8 +97,8 @@ const submit = async () => {
             "send": "Envoyer"
         }
     },
-    "en-US": {
-        "message": "Besoin d'aide ? <br /> Ou simplement besoin de <span class=\"glitch\" data-text=\"discuter\">discuter</span> ?<br /> Envoyez-moi un <span class=\"glitch\" data-text=\"message\">message</span> !",
+    "en": {
+        "message": "Need help? <br />Want to ask <span class=\"glitch\" data-text=\"something\">something</span>? Talk about <span class=\"glitch\" data-text=\"anything\">anything</span>? Drop a mail!",
         "form": {
             "fullName": "Full name",
             "email": "Email address",

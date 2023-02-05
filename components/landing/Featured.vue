@@ -5,7 +5,7 @@
                 <div class="title">
                     <h2 class="uppercase" v-html="t('articles.featured')" />
 
-                    <Button type="link" link="/articles" :content="t('articles.all')" />
+                    <Button type="link" :link="localePath({name: 'articles'})" :content="t('articles.all')" />
                 </div>
 
                 <div class="list" v-for="(article, i) in featuredArticles" :key="i">
@@ -16,7 +16,7 @@
                 <div class="title">
                     <h2 class="uppercase" v-html="t('projects.featured')" />
 
-                    <Button type="link" link="/projects" :content="t('projects.all')" />
+                    <Button type="link" :link="localePath({name: 'projects'})" :content="t('projects.all')" />
                 </div>
                 <div class="list" v-for="(project, i) in featuredProjects" :key="i">
                     <ItemThumbnail item-type="project" :item="project" />
@@ -43,6 +43,7 @@ const gqlHeaders = {
 }
 
 const { locale, t } = useI18n()
+const localePath = useLocalePath()
 
 const featuredArticles = ref<Article[]>([])
 const featuredProjects = ref<Project[]>([])
@@ -66,7 +67,7 @@ await useAsyncQuery<ProjectsReceived>(projects, gqlHeaders)
 
 <i18n lang="json">
 {
-    "fr-FR": {
+    "fr": {
         "articles": {
             "featured": "<span class=\"glitch\" data-text=\"ARTICLES\">Articles</span><br /> en avant",
             "all": "Tous les articles"
@@ -76,7 +77,7 @@ await useAsyncQuery<ProjectsReceived>(projects, gqlHeaders)
             "all": "Tous les projets"
         }
     },
-    "en-US": {
+    "en": {
         "articles": {
             "featured": "Featured <br /><span class=\"glitch\" data-text=\"ARTICLES\">Articles</span>",
             "all": "View all articles"

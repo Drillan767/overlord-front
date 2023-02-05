@@ -13,7 +13,9 @@
 </template>
 
 <script setup lang="ts">
-import { useSeoMeta } from '@unhead/vue';
+import { useSeoMeta } from '@unhead/vue'
+import Footer from '~~/components/layout/Footer.vue'
+import Navbar from '~~/components/layout/Navbar.vue'
 
 const { url } = useRuntimeConfig()
 const homepage = useHomepage()

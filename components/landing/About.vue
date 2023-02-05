@@ -19,7 +19,8 @@ const homepage = useHomepage()
 const { user, translations } = homepage.value
 
 const description = computed(() => {
-    const description = translations.find((t) => t.languages_code.code === locale.value)?.description
+    const fullLocale = locale.value === 'fr' ? 'fr-FR' : 'en-US'
+    const description = translations.find((t) => t.languages_code.code === fullLocale)?.description
 
     return description ?? ''
 })
