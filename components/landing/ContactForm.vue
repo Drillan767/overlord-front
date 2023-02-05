@@ -2,29 +2,24 @@
     <section id="contact">
         <div class="content grid grid-cols-2 gap-8">
             <div class="col-span-2 sm:col-span-1">
-                <h2>
-                    Need help? <br />Want to ask
-                    <span class="glitch" data-text="something">something</span>?
-                    Talk about <span class="glitch" data-text="anything">anything</span>?
-                     Drop a mail!
-                </h2>
+                <h2 v-html="t('message')" />
             </div>
-            <form @submit.prevent="submit" class="col-span-2 sm:col-span-1 grid grid-cols-2 gap-4">
+            <form @submit.prevent="submit">
                  <Input
-                    label="Full name"
+                    :label="t('form.fullName')"
                     v-model="form.name"
                     identifier="name"
                     class="col-span-2 sm:col-span-1"
                 />
                  <Input
                     type="email"
-                    label="Email address"
+                    :label="t('form.email')"
                     v-model="form.email"
                     identifier="email"
                     class="col-span-2 sm:col-span-1"
                 />
                 <Input
-                    label="Subject"
+                    :label="t('form.subject')"
                     v-model="form.subject"
                     identifier="subject"
                     class="col-span-2"
@@ -40,7 +35,7 @@
                 <div class="flex justify-end col-span-2">
                     <Button
                         type="button"
-                        content="Send"
+                        :content="t('form.send')"
                     />
                 </div>
             </form>
@@ -52,6 +47,8 @@
 import Button from "~~/components/layout/Button.vue";
 import Input from "~~/components/layout/Input.vue";
 import Textarea from "~~/components/layout/Textarea.vue";
+
+const { t } = useI18n()
 
 const form = ref({
     name: '',
@@ -82,5 +79,32 @@ const submit = async () => {
         line-height: 1;
         color: var(--title-color);
     }
+
+    form {
+        @apply col-span-2 sm:col-span-1 grid grid-cols-2 gap-4;
+    }
 }
 </style>
+
+<i18n lang="json">
+{
+    "fr-FR": {
+        "message": "Need help? <br />Want to ask <span class=\"glitch\" data-text=\"something\">something</span>? Talk about <span class=\"glitch\" data-text=\"anything\">anything</span>? Drop a mail!",
+        "form": {
+            "fullName": "Nom complet",
+            "email": "Adresse email",
+            "subject": "Objet",
+            "send": "Envoyer"
+        }
+    },
+    "en-US": {
+        "message": "Besoin d'aide ? <br /> Ou simplement besoin de <span class=\"glitch\" data-text=\"discuter\">discuter</span> ?<br /> Envoyez-moi un <span class=\"glitch\" data-text=\"message\">message</span> !",
+        "form": {
+            "fullName": "Full name",
+            "email": "Email address",
+            "subject": "Subject",
+            "send": "Send"
+        }
+    }
+}
+</i18n>

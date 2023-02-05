@@ -6,42 +6,24 @@
                     <nuxt-img format="webp" :src="`${config.apiUrl}/assets/${user.id}`" :alt="user.title" />
                 </div>
             </div>
-            <div class="text-xl prose w-full md:w-1/2" v-html="description" />
+            <div class="prose" v-html="description" />
         </div>
     </section>
 </template>
 
 <script setup lang="ts">
 
-const homepage = useHomepage()
-const { description, user } = homepage.value
-
 const config = useRuntimeConfig()
+const { locale } = useI18n()
+const homepage = useHomepage()
+const { user, translations } = homepage.value
 
-const randInt = (min: number, max: number) => {
-    const random = Math.random() * ((max + 1) - min)
-    return Math.floor(random) + 1
-}
+const description = computed(() => {
+    const description = translations.find((t) => t.languages_code.code === locale.value)?.description
 
-const updatePositions = () => {
-    const words = document.querySelectorAll<HTMLElement>('.words p')
-
-    for (let i = 0; i < words.length; i++) {
-        let newX = randInt(30, 150)
-        let newY = randInt(20, 80)
-
-        let topValue = `calc(${newY.toString()}% - 1ex)`
-        let leftValue = `${newX.toString()}%`
-
-        words[i].style.top = topValue;
-        words[i].style.left = leftValue;
-    }
-}
-
-onMounted(() => {
-    updatePositions()
-    setInterval(updatePositions, 5000)
+    return description ?? ''
 })
+
 
 </script>
 
@@ -58,7 +40,11 @@ onMounted(() => {
         }
 
         .prose {
-            color: var(--font-color);
+            @apply text-xl w-full md:w-1/2 prose-a:text-violet-600 dark:prose-invert;
+            
+            p {
+                color: var(--font-color);
+            }
         }
     }
 }

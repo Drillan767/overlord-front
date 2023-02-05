@@ -3,12 +3,9 @@
         <div class="content">
             <div class="articles" v-if="featuredArticles.length">
                 <div class="title">
-                    <h2 class="uppercase">
-                        Featured <br />
-                        <span class="glitch" data-text="ARTICLES">Articles</span>
-                    </h2>
+                    <h2 class="uppercase" v-html="t('articles.featured')" />
 
-                    <Button type="link" link="/articles" content="View all articles" />
+                    <Button type="link" link="/articles" :content="t('articles.all')" />
                 </div>
 
                 <div class="list" v-for="(article, i) in featuredArticles" :key="i">
@@ -17,12 +14,9 @@
             </div>
             <div class="projects" v-if="featuredProjects.length">
                 <div class="title">
-                    <h2>
-                        Featured <br />
-                        <span class="glitch" data-text="PROJECTS">Projects</span>
-                    </h2>
+                    <h2 class="uppercase" v-html="t('projects.featured')" />
 
-                    <Button type="link" link="/projects" content="View all projects" />
+                    <Button type="link" link="/projects" :content="t('projects.all')" />
                 </div>
                 <div class="list" v-for="(project, i) in featuredProjects" :key="i">
                     <ItemThumbnail item-type="project" :item="project" />
@@ -48,6 +42,8 @@ const gqlHeaders = {
     limit: 3
 }
 
+const { locale, t } = useI18n()
+
 const featuredArticles = ref<Article[]>([])
 const featuredProjects = ref<Project[]>([])
 
@@ -67,3 +63,28 @@ await useAsyncQuery<ProjectsReceived>(projects, gqlHeaders)
     })
 
 </script>
+
+<i18n lang="json">
+{
+    "fr-FR": {
+        "articles": {
+            "featured": "<span class=\"glitch\" data-text=\"ARTICLES\">Articles</span><br /> en avant",
+            "all": "Tous les articles"
+        },
+        "projects": {
+            "featured": "<span class=\"glitch\" data-text=\"PROJETS\">Projets</span><br /> en avant",
+            "all": "Tous les projets"
+        }
+    },
+    "en-US": {
+        "articles": {
+            "featured": "Featured <br /><span class=\"glitch\" data-text=\"ARTICLES\">Articles</span>",
+            "all": "View all articles"
+        },
+        "projects": {
+            "featured": "Featured <br /><span class=\"glitch\" data-text=\"PROJECTS\">Projects</span>",
+            "all": "View all projects"
+        }
+    }
+}
+</i18n>

@@ -1,6 +1,13 @@
 export type Homepage = {
     baseline: string,
     description: string,
+    translations: {
+        languages_code: {
+            code: string
+        },
+        baseline: string,
+        description: string,
+    }[],
     fullname: string,
     icon: {
         id: string

@@ -1,5 +1,14 @@
 @import "variables";
 
+@mixin cursor ($fontSize) {
+    content: '▮';
+    color: var(--font-color);
+    display: inline-block;
+    margin-left: 5px;
+    font-size: $fontSize;
+    animation: blink .6s linear infinite alternate;
+}
+
 @mixin content-item ($width, $articlesToo: true) {
     position: relative;
 

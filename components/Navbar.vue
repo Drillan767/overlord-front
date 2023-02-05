@@ -36,6 +36,8 @@
 
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
+import LandingLight from '~~/components/svg/Light.vue'
+import LandingDark from '~~/components/svg/Dark.vue'
 
 const config = useRuntimeConfig()
 const color = useTheme()

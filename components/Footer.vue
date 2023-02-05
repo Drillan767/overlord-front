@@ -48,6 +48,8 @@
 </template>
 
 <script setup lang="ts">
+import LandingLight from '~~/components/svg/Light.vue'
+import LandingDark from '~~/components/svg/Dark.vue'
 import LanguageSwitcher from '~~/components/layout/LanguageSwitcher.vue'
 
 const date = new Date;

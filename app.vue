@@ -19,7 +19,6 @@ const homepage = useHomepage()
 await useAsyncQuery<HomepageData>(homepageGql, {locale: locale.value})
     .then(({ data }) => {
         if (data.value) {
-            console.log(data.value)
             homepage.value = data.value.Homepage
         }
     })

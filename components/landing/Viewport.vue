@@ -2,7 +2,7 @@
     <header id="viewport">
         <div class="content">
             <h1 class="title glitch" :data-text="fullname">{{ fullname }}</h1>
-            <p class="subtitle" v-html="subtitle"></p>
+            <p class="subtitle" v-html="baseline"></p>
 
             <div class="scroll">
                 <span class="typed-text" @click="scrollNext">{{ typedText }}</span>
@@ -14,10 +14,12 @@
 
 <script setup lang="ts">
 
+const { locale, t } = useI18n() 
 const homepage = useHomepage()
-const { fullname, baseline } = homepage.value
-const scrollText = "Let's scroll!"
+const { fullname, translations } = homepage.value
+const scrollText = t('scrollText')
 const typedText = ref('')
+
 let i = 0
 
 onMounted(() => {
@@ -26,6 +28,14 @@ onMounted(() => {
         typeLetters()
 
     }, 2000)
+})
+
+const baseline = computed(() => {
+    const baseline = translations.find((t) => t.languages_code.code === locale.value)?.baseline
+    if (baseline) {
+        return baseline.replaceAll(/_([a-zA-Zé]*)_/g, (_, g) => `<span class="glitch" data-text="${g}">${g}</span>`)
+    }
+    return ''
 })
 
 const scrollNext = () => {
@@ -44,19 +54,12 @@ const typeLetters = () => {
     }
 }
 
-const subtitle = computed(() =>
-    baseline.replaceAll(/_([a-zA-Z]*)_/g, (m, g) =>
-        `<span class="glitch" data-text="${g}">${g}</span>`))
-
 </script>
 
 <style scoped lang="scss">
 #viewport {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    @apply flex-col;
     background-color: var(--bg-color);
+    @apply flex flex-col justify-center items-center;
     height: 100vh;
 
     .content {
@@ -76,10 +79,7 @@ const subtitle = computed(() =>
         }
 
         .scroll {
-            position: absolute;
-            display: flex;
-            justify-content: center;
-            width: 100%;
+            @apply absolute flex justify-center w-full;
             top: 38vh;
 
             p {
@@ -107,3 +107,14 @@ const subtitle = computed(() =>
     }
 }
 </style>
+
+<i18n lang="json">
+{
+    "fr-FR": {
+        "scrollText": "Découvrez..."
+    },
+    "en-US": {
+        "scrollText": "Discover..."
+    }
+}
+</i18n>

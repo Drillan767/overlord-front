@@ -1,26 +1,23 @@
-query Homepage ($locale: String!) {
-    Homepage {
-        fullname
-        baseline
-        links
-        description
-
-        translations(filter: {languages_code: {code: {_eq: $locale}}}) {
-            baseline
-            description
-            legal
-        }
-
-        icon {
-            title
-            id
-        }
-
-        user {
-            title
-            id
-        }
-
-        
-    }
+query Homepage {
+	Homepage {
+		fullname
+		baseline
+		description
+		links
+		translations {
+			languages_code {
+				code
+			}
+			baseline
+			description
+		}
+		icon {
+			id
+			title
+		}
+		user {
+			id
+			title
+		}
+	}
 }
