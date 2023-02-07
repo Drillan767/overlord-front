@@ -57,16 +57,15 @@ await useAsyncQuery<ArticlesReceived>(articles, gqlHeaders)
         if (data.value) {
             console.log(toRaw(data.value.Articles))
             featuredArticles.value = data.value.Articles.map((article) => {
-                const { id, date_created, date_updated, illustration, tags } = article
+                const { date_created, date_updated, illustration, tags } = article
                 const [{ title, slug, description, body }] = article.translations
 
                 return {
-                    id,
                     title,
                     slug,
-                    description,
-                    body,
                     tags,
+                    body,
+                    description,
                     illustration,
                     date_created,
                     date_updated,

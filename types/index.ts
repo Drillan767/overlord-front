@@ -37,7 +37,6 @@ interface Translation {
 type ArticlesReceivedPayload = ArticleFields & Translation
 
 interface ArticleFields {
-    id: string,
     date_created: string,
     date_updated: string,
     illustration: Illustration
@@ -81,6 +80,23 @@ export type Page = {
 
 export type ArticlesReceived = {
     Articles: ArticlesReceivedPayload[]
+}
+
+export type SingleArticleReceived = {
+    Articles_translations: {
+        title: string,
+        slug: string,
+        body: string,
+        description: string,
+        Articles_id: {
+            date_created: string,
+            date_updated: string,
+            illustration: Illustration
+            tags: {
+                Tag_id: Tag
+            }[]
+        }
+    }[]
 }
 
 export type ProjectsReceived = {

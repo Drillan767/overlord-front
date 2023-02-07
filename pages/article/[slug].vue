@@ -58,9 +58,9 @@
 import { useSeoMeta } from '@unhead/vue'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/tokyo-night-dark.css'
-import { Article, ArticlesReceived } from '~~/types'
+import { Article, SingleArticleReceived } from '~~/types'
 import { getReadingTime, scrollSpy } from '~~/utils/blog'
-import articleQuery from '../../queries/articles.gql'
+import articleQuery from '../../queries/article.gql'
 import TagSVG from '~~/components/svg/Tag.vue'
 import TimeSVG from '~~/components/svg/Time.vue'
 import DateSVG from '~~/components/svg/Date.vue'
@@ -71,7 +71,7 @@ definePageMeta({
 
 const route = useRoute()
 const config = useRuntimeConfig()
-const { locale, t } = useI18n() 
+const { t } = useI18n() 
 
 const article = ref({} as Article)
 const barWidth = ref(0)
@@ -80,38 +80,49 @@ const lastCommit = ref('')
 const minuteRead = ref(0)
 const tagList = ref('')
 const brEnabled = ref(false)
-const fullLocale = locale.value === 'fr' ? 'fr-FR' : 'en-US'
 
-await useAsyncQuery<ArticlesReceived>(articleQuery, {
-    search: route.params.slug.toString(),
-    locale: fullLocale,
-    filter: {
-        status: {_eq: 'published'},
-    },
-    featured: false,
-    limit: 1
-})
+console.log(route.params.slug)
+
+await useAsyncQuery<SingleArticleReceived>(articleQuery, {
+        slug: route.params.slug.toString()
+    })
     .then(({ data }) => {
-        if (data.value && data.value.Articles.length) {
-            article.value = data.value.Articles[0]
-            tagList.value = article.value.tags.map((t) => t.Tag_id.title).join(' • ')
-            const field = article.value.date_updated ?? article.value.date_created
-            lastCommit.value = new Intl.DateTimeFormat('fr-FR').format(new Date(field))
-            minuteRead.value = getReadingTime(article.value.body)
-        } else {
+        if (!data.value || !data.value.Articles_translations.length) {
             throw createError({
                 statusCode: 404,
-                message: 'Article not found ya idiot',
                 fatal: true,
             })
         }
+
+        const rawArticle = data.value.Articles_translations[0]
+        const { title, slug, description, body } = rawArticle
+        const { Articles_id: { date_created, date_updated, illustration, tags } } = rawArticle
+
+        article.value = {
+            title,
+            slug,
+            description,
+            body,
+            date_created,
+            date_updated,
+            illustration,
+            tags
+        }
+
+        console.log(toRaw(article.value))
+
+        tagList.value = article.value.tags.map((t) => t.Tag_id.title).join(' • ')
+        const field = article.value.date_updated ?? article.value.date_created
+        lastCommit.value = new Intl.DateTimeFormat('fr-FR').format(new Date(field))
+        minuteRead.value = getReadingTime(article.value.body)
+    
     })
 
 const displayPercentage = computed(() => {
     let result = 'Progress: ['
 
     if (readPercentage.value && readPercentage.value >= 0) {
-        let spaces = 3 - readPercentage.value.toString().length
+        const spaces = 3 - readPercentage.value.toString().length
         result += ' '.repeat(spaces)
         result += readPercentage.value
     }
@@ -414,3 +425,14 @@ main {
     }
 }
 </style>
+
+<i18n lang="json">
+{
+    "fr": {
+
+    },
+    "en": {
+        "404": ""
+    }
+}
+</i18n>
