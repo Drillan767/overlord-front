@@ -2,7 +2,7 @@
     <header id="viewport">
         <div class="content">
             <h1 class="title glitch" :data-text="fullname">{{ fullname }}</h1>
-            <p class="subtitle" v-html="baseline"></p>
+            <p class="subtitle" v-html="subtitle"></p>
 
             <div class="scroll">
                 <span class="typed-text" @click="scrollNext">{{ typedText }}</span>
@@ -14,9 +14,9 @@
 
 <script setup lang="ts">
 
-const { locale, t } = useI18n() 
+const { t } = useI18n() 
 const homepage = useHomepage()
-const { fullname, translations } = homepage.value
+const { fullname, baseline } = homepage.value
 const scrollText = t('scrollText')
 const typedText = ref('')
 
@@ -30,13 +30,9 @@ onMounted(() => {
     }, 2000)
 })
 
-const baseline = computed(() => {
-    const baseline = translations.find((t) => t.languages_code.code === locale.value)?.baseline
-    if (baseline) {
-        return baseline.replaceAll(/_([a-zA-Zé]*)_/g, (_, g) => `<span class="glitch" data-text="${g}">${g}</span>`)
-    }
-    return ''
-})
+const subtitle = computed(() =>
+    baseline.replaceAll(/_([a-zA-Z]*)_/g, (m, g) =>
+        `<span class="glitch" data-text="${g}">${g}</span>`))
 
 const scrollNext = () => {
     document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })

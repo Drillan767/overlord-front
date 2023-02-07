@@ -1,12 +1,6 @@
 export type Homepage = {
-
-    translations: {
-        languages_code: {
-            code: string
-        },
-        baseline: string,
-        description: string,
-    }[],
+    baseline: string,
+    description: string,
     fullname: string,
     icon: {
         id: string
@@ -23,20 +17,41 @@ export type Homepage = {
     }
 }
 
-interface TranslatedFields {
+export type ReceivedHomepage = {
+    Homepage_translations: {
+        baseline: string,
+        description: string,
+        Homepage_id: {
+            fullname: string,
+            icon: {
+                id: string
+                title: string
+            },
+            links: {
+                url: string,
+                svg: string,
+                display: string,
+            }[],
+            user: {
+                id: string,
+                title: string,
+            }
+        }
+    }[]
+}
+
+export type ReceivedTranslatedHomepage = {
+    Homepage_translations: {
+        baseline: string,
+        description: string,
+    }[]
+}
+
+export type Article = {
     title: string,
     slug: string,
     body: string,
     description: string,
-}
-
-interface Translation {
-    translations: TranslatedFields[]
-}
-
-type ArticlesReceivedPayload = ArticleFields & Translation
-
-interface ArticleFields {
     date_created: string,
     date_updated: string,
     illustration: Illustration
@@ -45,21 +60,59 @@ interface ArticleFields {
     }[]
 }
 
-export type Article = ArticleFields & TranslatedFields
-
 export type Project = {
-    id: string,
     title: string,
     slug: string,
-    body?: string,
+    body: string,
     description: string,
-    website?: string,
-    repo_link?: string,
+    website: string,
+    repo_link: string,
     date_created: string,
     date_updated: string,
     illustration: Illustration
     tags: {
         Tag_id: Tag
+    }[]
+}
+
+export type ProjectReceived = {
+    Project_translations: {
+        title: string,
+        slug: string,
+        description: string,
+        body: string,
+        Project_id: {
+            date_created: string,
+            date_updated: string,
+            repo_link: string,
+            website: string,
+            tags: {
+                Tag_id: Tag
+            }[],
+            illustration: Illustration
+        }
+    }[]
+}
+
+export type DisplayedProject = {
+    title: string
+    slug: string
+    tags: {
+        Tag_id: Tag
+    }[],
+    illustration: Illustration
+}
+
+export type DisplayedProjectsReceived = {
+    Project_translations: {
+        title: string,
+        slug: string,
+        Project_id: {
+            tags: {
+                Tag_id: Tag
+            }[],
+            illustration: Illustration
+        }
     }[]
 }
 
@@ -79,10 +132,6 @@ export type Page = {
 }
 
 export type ArticlesReceived = {
-    Articles: ArticlesReceivedPayload[]
-}
-
-export type SingleArticleReceived = {
     Articles_translations: {
         title: string,
         slug: string,
@@ -97,10 +146,6 @@ export type SingleArticleReceived = {
             }[]
         }
     }[]
-}
-
-export type ProjectsReceived = {
-    Project: Project[]
 }
 
 export type PagesReceived = {

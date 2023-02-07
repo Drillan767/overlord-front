@@ -58,7 +58,7 @@
 import { useSeoMeta } from '@unhead/vue'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/tokyo-night-dark.css'
-import { Article, SingleArticleReceived } from '~~/types'
+import { Article, ArticlesReceived } from '~~/types'
 import { getReadingTime, scrollSpy } from '~~/utils/blog'
 import articleQuery from '../../queries/article.gql'
 import TagSVG from '~~/components/svg/Tag.vue'
@@ -83,7 +83,7 @@ const brEnabled = ref(false)
 
 console.log(route.params.slug)
 
-await useAsyncQuery<SingleArticleReceived>(articleQuery, {
+await useAsyncQuery<ArticlesReceived>(articleQuery, {
         slug: route.params.slug.toString()
     })
     .then(({ data }) => {
@@ -109,13 +109,10 @@ await useAsyncQuery<SingleArticleReceived>(articleQuery, {
             tags
         }
 
-        console.log(toRaw(article.value))
-
         tagList.value = article.value.tags.map((t) => t.Tag_id.title).join(' • ')
         const field = article.value.date_updated ?? article.value.date_created
         lastCommit.value = new Intl.DateTimeFormat('fr-FR').format(new Date(field))
         minuteRead.value = getReadingTime(article.value.body)
-    
     })
 
 const displayPercentage = computed(() => {
@@ -176,8 +173,6 @@ onMounted(() => {
     document.addEventListener('scroll', () => {
         readPercentage.value = Math.floor(getScrollPercent())
         scrollSpy(headers)
-
-        //TODO: display the toc on the side
     })
 })
 

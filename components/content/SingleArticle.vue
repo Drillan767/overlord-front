@@ -86,7 +86,6 @@ article {
         .glitch-thumb {
             @include glitch-items(true);
         }
-
     }
 }
 </style>

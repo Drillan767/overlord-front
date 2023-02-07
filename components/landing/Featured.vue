@@ -12,7 +12,7 @@
                     <ItemThumbnail item-type="article" :item="article" />
                 </div>
             </div>
-            <!-- <div class="projects" v-if="featuredProjects.length">
+            <div class="projects" v-if="featuredProjects.length">
                 <div class="title">
                     <h2 class="uppercase" v-html="t('projects.featured')" />
 
@@ -21,7 +21,7 @@
                 <div class="list" v-for="(project, i) in featuredProjects" :key="i">
                     <ItemThumbnail item-type="project" :item="project" />
                 </div>
-            </div> -->
+            </div>
         </div>
     </section>
 </template>
@@ -32,16 +32,14 @@ import articles from '~~/queries/articles.gql'
 import projects from '~~/queries/projects.gql'
 import ItemThumbnail from '~~/components/content/ItemThumbnail.vue'
 import Button from '~~/components/layout/Button.vue'
-import type { Article, ArticlesReceived, Project, ProjectsReceived } from '~~/types'
+import type { Article, ArticlesReceived, DisplayedProject, DisplayedProjectsReceived } from '~~/types'
 
-const { locale, t } = useI18n()
+const { t } = useI18n()
 const localePath = useLocalePath()
-
-const fullLocale = locale.value === 'fr' ? 'fr-FR' : 'en-US'
+const fullLocale = useFullLocale()
 
 const gqlHeaders = {
-    featured: true,
-    locale: fullLocale,
+    locale: fullLocale.value,
     limit: 3,
     filters: {
         status: {_eq: 'published'},
@@ -50,15 +48,14 @@ const gqlHeaders = {
 }
 
 const featuredArticles = ref<Article[]>([])
-const featuredProjects = ref<Project[]>([])
+const featuredProjects = ref<DisplayedProject[]>([])
 
-await useAsyncQuery<ArticlesReceived>(articles, gqlHeaders)
+await useAsyncQuery<ArticlesReceived>(articles, {...gqlHeaders, featured: true})
     .then(({ data }) => {
         if (data.value) {
-            console.log(toRaw(data.value.Articles))
-            featuredArticles.value = data.value.Articles.map((article) => {
-                const { date_created, date_updated, illustration, tags } = article
-                const [{ title, slug, description, body }] = article.translations
+            featuredArticles.value = data.value.Articles_translations.map((article) => {
+            const { title, slug, description, body } = article
+            const { Articles_id: { date_created, date_updated, illustration, tags } } = article
 
                 return {
                     title,
@@ -74,12 +71,19 @@ await useAsyncQuery<ArticlesReceived>(articles, gqlHeaders)
         }
     })
 
-/* await useAsyncQuery<ProjectsReceived>(projects, gqlHeaders)
+await useAsyncQuery<DisplayedProjectsReceived>(projects, gqlHeaders)
     .then(({ data }) => {
         if (data.value) {
-            featuredProjects.value = data.value.Project
+            featuredProjects.value = data.value.Project_translations.map((project) => {
+                const { title, slug } = project
+                const { Project_id: {illustration, tags} } = project
+
+                return {
+                    title, slug, illustration, tags
+                }
+            })
         }
-    }) */
+    })
 
 </script>
 

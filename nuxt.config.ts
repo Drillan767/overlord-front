@@ -22,10 +22,10 @@ export default defineNuxtConfig({
             ],
 
             link: [
-                { rel: 'icon', type: 'image/svg+xml', href:`${process.env.URL}/icons/logo.svg` }
+                { rel: 'icon', type: 'image/svg+xml', href: `${process.env.URL}/icons/logo.svg` }
             ],
 
-            script:[{
+            script: [{
                 children: `
                     var _paq = window._paq = window._paq || [];
                     _paq.push(['trackPageView']);
@@ -52,6 +52,17 @@ export default defineNuxtConfig({
         strategy: 'prefix',
         defaultLocale: 'en',
         customRoutes: 'config',
+        vueI18n: {
+            legacy: false,
+            messages: {
+                en: {
+                    projects: 'Projects',
+                },
+                fr: {
+                    projects: 'Projets'
+                }
+            }
+        },
         pages: {
             projects: {
                 fr: '/projets'

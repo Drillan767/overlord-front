@@ -3,27 +3,20 @@ import type { Homepage } from "~~/types"
 export const useHomepage = () => useState<Homepage>('homepage', () => ({
     baseline: '',
     description: '',
-    translations: [
-        {
-            languages_code: {
-                code: '',
-            },
-            baseline: '',
-            description: '',
-        }
-    ],
     fullname: '',
     icon: {
         id: '',
-        title: '',
+        title: ''
     },
-    links: [{
-        url: '',
-        svg: '',
-        display: '',
-    }],
     user: {
         id: '',
         title: '',
-    }
+    },
+    links: [
+        {
+            url: '',
+            svg: '',
+            display: '',
+        }
+    ]
 }))

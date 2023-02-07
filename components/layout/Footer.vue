@@ -55,7 +55,7 @@ import LanguageSwitcher from '~~/components/layout/LanguageSwitcher.vue'
 const date = new Date;
 const year = ref(date.getFullYear())
 const config = useRuntimeConfig()
-const { t, locale } = useI18n()
+const { t } = useI18n()
 const color = useTheme()
 const route = useRoute()
 const homepage = useHomepage()
@@ -69,7 +69,7 @@ const footerLinks = ref([
     },
     {
         url: '/projects',
-        title: 'Projects',
+        title: t('projects'),
         item: 'project',
     }
 ])

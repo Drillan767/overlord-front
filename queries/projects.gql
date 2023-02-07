@@ -1,18 +1,17 @@
-query Projects ($filter: Project_filter, $limit: Int = -1) {
-    Project(
-            filter: $filter,
-            limit: $limit
-		) {
+query Projects($locale: String!, $filters: Project_filter, $limit: Int = -1) {
+	Project_translations(limit: $limit, filter: {languages_code: {code: {_eq: $locale}}, Project_id: $filters}) {
 		title
 		slug
-		tags {
-			Tag_id {
+		Project_id {
+			tags {
+				Tag_id {
+					title
+				}
+			}
+			illustration {
+				id
 				title
 			}
 		}
-		illustration {
-			id
-			title
-		}
-    }
+	}
 }

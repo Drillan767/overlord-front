@@ -34,7 +34,7 @@
 
 <script setup lang="ts">
 import { useSeoMeta } from '@unhead/vue'
-import type { TagFilter, Project, ProjectsReceived } from '~~/types'
+import type { TagFilter, DisplayedProjectsReceived, DisplayedProject } from '~~/types'
 import projectQuery from '~~/queries/projects.gql'
 import SingleProject from '~~/components/content/SingleProject.vue';
 
@@ -42,19 +42,27 @@ definePageMeta({
     layout: "blog",
 })
 
+const { t, locale } = useI18n()
 const { url } = useRuntimeConfig()
 const homepage = useHomepage()
+const fullLocale = useFullLocale()
 const { baseline } = homepage.value
-const projectList = ref<Project[]>([])
+const projectList = ref<DisplayedProject[]>([])
 const activeTag = ref('')
+const params = {
+    locale: fullLocale.value,
+    filters: {
+        status: {_eq: 'published'}
+    }
+}
 
 useSeoMeta({
-    ogTitle: 'Projects',
+    ogTitle: t('projets'),
     ogType: 'website',
     ogImage: url + '/icons/logo.svg',
     description: baseline.replace(/_/g, ''),
     ogDescription: baseline.replace(/_/g, ''),
-    twitterTitle: 'Projects',
+    twitterTitle: ('projects'),
     twitterImage: url + '/icons/logo.svg',
     twitterDescription: baseline.replace(/_/g, '')
 })
@@ -87,10 +95,17 @@ const handleFilter = (filter: string) => {
     }
 }
 
-await useAsyncQuery<ProjectsReceived>(projectQuery)
+await useAsyncQuery<DisplayedProjectsReceived>(projectQuery, params)
     .then(({ data }) => {
         if (data.value) {
-            projectList.value = data.value.Project
+            projectList.value = data.value.Project_translations.map((project) => {
+                const { title, slug } = project
+                const { Project_id: {illustration, tags} } = project
+
+                return {
+                    title, slug, illustration, tags
+                }
+            })
         }
     })
 

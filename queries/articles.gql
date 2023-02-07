@@ -1,25 +1,21 @@
-query Articles ($filters: Articles_filter, $locale: String! $featured: Boolean = false, $limit: Int = -1) {
-	Articles (filter: $filters, limit: $limit) {
+query Articles($filters: Articles_filter, $locale: String!, $featured: Boolean! $limit: Int = -1) {
+	Articles_translations(limit: $limit, filter: {languages_code: {code: {_eq: $locale}}, Articles_id: $filters}) {
 		title
 		slug
 		body @skip(if: $featured)
-		description @skip(if: $featured)
-		translations(filter: {languages_code: {code: {_eq: $locale}}}) {
-			title
-			slug
-			description @skip(if: $featured)
-			body @skip(if: $featured)
-		}
-		date_created
-		date_updated
-		tags {
-			Tag_id {
+        description @skip(if: $featured)
+		Articles_id {
+			date_created @skip(if: $featured)
+			date_updated @skip(if: $featured)
+			tags {
+				Tag_id {
+					title
+				}
+			}
+			illustration {
+				id
 				title
 			}
-		}
-		illustration {
-			id
-            title
 		}
 	}
 }

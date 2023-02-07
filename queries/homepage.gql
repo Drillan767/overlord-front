@@ -1,23 +1,18 @@
-query Homepage {
-	Homepage {
-		fullname
+query Homepage($locale: String!, $loadHomepage: Boolean = false) {
+	Homepage_translations(filter: {languages_code: {code: {_eq: $locale}}}) {
 		baseline
 		description
-		links
-		translations {
-			languages_code {
-				code
+		Homepage_id @include(if: $loadHomepage) {
+			fullname
+			links
+			icon {
+				id
+				title
 			}
-			baseline
-			description
-		}
-		icon {
-			id
-			title
-		}
-		user {
-			id
-			title
+			user {
+				id
+				title
+			}
 		}
 	}
 }

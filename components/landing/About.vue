@@ -14,17 +14,8 @@
 <script setup lang="ts">
 
 const config = useRuntimeConfig()
-const { locale } = useI18n()
 const homepage = useHomepage()
-const { user, translations } = homepage.value
-
-const description = computed(() => {
-    const fullLocale = locale.value === 'fr' ? 'fr-FR' : 'en-US'
-    const description = translations.find((t) => t.languages_code.code === fullLocale)?.description
-
-    return description ?? ''
-})
-
+const { user, description } = homepage.value
 
 </script>
 

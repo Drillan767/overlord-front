@@ -6,7 +6,7 @@
             <Meta property="article:author" content="Joseph Levarato" />
             <Meta property="article:published_time" :content="project.date_created" />
             <Meta property="article:modified_time" v-if="project.date_updated" :content="project.date_updated" />
-            <Link rel="canonical" :href="`${config.url}/article/${project.slug}`" />
+            <Link rel="canonical" :href="`${url}/article/${project.slug}`" />
         </Head>
 
         <header >
@@ -40,36 +40,45 @@ import hljs from 'highlight.js'
 import 'highlight.js/styles/tokyo-night-dark.css'
 import projectQuery from '~~/queries/project.gql'
 import Button from '~~/components/layout/Button.vue';
-import type { Project, ProjectsReceived } from '~~/types';
+import type { Project, ProjectReceived } from '~~/types';
 
 definePageMeta({
     layout: "blog",
 })
 
 const route = useRoute()
-const config = useRuntimeConfig()
+const { url, apiUrl } = useRuntimeConfig()
+const fullLocale = useFullLocale()
 
 const project = ref({} as Project)
 const tagList = ref('')
 
-const getIllustration = () => {
-    return `${config.apiUrl}/assets/${project.value.illustration.id}?width=600&height=800&fit=cover`
+const filters = {
+    languages_code: {code: {_eq: fullLocale.value}},
+    Project_id: {
+        status: {_eq: 'published'},
+        slug: {_eq: route.params.slug.toString()}
+    }
 }
 
-await useAsyncQuery<ProjectsReceived>(projectQuery, {
-    search: route.params.slug.toString()
-})
+await useAsyncQuery<ProjectReceived>(projectQuery, filters)
     .then(({data}) => {
-        if (data.value && data.value.Project.length) {
-            project.value = data.value.Project[0]
-            tagList.value = project.value.tags.map((t) => t.Tag_id.title).join(' • ')
-
-        } else {
+        if (!data.value || !data.value.Project_translations.length) {
             throw createError({
                 statusCode: 404,
-                message: 'Project not found ya idiot'
+                fatal: true,
             })
         }
+
+        const { title, slug, body, description, Project_id } = data.value.Project_translations[0]
+        const { date_created, date_updated, repo_link, website, tags, illustration } = Project_id
+
+        project.value = {
+            title, slug, body, description, date_created, date_updated, repo_link, website, tags, illustration
+        }
+
+        tagList.value = project.value.tags.map((t) => t.Tag_id.title).join(' • ')
+
     })
 
 onMounted(() => {
@@ -78,6 +87,10 @@ onMounted(() => {
             .forEach((block) => hljs.highlightBlock(block))
     }, 1000)
 })
+
+const getIllustration = () => {
+    return `${apiUrl}/assets/${project.value.illustration.id}?width=600&height=800&fit=cover`
+}
 
 useSeoMeta({
     ogTitle: project.value.title,

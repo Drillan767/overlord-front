@@ -5,7 +5,7 @@
             @blur="isOpened = false"
         >
             <Globe />
-            <span>{{ format(locale) }}</span>
+            <span>{{ locale.toUpperCase() }}</span>
             <ArrowDown :class="isOpened ? 'rotate-180' : 'rotate-0'" />
         </button>
         <transition
@@ -22,7 +22,7 @@
                     :key="i"
                     @mousedown.prevent="setOption(l)"
                 >
-                    {{ format(l) }}
+                    {{ l.toUpperCase() }}
                 </li>
             </ul>
         </transition>
@@ -32,8 +32,13 @@
 <script setup lang="ts">
 import Globe from "~~/components/svg/Globe.vue"
 import ArrowDown from "~~/components/svg/ArrowDown.vue"
+import type { ReceivedHomepage } from '~~/types';
+import homepageGql from '~~/queries/homepage.gql'
 
 const { locale, locales, setLocale } = useI18n()
+
+const homepage = useHomepage()
+const fullLocale = useFullLocale()
 
 const ids = ['viewport', 'about', 'featured', 'contact']
 
@@ -46,10 +51,10 @@ const isOpened = ref(false)
 
 const setOption = (l: string) => {
     setLocale(l)
+    fullLocale.value = l === 'fr' ? 'fr-FR' : 'en-US'
     isOpened.value = false
+    loadHomepageTranslation()
 }
-
-const format = (text: string) => text.split("-")[0].toUpperCase()
 
 const revealItems = () => {
     const ie = new IntersectionObserver((entries) => {
@@ -95,6 +100,18 @@ const waitForElm = (id: string) => {
             subtree: true,
         })
     })
+}
+
+const loadHomepageTranslation = async () => {
+    const fullLocale = useFullLocale()
+    await useAsyncQuery<ReceivedHomepage>(homepageGql, {locale: fullLocale })
+        .then(({ data }) => {
+            if (data.value) {
+                const {baseline, description } = data.value.Homepage_translations[0]
+                homepage.value.baseline = baseline
+                homepage.value.description = description
+            }
+        })
 }
 
 onMounted(() => {
