@@ -45,8 +45,8 @@ definePageMeta({
 const { t } = useI18n()
 const { url } = useRuntimeConfig()
 const homepage = useHomepage()
-const fullLocale = useFullLocale()
 const { baseline } = homepage.value
+const fullLocale = useFullLocale()
 const articleList = ref([] as Article[])
 const activeTag = ref('')
 
@@ -70,8 +70,6 @@ useSeoMeta({
     twitterImage: url + '/icons/logo.svg',
     twitterDescription: baseline.replace(/_/g, '')
 })
-
-
 
 await useAsyncQuery<ArticlesReceived>(articlesQuery, query)
     .then(({ data }) => {

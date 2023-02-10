@@ -11,6 +11,10 @@ export type Homepage = {
         svg: string,
         display: string,
     }[],
+    legal: {
+        title: string,
+        url: string,
+    }[],
     user: {
         id: string,
         title: string,
@@ -21,6 +25,10 @@ export type ReceivedHomepage = {
     Homepage_translations: {
         baseline: string,
         description: string,
+        legal: {
+            title: string,
+            url: string,
+        }[],
         Homepage_id: {
             fullname: string,
             icon: {
@@ -44,6 +52,10 @@ export type ReceivedTranslatedHomepage = {
     Homepage_translations: {
         baseline: string,
         description: string,
+        legal: {
+            title: string,
+            url: string,
+        }[]
     }[]
 }
 
@@ -131,6 +143,10 @@ export type Page = {
     body: string,
 }
 
+export type PagesReceived = {
+    Pages_translations: Page[]
+}
+
 export type ArticlesReceived = {
     Articles_translations: {
         title: string,
@@ -148,8 +164,18 @@ export type ArticlesReceived = {
     }[]
 }
 
-export type PagesReceived = {
-    Pages: Page[]
+export type Version = {
+    version: string,
+    description: string
+}
+
+export type ReceivedVersion = {
+    Releases_translations: {
+        description: string,
+        Releases_id: {
+            version: string
+        }
+    }[]
 }
 
 export type TagFilter = {

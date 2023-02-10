@@ -142,7 +142,6 @@ header {
 
 article {
     @apply lg:prose-xl mx-auto mt-4 prose-img:mx-auto prose-a:text-violet-600 px-2;
-    color: var(--font-color);
 }
 
 .links {

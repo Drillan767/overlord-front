@@ -32,7 +32,7 @@
 <script setup lang="ts">
 import Globe from "~~/components/svg/Globe.vue"
 import ArrowDown from "~~/components/svg/ArrowDown.vue"
-import type { ReceivedHomepage } from '~~/types';
+import type { ReceivedTranslatedHomepage } from '~~/types';
 import homepageGql from '~~/queries/homepage.gql'
 
 const { locale, locales, setLocale } = useI18n()
@@ -104,12 +104,13 @@ const waitForElm = (id: string) => {
 
 const loadHomepageTranslation = async () => {
     const fullLocale = useFullLocale()
-    await useAsyncQuery<ReceivedHomepage>(homepageGql, {locale: fullLocale })
+    await useAsyncQuery<ReceivedTranslatedHomepage>(homepageGql, {locale: fullLocale.value })
         .then(({ data }) => {
             if (data.value) {
-                const {baseline, description } = data.value.Homepage_translations[0]
+                const { baseline, description, legal } = data.value.Homepage_translations[0]
                 homepage.value.baseline = baseline
                 homepage.value.description = description
+                homepage.value.legal = legal
             }
         })
 }

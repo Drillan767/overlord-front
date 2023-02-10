@@ -16,7 +16,7 @@
 
 const { t } = useI18n() 
 const homepage = useHomepage()
-const { fullname, baseline } = homepage.value
+const { fullname } = homepage.value
 const scrollText = t('scrollText')
 const typedText = ref('')
 
@@ -31,7 +31,7 @@ onMounted(() => {
 })
 
 const subtitle = computed(() =>
-    baseline.replaceAll(/_([a-zA-Z]*)_/g, (m, g) =>
+    homepage.value.baseline.replaceAll(/_([a-zA-Zéè]*)_/g, (m, g) =>
         `<span class="glitch" data-text="${g}">${g}</span>`))
 
 const scrollNext = () => {

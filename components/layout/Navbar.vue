@@ -156,3 +156,14 @@ nav {
     }
 }
 </style>
+
+<i18n lang="json">
+{
+    "fr": {
+        "projects": "Projets"
+    },
+    "en": {
+        "projects": "Projects"
+    }
+}
+</i18n>

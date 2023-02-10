@@ -30,8 +30,17 @@
                 © {{ year }} <NuxtLink href="/">{{ fullname }}</NuxtLink>. {{ t('arr') }}.
             </span>
             <div class="socials">
+                <NuxtLink to="/versions">
+                    Versions
+                </NuxtLink>
+                <NuxtLink
+                    v-for="(link, i) in legal"
+                    :key="i"
+                    :to="link.url"
+                >
+                    {{ link.title }}
+                </NuxtLink>
 
-                <span>Mentions légales</span>
                 <span>|</span>
                 <a
                     v-for="(link, i) in links"
@@ -59,7 +68,7 @@ const { t } = useI18n()
 const color = useTheme()
 const route = useRoute()
 const homepage = useHomepage()
-const { fullname, links, icon } = homepage.value
+const { fullname, links, icon, legal } = homepage.value
 
 const footerLinks = ref([
     {
@@ -166,10 +175,12 @@ footer {
 <i18n lang="json">
 {
     "fr": {
-        "arr": "Tous Droits Réservés"
+        "arr": "Tous Droits Réservés",
+        "projects": "Projets"
     },
     "en": {
-        "arr": "All Rights Reserved"
+        "arr": "All Rights Reserved",
+        "projects": "Projects"
     }
 }
 </i18n>
