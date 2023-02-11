@@ -6,7 +6,7 @@
                     <nuxt-img format="webp" :src="`${config.apiUrl}/assets/${user.id}`" :alt="user.title" />
                 </div>
             </div>
-            <div class="prose" v-html="description" />
+            <div class="prose" v-html="homepage.description" />
         </div>
     </section>
 </template>
@@ -15,7 +15,7 @@
 
 const config = useRuntimeConfig()
 const homepage = useHomepage()
-const { user, description } = homepage.value
+const { user } = homepage.value
 
 </script>
 
