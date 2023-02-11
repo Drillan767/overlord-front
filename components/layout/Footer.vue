@@ -15,8 +15,10 @@
                         </NuxtLink>
                     </li>
                 </ul>
-                <LanguageSwitcher />
-                <div class="theme">
+                
+                <div class="buttons">
+                    <LanguageSwitcher />
+
                     <button @click="toggleTheme" :aria-label="`toggle ${color === 'dark' ? 'light' : 'dark'} theme`">
                         <LandingDark v-if="color === 'dark'" />
                         <LandingLight v-if="color === 'light'" />
@@ -29,27 +31,21 @@
             <span>
                 © {{ year }} <NuxtLink href="/">{{ fullname }}</NuxtLink>. {{ t('arr') }}.
             </span>
-            <div class="socials">
-                <NuxtLink to="/versions">
-                    Versions
-                </NuxtLink>
-                <NuxtLink
-                    v-for="(link, i) in legal"
-                    :key="i"
-                    :to="link.url"
-                >
-                    {{ link.title }}
-                </NuxtLink>
+            <div class="links">
+                <div class="internal">
+                    <NuxtLink to="/versions">
+                        Versions
+                    </NuxtLink>
+                    <NuxtLink v-for="(link, i) in legal" :key="i" :to="link.url">
+                        {{ link.title }}
+                    </NuxtLink>
+                </div>
 
-                <span>|</span>
-                <a
-                    v-for="(link, i) in links"
-                    :href="link.url"
-                    :key="i"
-                    :aria-label="link.display"
-                    v-html="link.svg"
-                    target="_blank"
-                />
+                <span class="separator">|</span>
+                <div class="socials">
+                    <a v-for="(link, i) in links" :href="link.url" :key="i" :aria-label="link.display" v-html="link.svg"
+                    target="_blank" />
+                </div>
             </div>
         </div>
     </footer>
@@ -104,7 +100,7 @@ footer {
         @apply md:flex md:justify-between;
 
         a {
-            @apply flex items-center mb-6 md:mb-0;
+            @apply flex items-center;
 
             img {
                 @apply mr-3 h-8;
@@ -117,25 +113,27 @@ footer {
         }
 
         .links {
-            @apply flex justify-between sm:justify-start;
+            @apply flex justify-between sm:justify-start gap-x-5 my-4 md:my-0;
 
             ul {
-                @apply flex flex-wrap items-center mb-6 text-sm text-gray-500 sm:mb-0;
+                @apply flex flex-wrap items-center text-sm text-gray-500 gap-x-5;
 
                 li a {
-                    @apply mr-4 md:mr-6;
 
-                    &:not(.current), &:not(.router-link-exact-active) {
+                    &:not(.current),
+                    &:not(.router-link-exact-active) {
                         color: var(--font-color);
                     }
-                    &.current, &.router-link-exact-active {
+
+                    &.current,
+                    &.router-link-exact-active {
                         color: var(--purple);
                     }
                 }
             }
 
-            .theme {
-                @apply flex items-center ml-2;
+            .buttons {
+                @apply flex items-center ml-2 gap-x-5;
 
                 button {
                     color: var(--font-color);
@@ -150,15 +148,41 @@ footer {
     }
 
     .second-row {
+        color: var(--font-color);
         @apply sm:flex sm:items-center sm:justify-between;
 
-        span {
-            color: var(--font-color);
-            @apply text-sm sm:text-center;
+        .links {
+            @apply block md:flex gap-x-5;
+
+            .internal {
+                @apply flex gap-x-4;
+
+                @media (max-width: 768px) {
+                    @apply justify-center my-4;
+                }
+
+                a {
+                    &:not(.current),
+                    &:not(.router-link-exact-active) {
+                        color: var(--font-color);
+                    }
+
+                    &.current,
+                    &.router-link-exact-active {
+                        color: var(--purple);
+                    }
+                }
+            }
+
+            .separator {
+                @apply hidden md:inline-block;
+            }
         }
 
         .socials {
-            @apply flex mt-4 space-x-6 sm:justify-center sm:mt-0;
+            @apply flex mt-4 justify-center space-x-6 sm:mt-0;
+
+            
 
             a {
                 color: var(--font-color);

@@ -20,9 +20,9 @@
                 <li
                     v-for="(l, i) in availableLocales"
                     :key="i"
-                    @mousedown.prevent="setOption(l)"
+                    @mousedown.prevent="setOption(l.code)"
                 >
-                    {{ l.toUpperCase() }}
+                    {{ l.code.toUpperCase() }}
                 </li>
             </ul>
         </transition>
@@ -43,8 +43,8 @@ const fullLocale = useFullLocale()
 const ids = ['viewport', 'about', 'featured', 'contact']
 
 const availableLocales = computed(() => {
-    const list = locales.value as string[]
-    return list.filter((l) => l !== locale.value)
+    const list = locales.value as {code: string, iso: string}[]
+    return list.filter((l) => l.code !== locale.value)
 })
 
 const isOpened = ref(false)

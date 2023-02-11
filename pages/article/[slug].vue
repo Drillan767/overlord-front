@@ -71,8 +71,6 @@ definePageMeta({
 
 const route = useRoute()
 const config = useRuntimeConfig()
-const { t } = useI18n() 
-
 const article = ref({} as Article)
 const barWidth = ref(0)
 const readPercentage = ref(0)

@@ -42,7 +42,7 @@ definePageMeta({
     layout: "blog",
 })
 
-const { t, locale } = useI18n()
+const { t } = useI18n()
 const { url } = useRuntimeConfig()
 const homepage = useHomepage()
 const fullLocale = useFullLocale()

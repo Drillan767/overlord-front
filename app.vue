@@ -33,9 +33,6 @@ await useAsyncQuery<ReceivedHomepage>(homepageGql, {locale: fullLocale.value, lo
     })
 
 useHead({
-    htmlAttrs: {
-        lang: locale
-    },
     bodyAttrs: {
         class: color
     },

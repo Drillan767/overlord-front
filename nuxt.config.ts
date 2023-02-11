@@ -48,7 +48,17 @@ export default defineNuxtConfig({
     },
 
     i18n: {
-        locales: ['fr', 'en'],
+        locales: [
+            {
+                code: 'en',
+                iso: 'en-US'
+            },
+            {
+                code: 'fr',
+                iso: 'fr-FR'
+            }
+        ],
+        baseUrl: process.env.URL,
         strategy: 'prefix',
         defaultLocale: 'en',
         customRoutes: 'config',
