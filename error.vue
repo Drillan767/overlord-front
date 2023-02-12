@@ -1,13 +1,14 @@
 <template>
-    <div :class="`error-${error.statusCode}`" :style="bg">
+    <div class="error" :style="bg">
         <div class="glitch-thumb">
             <div class="glitch-img" v-for="i in 5" :key="i" :style="bg" />
         </div>
-        <div>{{ error }}</div>
 
-        <div class="text-xl text-white">ERROR{{ error.statusCode }} CODE</div>
-
-        <Button @click="redirectHome" type="button" :content="t('home')" />
+        <div class="message">
+            <h1 class="glitch" :data-text="error.statusCode">{{ error.statusCode }}</h1>
+            <h2>{{ error.statusMessage }}</h2>
+            <Button @click="redirectHome" type="button" :content="t('home')" />
+        </div>
     </div>
 </template>
 
@@ -33,16 +34,42 @@ const bg = computed(() => {
     return `background-image: url('${imgUrl}')`
 })
 
-const redirectHome = () => clearError({redirect: '/'})
+const redirectHome = () => clearError({ redirect: '/' })
 </script>
 
 <style scoped lang="scss">
 @import '~~/assets/styles/mixins';
 
-.glitch-thumb {
-    @include glitch-items(true);
-}
+.error {
+    @apply relative h-screen;
+    @include content-item(100%);
 
+    .glitch-thumb {
+        @apply z-0 h-full cursor-default absolute inset-0;
+        @include glitch-items(true);
+
+        &::before {
+            @apply h-full;
+        }
+    }
+
+    .message {
+        @apply h-full relative flex flex-col items-center justify-center gap-y-4;
+
+        h1 {
+            @apply text-8xl;
+        }
+
+        h2 {
+            @apply text-4xl;
+        }
+
+        &::before {
+            content: '';
+            @apply absolute inset-0 bg-black opacity-60;
+        }
+    }
+}
 </style>
 
 <i18n lang="json">
