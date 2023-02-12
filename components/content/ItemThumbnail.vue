@@ -1,6 +1,16 @@
 <template>
-    <NuxtLink :to="`/${itemType}/${item.slug}`">
-        <article class="content-item" @mouseenter="isHovered = true" @mouseleave="isHovered = false" :class="{'animate': isHovered}">
+    <NuxtLink :to="{
+        name: `${itemType}-slug___${locale}`,
+        params: {
+            slug: item.slug
+        }
+    }">
+        <article
+            class="content-item"
+            @mouseenter="isHovered = true"
+            @mouseleave="isHovered = false"
+            :class="{'animate': isHovered}"
+        >
             <div class="glitch-thumb">
                 <div class="glitch-img" v-for="i in 5" :key="i" :style="`background-image: url('${getThumb(item)}')`" />
             </div>
@@ -20,15 +30,16 @@
 </template>
 
 <script setup lang="ts">
-import type { Article, Project } from '~~/types'
+import type { Article, DisplayedProject } from '~~/types'
 
 type propsType = {
     itemType: string,
-    item: Article|Project
+    item: Article|DisplayedProject
 }
 
 defineProps<propsType>()
 
+const { locale, t } = useI18n() 
 const config = useRuntimeConfig()
 const isHovered = ref(false)
 
@@ -50,7 +61,7 @@ onMounted(() => {
     }
 })
 
-const getThumb = (item: Article|Project) => {
+const getThumb = (item: Article|DisplayedProject) => {
     return `${config.apiUrl}/assets/${item.illustration.id}?width=300&height=200&fit=cover`
 }
 </script>
@@ -62,16 +73,13 @@ article {
     @include content-item(300px);
 
     .details {
-        padding: 0.5rem 0 0 0.25rem;
+        @apply pt-2 pl-1 flex flex-col justify-between;
         height: 130px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
 
         p {
+            @apply leading-8;
             color: var(--title-color);
-            font-size: clamp(1.5rem, 1.3239rem + 0.5634vw, 2rem);;
-            line-height: 1;
+            font-size: clamp(1.5rem, 1.3239rem + 0.5634vw, 2rem);
         }
 
         .tags {
@@ -94,3 +102,16 @@ article {
     }
 }
 </style>
+
+<i18n lang="json">
+{
+    "en": {
+        "project": "project",
+        "article": "article"
+    },
+    "fr": {
+        "project": "projet",
+        "article": "article"
+    }
+}
+</i18n>

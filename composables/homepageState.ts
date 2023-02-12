@@ -6,15 +6,17 @@ export const useHomepage = () => useState<Homepage>('homepage', () => ({
     fullname: '',
     icon: {
         id: '',
-        title: '',
+        title: ''
     },
-    links: [{
-        url: '',
-        svg: '',
-        display: '',
-    }],
     user: {
         id: '',
         title: '',
-    }
+    },
+    links: [
+        {
+            url: '',
+            svg: '',
+            display: '',
+        }
+    ]
 }))

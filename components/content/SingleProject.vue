@@ -1,5 +1,11 @@
 <template>
-    <NuxtLink :to="`/project/${project.slug}`">
+    <NuxtLink :to="{
+        name: `project-slug___${locale}`,
+        params: {
+            slug: project.slug
+        }
+    }"
+    >
         <article @mouseenter="isHovered = true" @mouseleave="isHovered = false" :class="{'animate': isHovered}">
             <div class="glitch-thumb">
                 <div class="glitch-img" v-for="i in 5" :key="i"
@@ -21,11 +27,12 @@
 </template>
 
 <script setup lang="ts">
-import type { Project } from '~~/types'
+import type { DisplayedProject } from '~~/types'
 
-defineProps<{ project: Project, activeTag: string }>()
+defineProps<{ project: DisplayedProject, activeTag: string }>()
 
-const config = useRuntimeConfig()
+const { locale, t } = useI18n()
+const { apiUrl } = useRuntimeConfig()
 const isHovered = ref(false)
 
 onMounted(() => {
@@ -46,8 +53,8 @@ onMounted(() => {
     }
 })
 
-const getThumb = (item: Project) => {
-    return `${config.apiUrl}/assets/${item.illustration.id}?width=300&height=200&fit=cover`
+const getThumb = (item: DisplayedProject) => {
+    return `${apiUrl}/assets/${item.illustration.id}?width=300&height=200&fit=cover`
 }
 </script>
 

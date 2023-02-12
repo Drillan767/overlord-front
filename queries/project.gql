@@ -1,25 +1,23 @@
-query Project ($search: String!) {
-    Project(
-        search: $search,
-        filter: {status: {_eq: "published"}}
-    ) {
-        title
-        website
-        repo_link
-        slug
-        description
-        body
-        illustration {
-			id
-			title
+query Projects($filters: Project_translations_filter) {
+	Project_translations(filter: $filters) {
+		title
+		slug
+		body
+		description
+		Project_id {
+			date_created
+			date_updated
+			repo_link
+			website
+			tags {
+				Tag_id {
+					title
+				}
+			}
+			illustration {
+				id
+				title
+			}
 		}
-        date_created
-        date_updated
-
-        tags {
-            Tag_id {
-                title
-            }
-        }
-    }
+	}
 }

@@ -1,19 +1,19 @@
-query Homepage ($showInfos: Boolean = true) {
-    Homepage {
-        fullname
-        baseline
-        links
-
-        icon {
-            title
-            id
-        }
-
-        user @include(if: $showInfos) {
-            title
-            id
-        }
-
-        description @include(if: $showInfos)
-    }
+query Homepage($locale: String!, $loadHomepage: Boolean = false) {
+	Homepage_translations(filter: {languages_code: {code: {_eq: $locale}}}) {
+		baseline
+		description
+        legal
+		Homepage_id @include(if: $loadHomepage) {
+			fullname
+			links
+			icon {
+				id
+				title
+			}
+			user {
+				id
+				title
+			}
+		}
+	}
 }

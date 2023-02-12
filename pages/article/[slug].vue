@@ -71,7 +71,6 @@ definePageMeta({
 
 const route = useRoute()
 const config = useRuntimeConfig()
-
 const article = ref({} as Article)
 const barWidth = ref(0)
 const readPercentage = ref(0)
@@ -80,29 +79,45 @@ const minuteRead = ref(0)
 const tagList = ref('')
 const brEnabled = ref(false)
 
+console.log(route.params.slug)
+
 await useAsyncQuery<ArticlesReceived>(articleQuery, {
-    search: route.params.slug.toString()
-})
+        slug: route.params.slug.toString()
+    })
     .then(({ data }) => {
-        if (data.value && data.value.Articles.length) {
-            article.value = data.value.Articles[0]
-            tagList.value = article.value.tags.map((t) => t.Tag_id.title).join(' • ')
-            const field = article.value.date_updated ?? article.value.date_created
-            lastCommit.value = new Intl.DateTimeFormat('fr-FR').format(new Date(field))
-            minuteRead.value = getReadingTime(article.value.body)
-        } else {
+        if (!data.value || !data.value.Articles_translations.length) {
             throw createError({
                 statusCode: 404,
-                message: 'Article not found ya idiot'
+                fatal: true,
             })
         }
+
+        const rawArticle = data.value.Articles_translations[0]
+        const { title, slug, description, body } = rawArticle
+        const { Articles_id: { date_created, date_updated, illustration, tags } } = rawArticle
+
+        article.value = {
+            title,
+            slug,
+            description,
+            body,
+            date_created,
+            date_updated,
+            illustration,
+            tags
+        }
+
+        tagList.value = article.value.tags.map((t) => t.Tag_id.title).join(' • ')
+        const field = article.value.date_updated ?? article.value.date_created
+        lastCommit.value = new Intl.DateTimeFormat('fr-FR').format(new Date(field))
+        minuteRead.value = getReadingTime(article.value.body)
     })
 
 const displayPercentage = computed(() => {
     let result = 'Progress: ['
 
     if (readPercentage.value && readPercentage.value >= 0) {
-        let spaces = 3 - readPercentage.value.toString().length
+        const spaces = 3 - readPercentage.value.toString().length
         result += ' '.repeat(spaces)
         result += readPercentage.value
     }
@@ -156,8 +171,6 @@ onMounted(() => {
     document.addEventListener('scroll', () => {
         readPercentage.value = Math.floor(getScrollPercent())
         scrollSpy(headers)
-
-        //TODO: display the toc on the side
     })
 })
 
@@ -405,3 +418,14 @@ main {
     }
 }
 </style>
+
+<i18n lang="json">
+{
+    "fr": {
+
+    },
+    "en": {
+        "404": ""
+    }
+}
+</i18n>

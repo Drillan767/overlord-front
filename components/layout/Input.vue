@@ -28,6 +28,4 @@ const props = defineProps({
     },
 })
 
-// const focus = () => input.value.focus()
-
 </script>

@@ -1,0 +1,1 @@
+export const useFullLocale = () => useState('fullLocale', () => 'fr-FR')

@@ -1,0 +1,8 @@
+query Versions($locale: String!) {
+	Releases_translations(filter: {languages_code: {code: {_eq: $locale}}}, sort: [ "-Releases_id.version" ]) {
+		description
+		Releases_id {
+			version
+		}
+	}
+}

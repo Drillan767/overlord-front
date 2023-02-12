@@ -6,13 +6,11 @@ export default defineNuxtConfig({
         '@nuxtjs/tailwindcss',
         '@nuxtjs/apollo',
         '@nuxt/image-edge',
+        '@nuxtjs/i18n',
     ],
 
     app: {
         head: {
-            htmlAttrs: {
-                lang: 'en'
-            },
             titleTemplate: '%s | Joseph Levarato',
 
             viewport: 'width=device-width, initial-scale=1',
@@ -24,10 +22,10 @@ export default defineNuxtConfig({
             ],
 
             link: [
-                { rel: 'icon', type: 'image/svg+xml', href:`${process.env.URL}/icons/logo.svg` }
+                { rel: 'icon', type: 'image/svg+xml', href: `${process.env.URL}/icons/logo.svg` }
             ],
 
-            script:[{
+            script: [{
                 children: `
                     var _paq = window._paq = window._paq || [];
                     _paq.push(['trackPageView']);
@@ -47,6 +45,45 @@ export default defineNuxtConfig({
 
     nitro: {
         compressPublicAssets: true,
+    },
+
+    i18n: {
+        locales: [
+            {
+                code: 'en',
+                iso: 'en-US'
+            },
+            {
+                code: 'fr',
+                iso: 'fr-FR'
+            }
+        ],
+        baseUrl: process.env.URL,
+        strategy: 'prefix',
+        defaultLocale: 'en',
+        customRoutes: 'config',
+        vueI18n: {
+            legacy: false,
+            messages: {
+                en: {
+                    projects: 'Projects',
+                },
+                fr: {
+                    projects: 'Projets'
+                }
+            }
+        },
+        pages: {
+            projects: {
+                fr: '/projets'
+            },
+            'project/[slug]': {
+                fr: '/projet/[slug]'
+            }
+        },
+        detectBrowserLanguage: {
+            useCookie: false,
+        }
     },
 
     apollo: {

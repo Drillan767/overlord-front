@@ -14,10 +14,12 @@
 
 <script setup lang="ts">
 
+const { t } = useI18n() 
 const homepage = useHomepage()
-const { fullname, baseline } = homepage.value
-const scrollText = "Let's scroll!"
+const { fullname } = homepage.value
+const scrollText = t('scrollText')
 const typedText = ref('')
+
 let i = 0
 
 onMounted(() => {
@@ -27,6 +29,10 @@ onMounted(() => {
 
     }, 2000)
 })
+
+const subtitle = computed(() =>
+    homepage.value.baseline.replaceAll(/_([a-zA-Zéè]*)_/g, (m, g) =>
+        `<span class="glitch" data-text="${g}">${g}</span>`))
 
 const scrollNext = () => {
     document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })
@@ -44,19 +50,12 @@ const typeLetters = () => {
     }
 }
 
-const subtitle = computed(() =>
-    baseline.replaceAll(/_([a-zA-Z]*)_/g, (m, g) =>
-        `<span class="glitch" data-text="${g}">${g}</span>`))
-
 </script>
 
 <style scoped lang="scss">
 #viewport {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    @apply flex-col;
     background-color: var(--bg-color);
+    @apply flex flex-col justify-center items-center;
     height: 100vh;
 
     .content {
@@ -76,10 +75,7 @@ const subtitle = computed(() =>
         }
 
         .scroll {
-            position: absolute;
-            display: flex;
-            justify-content: center;
-            width: 100%;
+            @apply absolute flex justify-center w-full;
             top: 38vh;
 
             p {
@@ -107,3 +103,14 @@ const subtitle = computed(() =>
     }
 }
 </style>
+
+<i18n lang="json">
+{
+    "fr": {
+        "scrollText": "Découvrez..."
+    },
+    "en": {
+        "scrollText": "Discover..."
+    }
+}
+</i18n>

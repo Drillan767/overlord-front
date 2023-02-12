@@ -36,8 +36,11 @@
 
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
+import LandingLight from '~~/components/svg/Light.vue'
+import LandingDark from '~~/components/svg/Dark.vue'
 
 const config = useRuntimeConfig()
+const { t } = useI18n()
 const color = useTheme()
 const route = useRoute()
 const homepage = useHomepage()
@@ -54,7 +57,7 @@ const footerLinks = ref([
     },
     {
         url: '/projects',
-        title: 'Projects',
+        title: t('projects'),
         item: 'project',
     }
 ])
@@ -153,3 +156,14 @@ nav {
     }
 }
 </style>
+
+<i18n lang="json">
+{
+    "fr": {
+        "projects": "Projets"
+    },
+    "en": {
+        "projects": "Projects"
+    }
+}
+</i18n>

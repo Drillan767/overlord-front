@@ -1,5 +1,6 @@
 <template>
     <div id="articles" class="slide-in">
+
         <Head>
             <Title>Articles</Title>
         </Head>
@@ -20,13 +21,8 @@
             </div>
 
             <div class="articlesList mx-auto">
-                <SingleArticle
-                    v-for="(article, i) in filteredArticles"
-                    :key="i"
-                    :activeTag="activeTag"
-                    :article="article"
-                    @change-tag="handleFilter"
-                />
+                <SingleArticle v-for="(article, i) in filteredArticles" :key="i" :activeTag="activeTag"
+                    :article="article" @change-tag="handleFilter" />
             </div>
 
             <p v-if="filteredArticles.length === 0" class="text-center text-white text-xl">
@@ -46,11 +42,23 @@ definePageMeta({
     layout: "blog",
 })
 
+const { t } = useI18n()
 const { url } = useRuntimeConfig()
 const homepage = useHomepage()
 const { baseline } = homepage.value
+const fullLocale = useFullLocale()
 const articleList = ref([] as Article[])
 const activeTag = ref('')
+
+const query = {
+    featured: false,
+    locale: fullLocale.value,
+    limit: 3,
+    filters: {
+        status: {_eq: 'published'},
+        featured: {_eq: true}
+    }
+}
 
 useSeoMeta({
     ogTitle: 'Articles',
@@ -63,10 +71,25 @@ useSeoMeta({
     twitterDescription: baseline.replace(/_/g, '')
 })
 
-await useAsyncQuery<ArticlesReceived>(articlesQuery, {filter: {status: {_eq: 'published'}}})
+await useAsyncQuery<ArticlesReceived>(articlesQuery, query)
     .then(({ data }) => {
         if (data.value) {
-            articleList.value = data.value.Articles
+            console.log(toRaw(data.value.Articles_translations))
+            articleList.value = data.value.Articles_translations.map((article) => {
+                const { title, slug, description, body } = article
+                const { Articles_id: { date_created, date_updated, illustration, tags } } = article
+
+                return {
+                    title,
+                    slug,
+                    tags,
+                    body,
+                    description,
+                    illustration,
+                    date_created,
+                    date_updated,
+                }
+            })
         }
     })
 

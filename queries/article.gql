@@ -1,23 +1,21 @@
-query Article ($search: String!) {
-	Articles(
-        search: $search,
-        filter: {status: {_eq: "published"}}
-    ) {
+query Article($slug: String!) {
+	Articles_translations(filter: {slug: {_eq: $slug}}) {
 		title
 		slug
-		description
-        date_created
-        date_updated
-		toc
 		body
-		tags {
-			Tag_id {
+		description
+		Articles_id {
+			date_created
+			date_updated
+			tags {
+				Tag_id {
+					title
+				}
+			}
+			illustration {
+				id
 				title
 			}
-		}
-		illustration {
-			id
-			title
 		}
 	}
 }
