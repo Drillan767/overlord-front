@@ -17,8 +17,8 @@
             </button>
             <div class="link-wrapper" :class="{ 'hidden': !showMenu }">
                 <ul>
-                    <li v-for="(link, i) in footerLinks" :key="i">
-                        <NuxtLink :to="link.url" :class="{ 'current': isCurrentRoute(link.item) }">{{ link.title }}
+                    <li v-for="(link, i) in navLinks" :key="i">
+                        <NuxtLink :to="{name: link.url}" :class="{ 'current': isCurrentRoute(link.item) }">{{ link.title }}
                         </NuxtLink>
                     </li>
 
@@ -40,7 +40,7 @@ import LandingLight from '~~/components/svg/Light.vue'
 import LandingDark from '~~/components/svg/Dark.vue'
 
 const config = useRuntimeConfig()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const color = useTheme()
 const route = useRoute()
 const homepage = useHomepage()
@@ -49,14 +49,14 @@ const { fullname, icon } = homepage.value
 const toggleTheme = () => color.value = color.value === 'dark' ? 'light' : 'dark'
 const showMenu = ref(false)
 
-const footerLinks = ref([
+const navLinks = ref([
     {
-        url: '/articles',
+        url: `articles___${locale.value}`,
         title: 'Articles',
         item: 'article',
     },
     {
-        url: '/projects',
+        url: `projects___${locale.value}`,
         title: t('projects'),
         item: 'project',
     }

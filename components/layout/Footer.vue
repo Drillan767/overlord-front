@@ -10,7 +10,7 @@
             <div class="links">
                 <ul>
                     <li v-for="(link, i) in footerLinks" :key="i">
-                        <NuxtLink :to="link.url" :class="{ 'current': isCurrentRoute(link.item) }">
+                        <NuxtLink :to="{name: link.url}" :class="{ 'current': isCurrentRoute(link.item) }">
                             {{ link.title }}
                         </NuxtLink>
                     </li>
@@ -60,7 +60,7 @@ import LanguageSwitcher from '~~/components/layout/LanguageSwitcher.vue'
 const date = new Date;
 const year = ref(date.getFullYear())
 const config = useRuntimeConfig()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const color = useTheme()
 const route = useRoute()
 const homepage = useHomepage()
@@ -68,12 +68,12 @@ const { fullname, links, icon, legal } = homepage.value
 
 const footerLinks = ref([
     {
-        url: '/articles',
+        url: `articles___${locale.value}`,
         title: 'Articles',
         item: 'article',
     },
     {
-        url: '/projects',
+        url: `projects___${locale.value}`,
         title: t('projects'),
         item: 'project',
     }

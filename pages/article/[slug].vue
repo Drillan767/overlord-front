@@ -398,8 +398,8 @@ main {
         overflow-y: hidden;
 
         .prose {
-            @apply prose-a:text-violet-600 prose-img:mx-auto;
-
+            @apply prose-a:text-violet-600 prose-img:mx-auto mx-auto dark:prose-invert;
+/* 
             margin: auto;
 
             p {
@@ -412,7 +412,7 @@ main {
             h5,
             h6 {
                 color: var(--title-color);
-            }
+            } */
 
         }
     }
