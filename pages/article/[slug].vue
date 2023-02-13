@@ -79,8 +79,6 @@ const minuteRead = ref(0)
 const tagList = ref('')
 const brEnabled = ref(false)
 
-console.log(route.params.slug)
-
 await useAsyncQuery<ArticlesReceived>(articleQuery, {
         slug: route.params.slug.toString()
     })

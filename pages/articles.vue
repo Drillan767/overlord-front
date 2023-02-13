@@ -74,7 +74,6 @@ useSeoMeta({
 await useAsyncQuery<ArticlesReceived>(articlesQuery, query)
     .then(({ data }) => {
         if (data.value) {
-            console.log(toRaw(data.value.Articles_translations))
             articleList.value = data.value.Articles_translations.map((article) => {
                 const { title, slug, description, body } = article
                 const { Articles_id: { date_created, date_updated, illustration, tags } } = article
