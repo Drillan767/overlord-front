@@ -31,6 +31,7 @@ jobs:
             API_URL=${{ secrets.API_URL }}
             GQL_HOST=${{ secrets.GQL_HOST }}
             URL=${{ secrets.URL }}
+            HCAPTCHA_SITEKEY=${{ secrets.HCAPTCHA_SITEKEY }}
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/overlord-front:latest
 
       - name: Deploying 🚚

@@ -1,11 +1,13 @@
 <template>
-    <div class="textarea relative">
+    <div class="textarea" :class="{'error': error}">
          <div class="grow-wrap">
             <textarea @input="input" ref="textarea" placeholder=" " :id="identifier">{{ modelValue }}</textarea>
             
-            <label :for="identifier" class="text-violet-800">{{ label }}</label>
+            <label :for="identifier">{{ label }}</label>
         </div>
-
+        <p class="text-xs text-red-500" v-if="error">
+            {{ error }}
+        </p>
     </div>
 </template>
 
@@ -16,15 +18,19 @@ defineProps({
     modelValue: String,
     identifier: String,
     label: String,
+    error: {
+        type: String,
+        required: false
+    }
 })
 
 const emit = defineEmits(['update:modelValue'])
 
-const input = (e) => {
-    if (textarea.value) {
-        textarea.value.style = `height: ${e.target.scrollHeight}px;`
-        emit('update:modelValue', e.target.value)
+const input = (e: Event) => {
+    const target = (<HTMLInputElement>e.target)
+    if (textarea.value && e) {
+        textarea.value.style = `height: ${target.scrollHeight}px;`
+        emit('update:modelValue', target.value)
     }
-
 }
 </script>

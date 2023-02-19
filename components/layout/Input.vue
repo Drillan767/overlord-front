@@ -1,5 +1,5 @@
 <template>
-    <div class="input">
+    <div class="input" :class="{'error': error}">
         <input
             ref="input"
             :value="modelValue"
@@ -11,6 +11,9 @@
         <label :for="identifier">
             {{ label }}
         </label>
+        <p class="text-xs text-red-500" v-if="error">
+            {{ error }}
+        </p>
     </div>
 </template>
 
@@ -22,6 +25,10 @@ const props = defineProps({
     modelValue: String,
     identifier: String,
     label: String,
+    error: {
+        type: String,
+        required: false
+    },
     type: {
         type: String,
         default: 'text',

@@ -9,6 +9,9 @@ ENV GQL_HOST=${GQL_HOST}
 ARG URL
 ENV URL=${URL}
 
+ARG HCAPTCHA_SITEKEY
+ENV HCAPTCHA_SITEKEY=${HCAPTCHA_SITEKEY}
+
 RUN mkdir -p /usr/src/nuxt-app
 WORKDIR /usr/src/nuxt-app
 COPY . .
