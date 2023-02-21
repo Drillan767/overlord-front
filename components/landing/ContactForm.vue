@@ -42,7 +42,7 @@
 import VueHcaptcha from '@hcaptcha/vue3-hcaptcha'
 import { useVuelidate } from '@vuelidate/core'
 import { required, email, minLength, helpers } from '@vuelidate/validators'
-import Check from '~~/components/svg/check.vue'
+import Check from '~~/components/svg/Check.vue'
 import contactQuery from '~~/queries/inquiries.gql'
 import Button from "~~/components/layout/Button.vue"
 import Input from "~~/components/layout/Input.vue"
