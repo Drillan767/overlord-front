@@ -12,6 +12,12 @@ export const useHomepage = () => useState<Homepage>('homepage', () => ({
         id: '',
         title: '',
     },
+    legal: [
+        {
+        title: '',
+        url: '',
+        }
+    ],
     links: [
         {
             url: '',
