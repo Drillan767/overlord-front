@@ -1,9 +1,5 @@
 <template>
     <div id="index">
-        <Head>
-            <Title>Landing</Title>
-        </Head>
-        <Navbar />
         <LandingViewport />
         <LandingAbout />
         <LandingFeatured />
@@ -16,6 +12,10 @@
 import { useSeoMeta } from '@unhead/vue'
 import Footer from '~~/components/layout/Footer.vue'
 import Navbar from '~~/components/layout/Navbar.vue'
+
+useHead({
+    title: 'Landing',
+})
 
 const { url } = useRuntimeConfig()
 // const homepage = useHomepage()

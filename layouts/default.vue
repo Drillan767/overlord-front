@@ -1,22 +1,28 @@
 <template>
-    <div id="default">
+    <VLayout>
+        <Navbar />
+        <slot />
+    </VLayout>
+    <!-- <div id="default">
         <Html>
-            <!-- :lang="head.htmlAttrs?.lang" :dir="head.htmlAttrs?.dir" -->
-            <!-- <Head>
+            :lang="head.htmlAttrs?.lang" :dir="head.htmlAttrs?.dir"
+            <Head>
                 <template v-for="link in head.link" :key="link.id">
                     <Link :id="link.id" :rel="link.rel" :href="link.href" :hreflang="link.hreflang" />
                 </template>
                 <template v-for="meta in head.meta" :key="meta.id">
                     <Meta :id="meta.id" :property="meta.property" :content="meta.content" />
                 </template>
-            </Head> -->
+            </Head>
 
             <Body>
                 <slot />
             </Body>
         </Html>
-    </div>
+    </div> -->
 </template>
 
 <script setup lang="ts">
+import Navbar from '~/components/layout/Navbar.vue';
+
 </script>

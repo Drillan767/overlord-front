@@ -1,4 +1,5 @@
 :root {
+    --purple: hsl(274, 93%, 63%);
     /*=== Dark theme (default) ===*/
     /* --font-light: rgb(245, 245, 247);
     --title-light: #fff;
@@ -21,7 +22,7 @@
     --gap-vertical: 5px;
     --gap-horizontal: 10px;
     --time-anim: 4s;
-    --purple: hsl(274, 93%, 63%);
+    
     --bg-navbar-footer: var(--bg-dark);
     --bg-about: var(--bg-dark);
     --bg-contact: var(--bg-dark-alt);
