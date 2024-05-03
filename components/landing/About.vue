@@ -1,5 +1,5 @@
 <template>
-    <section id="about">
+    <!-- <section id="about">
         <div class="content">
             <div class="w-full md:w-1/2">
                 <div class="flex justify-center">
@@ -8,14 +8,14 @@
             </div>
             <div class="prose" v-html="homepage.description" />
         </div>
-    </section>
+    </section> -->
 </template>
 
 <script setup lang="ts">
 
-const config = useRuntimeConfig()
+/* const config = useRuntimeConfig()
 const homepage = useHomepage()
-const { user } = homepage.value
+const { user } = homepage.value */
 
 </script>
 

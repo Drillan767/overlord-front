@@ -1,6 +1,6 @@
 <template>
     <header id="viewport">
-        <div class="content">
+        <!-- <div class="content">
             <h1 class="title glitch" :data-text="fullname">{{ fullname }}</h1>
             <p class="subtitle" v-html="subtitle"></p>
 
@@ -8,17 +8,18 @@
                 <span class="typed-text" @click="scrollNext">{{ typedText }}</span>
                 <span class="input-cursor"></span>
             </div>
-        </div>
+        </div> -->
     </header>
 </template>
 
 <script setup lang="ts">
 
-const { t } = useI18n() 
-const homepage = useHomepage()
-const { fullname } = homepage.value
-const scrollText = t('scrollText')
+const scrollText = 'Scroll down...'
+
+/* const homepage = useHomepage()
+const { fullname } = await homepage
 const typedText = ref('')
+
 
 let i = 0
 
@@ -48,7 +49,7 @@ const typeLetters = () => {
         document.querySelector('.typed-text')?.classList.add('underline', 'cursor-pointer')
 
     }
-}
+} */
 
 </script>
 
@@ -103,14 +104,3 @@ const typeLetters = () => {
     }
 }
 </style>
-
-<i18n lang="json">
-{
-    "fr": {
-        "scrollText": "Découvrez..."
-    },
-    "en": {
-        "scrollText": "Discover..."
-    }
-}
-</i18n>

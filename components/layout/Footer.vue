@@ -1,6 +1,6 @@
 <template>
     <footer>
-        <div class="first-row">
+<!--         <div class="first-row">
             <div class="flex gap-x-5">
                 <NuxtLink to="/">
                     <nuxt-img format="webp" :src="`${config.apiUrl}/assets/${icon.id}`" :alt="icon.title" />
@@ -29,7 +29,7 @@
         <hr />
         <div class="second-row">
             <span>
-                © {{ year }} <NuxtLink href="/">{{ fullname }}</NuxtLink>. {{ t('arr') }}.
+                © {{ year }} <NuxtLink href="/">{{ fullname }}</NuxtLink>. All Rights Reserved.
             </span>
             <div class="links">
                 <div class="internal">
@@ -47,7 +47,7 @@
                     target="_blank" />
                 </div>
             </div>
-        </div>
+        </div> -->
     </footer>
 
 </template>
@@ -57,7 +57,7 @@ import LandingLight from '~~/components/svg/Light.vue'
 import LandingDark from '~~/components/svg/Dark.vue'
 import LanguageSwitcher from '~~/components/layout/LanguageSwitcher.vue'
 
-const date = new Date;
+/* const date = new Date;
 const year = ref(date.getFullYear())
 const config = useRuntimeConfig()
 const { t, locale } = useI18n()
@@ -74,7 +74,7 @@ const footerLinks = ref([
     },
     {
         url: `projects___${locale.value}`,
-        title: t('projects'),
+        title: 'Projects',
         item: 'project',
     }
 ])
@@ -87,7 +87,7 @@ const isCurrentRoute = (link: string) => {
     return false
 }
 
-const toggleTheme = () => color.value = color.value === 'dark' ? 'light' : 'dark'
+const toggleTheme = () => color.value = color.value === 'dark' ? 'light' : 'dark' */
 
 </script>
 
@@ -195,16 +195,3 @@ footer {
     }
 }
 </style>
-
-<i18n lang="json">
-{
-    "fr": {
-        "arr": "Tous Droits Réservés",
-        "projects": "Projets"
-    },
-    "en": {
-        "arr": "All Rights Reserved",
-        "projects": "Projects"
-    }
-}
-</i18n>

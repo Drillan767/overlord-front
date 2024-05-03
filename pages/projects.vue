@@ -1,7 +1,7 @@
 <template>
     <div id="projects" class="slide-in">
 
-        <Head>
+       <!--  <Head>
             <Title>Projects</Title>
         </Head>
 
@@ -28,22 +28,20 @@
             <p v-if="filteredProjects.length === 0" class="text-center text-white text-xl">
                 Nothing to see here for now...
             </p>
-        </div>
+        </div> -->
     </div>
 </template>
 
 <script setup lang="ts">
 import { useSeoMeta } from '@unhead/vue'
 import type { TagFilter, DisplayedProjectsReceived, DisplayedProject } from '~~/types'
-import projectQuery from '~~/queries/projects.gql'
 import SingleProject from '~~/components/content/SingleProject.vue';
 
 definePageMeta({
-    layout: "blog",
+    layout: 'blog',
 })
 
-const { t } = useI18n()
-const { url } = useRuntimeConfig()
+/* const { url } = useRuntimeConfig()
 const homepage = useHomepage()
 const fullLocale = useFullLocale()
 const { baseline } = homepage.value
@@ -113,7 +111,7 @@ const filteredProjects = computed(() => {
     return activeTag.value !== ''
         ? projectList.value.filter((a) => a.tags.some((t) => t.Tag_id.title === activeTag.value))
         : projectList.value
-})
+}) */
 
 </script>
 

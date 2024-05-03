@@ -1,4 +1,4 @@
-import { parse } from 'node-html-parser'
+// import { parse } from 'node-html-parser'
 
 export const getScrollPercent = () => {
     const prose = document.querySelector<HTMLDivElement>('.prose')
@@ -54,10 +54,10 @@ export const getReadingTime = (text: string) => {
 }
 
 export const toBionicReading = (text: string) => {
-    const raw = parse(text)
+    /* const raw = parse(text)
     const allParagraphs = raw.querySelectorAll('p')
     // allParagraphs.forEach((p))
-    console.log(allParagraphs.length)
+    console.log(allParagraphs.length) */
     /*
         RULES
         =====

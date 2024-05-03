@@ -1,6 +1,6 @@
 <template>
     <nav>
-        <div class="container">
+        <!-- <div class="container">
             <NuxtLink to="/">
                 <nuxt-img format="webp" :src="`${config.apiUrl}/assets/${icon.id}`" :title="icon.title" />
                 <span>{{ fullname }}</span>
@@ -30,17 +30,17 @@
                     </li>
                 </ul>
             </div>
-        </div>
+        </div> -->
     </nav>
 </template>
 
 <script setup lang="ts">
-import { useRoute } from 'vue-router';
+/* import { useRoute } from 'vue-router';
 import LandingLight from '~~/components/svg/Light.vue'
 import LandingDark from '~~/components/svg/Dark.vue'
 
 const config = useRuntimeConfig()
-const { t, locale } = useI18n()
+const { locale } = useI18n()
 const color = useTheme()
 const route = useRoute()
 const homepage = useHomepage()
@@ -57,7 +57,7 @@ const navLinks = ref([
     },
     {
         url: `projects___${locale.value}`,
-        title: t('projects'),
+        title: 'Projects',
         item: 'project',
     }
 ])
@@ -68,7 +68,7 @@ const isCurrentRoute = (link: string) => {
     }
 
     return false
-}
+} */
 
 </script>
 

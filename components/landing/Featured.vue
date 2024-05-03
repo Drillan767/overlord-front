@@ -1,6 +1,6 @@
 <template>
     <section id="featured" v-if="(featuredArticles.length || featuredProjects.length)">
-        <div class="content">
+        <!-- <div class="content">
             <div class="articles" v-if="featuredArticles.length">
                 <div class="title">
                     <h2 class="uppercase" v-html="t('articles.featured')" />
@@ -22,35 +22,29 @@
                     <ItemThumbnail item-type="project" :item="project" />
                 </div>
             </div>
-        </div>
+        </div> -->
     </section>
 </template>
 
 <script setup lang="ts">
 
-import articles from '~~/queries/articles.gql'
-import projects from '~~/queries/projects.gql'
 import ItemThumbnail from '~~/components/content/ItemThumbnail.vue'
 import Button from '~~/components/layout/Button.vue'
 import type { Article, ArticlesReceived, DisplayedProject, DisplayedProjectsReceived } from '~~/types'
 
-const { t } = useI18n()
-const localePath = useLocalePath()
-const fullLocale = useFullLocale()
-
-const gqlHeaders = {
+/* const gqlHeaders = {
     locale: fullLocale.value,
     limit: 3,
     filters: {
         status: {_eq: 'published'},
         featured: {_eq: true}
     }
-}
+} */
 
 const featuredArticles = ref<Article[]>([])
 const featuredProjects = ref<DisplayedProject[]>([])
 
-await useAsyncQuery<ArticlesReceived>(articles, {...gqlHeaders, featured: true})
+/* await useAsyncQuery<ArticlesReceived>(articles, {...gqlHeaders, featured: true})
     .then(({ data }) => {
         if (data.value) {
             featuredArticles.value = data.value.Articles_translations.map((article) => {
@@ -83,31 +77,6 @@ await useAsyncQuery<DisplayedProjectsReceived>(projects, gqlHeaders)
                 }
             })
         }
-    })
+    }) */
 
 </script>
-
-<i18n lang="json">
-{
-    "fr": {
-        "articles": {
-            "featured": "<span class=\"glitch\" data-text=\"ARTICLES\">Articles</span><br /> en avant",
-            "all": "Tous les articles"
-        },
-        "projects": {
-            "featured": "<span class=\"glitch\" data-text=\"PROJETS\">Projets</span><br /> en avant",
-            "all": "Tous les projets"
-        }
-    },
-    "en": {
-        "articles": {
-            "featured": "Featured <br /><span class=\"glitch\" data-text=\"ARTICLES\">Articles</span>",
-            "all": "View all articles"
-        },
-        "projects": {
-            "featured": "Featured <br /><span class=\"glitch\" data-text=\"PROJECTS\">Projects</span>",
-            "all": "View all projects"
-        }
-    }
-}
-</i18n>

@@ -1,21 +1,19 @@
 <template>
-    <NuxtLayout>
-        <NuxtPage />
-    </NuxtLayout>
+    <VApp>
+        <NuxtLayout>
+            <NuxtPage />
+        </NuxtLayout>
+    </VApp>
 </template>
 
 <script setup lang="ts">
 import type { ReceivedHomepage } from '~~/types';
-import homepageGql from '~~/queries/homepage.gql'
 
-const { locale } = useI18n()
-const color = useTheme()
-const homepage = useHomepage()
-const fullLocale = useFullLocale()
+// const homepage = useHomepage()
 
-fullLocale.value = locale.value === 'fr' ? 'fr-FR' : 'en-US'
+// fullLocale.value = locale.value === 'fr' ? 'fr-FR' : 'en-US'
 
-await useAsyncQuery<ReceivedHomepage>(homepageGql, {locale: fullLocale.value, loadHomepage: true })
+/* await useAsyncQuery<ReceivedHomepage>(homepageGql, {locale: fullLocale.value, loadHomepage: true })
     .then(({ data }) => {
         if (data.value) {
             const {baseline, description, legal, Homepage_id } = data.value.Homepage_translations[0]
@@ -30,12 +28,6 @@ await useAsyncQuery<ReceivedHomepage>(homepageGql, {locale: fullLocale.value, lo
                 icon
             }
         }
-    })
-
-useHead({
-    bodyAttrs: {
-        class: color
-    },
-})
+    }) */
 
 </script>

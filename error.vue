@@ -1,5 +1,6 @@
 <template>
-    <div class="error" :style="bg">
+    <p>Error</p>
+    <!-- <div class="error" :style="bg">
         <div class="glitch-thumb">
             <div class="glitch-img" v-for="i in 5" :key="i" :style="bg" />
         </div>
@@ -7,15 +8,15 @@
         <div class="message">
             <h1 class="glitch" :data-text="error.statusCode">{{ error.statusCode }}</h1>
             <h2>{{ error.statusMessage }}</h2>
-            <Button @click="redirectHome" type="button" :content="t('home')" />
-        </div>
-    </div>
+            <Button @click="redirectHome" type="button" :content="'home'" />
+        </div> 
+    </div>-->
 </template>
 
 <script setup lang="ts">
 import Button from '~~/components/layout/Button.vue'
 
-const { t } = useI18n()
+/* const { t } = useI18n()
 const { url } = useRuntimeConfig()
 const img = useImage()
 const { error } = defineProps(['error'])
@@ -32,7 +33,7 @@ useHead({
 const bg = computed(() => {
     const imgUrl = img(url + '/img/404.jpg', { modifiers: { format: 'webp' } })
     return `background-image: url('${imgUrl}')`
-})
+}) */
 
 const redirectHome = () => clearError({ redirect: '/' })
 </script>

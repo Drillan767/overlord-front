@@ -1,6 +1,6 @@
 <template>
    <div class="dropdown">
-        <button
+ <!--        <button
             @click="isOpened = !isOpened"
             @blur="isOpened = false"
         >
@@ -25,7 +25,7 @@
                     {{ l.code.toUpperCase() }}
                 </li>
             </ul>
-        </transition>
+        </transition> -->
     </div>
 </template>
 
@@ -33,9 +33,8 @@
 import Globe from "~~/components/svg/Globe.vue"
 import ArrowDown from "~~/components/svg/ArrowDown.vue"
 import type { ReceivedTranslatedHomepage } from '~~/types';
-import homepageGql from '~~/queries/homepage.gql'
 
-const { locale, locales, setLocale } = useI18n()
+/* const { locale, locales, setLocale } = useI18n()
 
 const homepage = useHomepage()
 const fullLocale = useFullLocale()
@@ -118,7 +117,7 @@ const loadHomepageTranslation = async () => {
 onMounted(() => {
     const sections = ids.map((id) => waitForElm(id))
     Promise.all(sections).then(() => revealItems())
-})
+}) */
 
 </script>
 

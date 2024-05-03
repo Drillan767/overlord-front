@@ -1,6 +1,7 @@
 <template>
     <div id="blog">
-        <Html :lang="head.htmlAttrs?.lang" :dir="head.htmlAttrs?.dir">
+        <Html>
+            <!-- :lang="head.htmlAttrs?.lang" :dir="head.htmlAttrs?.dir"
             <Head>
                 <template v-for="link in head.link" :key="link.id">
                     <Link :id="link.id" :rel="link.rel" :href="link.href" :hreflang="link.hreflang" />
@@ -8,7 +9,7 @@
                 <template v-for="meta in head.meta" :key="meta.id">
                     <Meta :id="meta.id" :property="meta.property" :content="meta.content" />
                 </template>
-            </Head>
+            </Head> -->
 
             <Body>
                 <Navbar />
@@ -25,20 +26,15 @@
 import Footer from '~~/components/layout/Footer.vue'
 import Navbar from '~~/components/layout/Navbar.vue'
 
-const head = useLocaleHead({
-    addDirAttribute: true,
-    identifierAttribute: 'id',
-    addSeoAttributes: true
-})
 </script>
 
 <style scoped lang="scss">
 
-#blog {
+/* #blog {
     background-color: var(--bg-color);
     .content {
         min-height: var(--landing-min-height);
     }
-}
+} */
 
 </style>

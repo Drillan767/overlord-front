@@ -1,4 +1,4 @@
-export type Homepage = {
+export interface Homepage {
     baseline: string,
     description: string,
     fullname: string,
@@ -21,7 +21,7 @@ export type Homepage = {
     }
 }
 
-export type ReceivedHomepage = {
+export interface ReceivedHomepage {
     Homepage_translations: {
         baseline: string,
         description: string,
@@ -48,7 +48,7 @@ export type ReceivedHomepage = {
     }[]
 }
 
-export type ReceivedTranslatedHomepage = {
+export interface ReceivedTranslatedHomepage {
     Homepage_translations: {
         baseline: string,
         description: string,
@@ -59,7 +59,7 @@ export type ReceivedTranslatedHomepage = {
     }[]
 }
 
-export type Article = {
+export interface Article {
     title: string,
     slug: string,
     body: string,
@@ -72,7 +72,7 @@ export type Article = {
     }[]
 }
 
-export type Project = {
+export interface Project {
     title: string,
     slug: string,
     body: string,
@@ -87,7 +87,7 @@ export type Project = {
     }[]
 }
 
-export type ProjectReceived = {
+export interface ProjectReceived {
     Project_translations: {
         title: string,
         slug: string,
@@ -106,7 +106,7 @@ export type ProjectReceived = {
     }[]
 }
 
-export type DisplayedProject = {
+export interface DisplayedProject {
     title: string
     slug: string
     tags: {
@@ -115,7 +115,7 @@ export type DisplayedProject = {
     illustration: Illustration
 }
 
-export type DisplayedProjectsReceived = {
+export interface DisplayedProjectsReceived {
     Project_translations: {
         title: string,
         slug: string,
@@ -128,26 +128,26 @@ export type DisplayedProjectsReceived = {
     }[]
 }
 
-export type Illustration = {
+export interface Illustration {
     id: string,
     title: string
 }
 
-export type Tag = {
+export interface Tag {
     title: string,
 }
 
-export type Page = {
+export interface Page {
     title: string,
     slug: string,
     body: string,
 }
 
-export type PagesReceived = {
+export interface PagesReceived {
     Pages_translations: Page[]
 }
 
-export type ArticlesReceived = {
+export interface ArticlesReceived {
     Articles_translations: {
         title: string,
         slug: string,
@@ -164,12 +164,12 @@ export type ArticlesReceived = {
     }[]
 }
 
-export type Version = {
+export interface Version {
     version: string,
     description: string
 }
 
-export type ReceivedVersion = {
+export interface ReceivedVersion {
     Releases_translations: {
         description: string,
         Releases_id: {
@@ -178,7 +178,7 @@ export type ReceivedVersion = {
     }[]
 }
 
-export type TagFilter = {
+export interface TagFilter {
     title: string,
     nbArticles?: number,
     nbProjects?: number,

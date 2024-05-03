@@ -1,12 +1,21 @@
 import { defineNuxtConfig } from 'nuxt/config'
-import pkg from './package.json'
+import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 
 export default defineNuxtConfig({
+    devtools: {
+        enabled: true,
+    },
+
     modules: [
-        '@nuxtjs/tailwindcss',
-        '@nuxtjs/apollo',
-        '@nuxt/image-edge',
-        '@nuxtjs/i18n',
+        'nuxt-directus',
+        '@vee-validate/nuxt',
+        '@vueuse/nuxt',
+        (_options, nuxt) => {
+            nuxt.hooks.hook('vite:extendConfig', (config) => {
+                // @ts-expect-error
+                config.plugins.push(vuetify({ autoImport: true }))
+            })
+        },
     ],
 
     app: {
@@ -43,10 +52,7 @@ export default defineNuxtConfig({
         }
     },
 
-    nitro: {
-        compressPublicAssets: true,
-    },
-
+/* 
     i18n: {
         locales: [
             {
@@ -92,12 +98,13 @@ export default defineNuxtConfig({
                 httpEndpoint: process.env.GQL_HOST || 'localhost:8055'
             }
         }
-    },
+    }, 
 
     tailwindcss: {
         viewer: false,
         cssPath: '~/assets/css/tailwind.css'
     },
+    */
 
     css: ["@/assets/styles/main.scss"],
 
@@ -105,8 +112,22 @@ export default defineNuxtConfig({
         public: {
             apiUrl: process.env.API_URL || 'localhost:8055',
             url: process.env.URL || 'localhost:3000',
-            version: pkg.version,
-            hcSitekey: process.env.HCAPTCHA_SITEKEY
+            hcSitekey: process.env.HCAPTCHA_SITEKEY,
+            directus: {
+                url: process.env.API_URL || 'localhost:8055',
+            }
         }
-    }
+    },
+
+    build: {
+        transpile: ['vuetify'],
+    },
+
+    vite: {
+        vue: {
+            template: {
+                transformAssetUrls,
+            },
+        },
+    },
 })
