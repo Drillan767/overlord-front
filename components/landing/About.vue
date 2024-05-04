@@ -1,4 +1,7 @@
 <template>
+    <section id="about">
+        <p>Bjr</p>
+    </section>
     <!-- <section id="about">
         <div class="content">
             <div class="w-full md:w-1/2">

@@ -106,7 +106,10 @@ export default defineNuxtConfig({
     },
     */
 
-    css: ["@/assets/styles/main.scss"],
+    css: [
+        'vuetify/lib/styles/main.sass',
+        '@/assets/styles/main.scss'
+    ],
 
     runtimeConfig: {
         public: {
