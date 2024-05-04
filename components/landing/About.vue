@@ -1,45 +1,51 @@
 <template>
     <section id="about">
-        <p>Bjr</p>
+        <VContainer class="d-flex align-center">
+            <VRow v-if="homepage" justify="center">
+                <VCol
+                    cols="12"
+                    md="5"
+                    class="d-flex justify-center align-center"
+                >
+                    <div>
+                        <VImg
+                            :src="`${config.public.apiUrl}/assets/${homepage.user}`"
+                            width="320"
+                        />
+                    </div>
+                </VCol>
+                <VCol
+                    class="description"
+                    cols="12"
+                    md="5"
+                    v-html="homepage.description"
+                />
+            </VRow>
+        </VContainer>
     </section>
-    <!-- <section id="about">
-        <div class="content">
-            <div class="w-full md:w-1/2">
-                <div class="flex justify-center">
-                    <nuxt-img format="webp" :src="`${config.apiUrl}/assets/${user.id}`" :alt="user.title" />
-                </div>
-            </div>
-            <div class="prose" v-html="homepage.description" />
-        </div>
-    </section> -->
 </template>
 
 <script setup lang="ts">
+import type { Homepage } from '~/types'
 
-/* const config = useRuntimeConfig()
-const homepage = useHomepage()
-const { user } = homepage.value */
+const config = useRuntimeConfig()
+const homepage = useState<Homepage>('homepage')
 
 </script>
 
 <style scoped lang="scss">
+@import '../../assets/styles/_variables';
+
 #about {
-    background-color: var(--bg-about);
-    min-height: var(--landing-min-height);
-    padding: var(--landing-padding);
+    display: flex;
+    min-height: 100vh;
 
-    .content {
+    .description :deep p {
+        margin-bottom: 1.25em;
+        font-size: 20px;
 
-        @media (min-width: 768px) {
-            display: flex;
-        }
-
-        .prose {
-            @apply text-xl w-full md:w-1/2 prose-a:text-violet-600 dark:prose-invert;
-            
-            p {
-                color: var(--font-color);
-            }
+        &:last-of-type::after {
+            @include cursor;
         }
     }
 }

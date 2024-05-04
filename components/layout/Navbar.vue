@@ -83,7 +83,6 @@ onMounted(() => loadHomepageData())
 </template>
 
 <style scoped lang="scss">
-//components/layout/~/assets/styles/_variables.scss.scss
 @import '../../assets/styles/_variables';
 
 .nav {
