@@ -40,7 +40,7 @@ const homepage = useState<Homepage>('homepage')
     display: flex;
     min-height: 100vh;
 
-    .description :deep p {
+    .description :deep(p) {
         margin-bottom: 1.25em;
         font-size: 20px;
 

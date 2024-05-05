@@ -1,82 +1,116 @@
-<template>
-    <section id="featured" v-if="(featuredArticles.length || featuredProjects.length)">
-        <!-- <div class="content">
-            <div class="articles" v-if="featuredArticles.length">
-                <div class="title">
-                    <h2 class="uppercase" v-html="t('articles.featured')" />
-
-                    <Button type="link" :link="localePath({ name: 'articles' })" :content="t('articles.all')" />
-                </div>
-
-                <div class="list" v-for="(article, i) in featuredArticles" :key="i">
-                    <ItemThumbnail item-type="article" :item="article" />
-                </div>
-            </div>
-            <div class="projects" v-if="featuredProjects.length">
-                <div class="title">
-                    <h2 class="uppercase" v-html="t('projects.featured')" />
-
-                    <Button type="link" :link="localePath({name: 'projects'})" :content="t('projects.all')" />
-                </div>
-                <div class="list" v-for="(project, i) in featuredProjects" :key="i">
-                    <ItemThumbnail item-type="project" :item="project" />
-                </div>
-            </div>
-        </div> -->
-    </section>
-</template>
-
 <script setup lang="ts">
-
-import ItemThumbnail from '~~/components/content/ItemThumbnail.vue'
+import type { Article, DisplayedProject } from '~~/types'
 import Button from '~~/components/layout/Button.vue'
-import type { Article, ArticlesReceived, DisplayedProject, DisplayedProjectsReceived } from '~~/types'
+import ItemThumbnail from '../content/ItemThumbnail.vue';
 
-/* const gqlHeaders = {
-    locale: fullLocale.value,
-    limit: 3,
-    filters: {
-        status: {_eq: 'published'},
-        featured: {_eq: true}
-    }
-} */
+const config = useRuntimeConfig()
+
+const { getItems  } = useDirectusItems()
 
 const featuredArticles = ref<Article[]>([])
 const featuredProjects = ref<DisplayedProject[]>([])
 
-/* await useAsyncQuery<ArticlesReceived>(articles, {...gqlHeaders, featured: true})
-    .then(({ data }) => {
-        if (data.value) {
-            featuredArticles.value = data.value.Articles_translations.map((article) => {
-            const { title, slug, description, body } = article
-            const { Articles_id: { date_created, date_updated, illustration, tags } } = article
-
-                return {
-                    title,
-                    slug,
-                    tags,
-                    body,
-                    description,
-                    illustration,
-                    date_created,
-                    date_updated,
-                }
-            })
-        }
+const fetchFeatured = async () => {
+    featuredArticles.value = await getItems<Article>({
+        collection: 'Articles',
+        params: {
+            filter: {
+                featured: true
+            },
+            fields: ['title, tags, illustration, slug', 'tags.Tag_id.title']
+        },
     })
 
-await useAsyncQuery<DisplayedProjectsReceived>(projects, gqlHeaders)
-    .then(({ data }) => {
-        if (data.value) {
-            featuredProjects.value = data.value.Project_translations.map((project) => {
-                const { title, slug } = project
-                const { Project_id: {illustration, tags} } = project
-
-                return {
-                    title, slug, illustration, tags
-                }
-            })
+    featuredProjects.value = await getItems<DisplayedProject>({
+        collection: 'Project',
+        params: {
+            filter: {
+                featured: true
+            },
+            fields: ['title, tags, illustration, slug', 'tags.Tag_id.title']
         }
-    }) */
+    })
+}
 
+onMounted(() => fetchFeatured())
 </script>
+
+<template>
+    <section id="featured">
+        <VContainer>
+            <VRow>
+                <VCol
+                    cols="12"
+                    md="2"
+                    class="offset-md-1 d-flex flex-column justify-space-between"
+                >
+                    <h2 class="text-uppercase text-right text-h3">
+                        Featured <br>
+                        <span class="glitch" data-text="ARTICLES">
+                            Articles
+                        </span>
+                    </h2>
+
+                    <Button
+                        type="link"
+                        link="/articles"
+                        content="View all articles"
+                    />
+                </VCol>
+                <VCol
+                    v-for="(article, i) in featuredArticles"
+                    :key="i"
+                    cols="12"
+                    md="3"
+                >
+                    <ItemThumbnail
+                        item-type="article"
+                        :item="article"
+                    />
+                </VCol>
+            </VRow>
+            <VRow>
+                <VCol
+                    cols="12"
+                    md="2"
+                    class="offset-md-1 d-flex flex-column justify-space-between"
+                >
+                    <h2 class="text-uppercase text-right text-h3">
+                        Featured <br>
+                        <span class="glitch" data-text="PROJECTS">
+                            Projects
+                        </span>
+                    </h2>
+
+                    <Button
+                        type="link"
+                        link="/projects"
+                        content="View all projects"
+                    />
+                </VCol>
+                
+                <VCol
+                    v-for="(project, i) in featuredProjects"
+                    :key="i"
+                    cols="12"
+                    md="3"
+                >
+                    <ItemThumbnail
+                        item-type="project"
+                        :item="project"
+                    />
+                </VCol>
+            </VRow>
+        </VContainer>
+    </section>
+</template>
+
+<style scoped lang="scss">
+@import '../../assets/styles/mixins';
+
+
+
+.c-title {
+    font-size: clamp(1.5rem,1.3239rem + .5634vw,2rem);
+}
+</style>

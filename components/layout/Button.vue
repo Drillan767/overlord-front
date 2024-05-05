@@ -8,31 +8,35 @@
         </span>
     </button>
 
-    <NuxtLink :to="link" v-else>
+    <NuxtLink
+        :to="link"
+        class="text-decoration-none"
+        v-else
+    >
         <span class="kave"></span>
         {{ content }}
 
         <span class="version" :data-text="config.version">
-            {{ config.version }}
+            {{ config.public.version }}
         </span>
     </NuxtLink>
 
 </template>
 
 <script setup lang="ts">
+
+interface Props {
+    type: string
+    content: string
+    showTag?: boolean
+    link?: string
+}
+
 const config = useRuntimeConfig()
 
-defineProps({
-    type: String,
-    content: String,
-    showTag: {
-        type: Boolean,
-        default: true,
-    },
-    link: {
-        type: String,
-        required: false,
-    }
+withDefaults(defineProps<Props>(), {
+    showTag: true,
+    link: undefined
 })
 
 </script>

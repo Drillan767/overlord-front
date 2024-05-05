@@ -1,5 +1,6 @@
 import { defineNuxtConfig } from 'nuxt/config'
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
+import { version } from './package.json'
 
 export default defineNuxtConfig({
     devtools: {
@@ -115,6 +116,7 @@ export default defineNuxtConfig({
         public: {
             apiUrl: process.env.API_URL || 'localhost:8055',
             url: process.env.URL || 'localhost:3000',
+            version,
             hcSitekey: process.env.HCAPTCHA_SITEKEY,
             directus: {
                 url: process.env.API_URL || 'localhost:8055',
