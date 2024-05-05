@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { Homepage } from '~/types'
 
-
 const navLinks = [
     {
         title: 'Articles',

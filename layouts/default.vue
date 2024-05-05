@@ -2,8 +2,6 @@
     <VLayout>
         <Navbar />
         <slot />
-
-        <Footer />
     </VLayout>
     <!-- <div id="default">
         <Html>

@@ -98,7 +98,7 @@ onMounted(() => {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
 
     .title {
         font-size: clamp(2.25rem, -2.75rem + 16vw, 6.25rem);

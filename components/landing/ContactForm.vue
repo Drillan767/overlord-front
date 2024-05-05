@@ -1,3 +1,79 @@
+<script setup lang="ts">
+import VueHcaptcha from '@hcaptcha/vue3-hcaptcha'
+import Button from "~~/components/layout/Button.vue"
+
+interface FormType {
+    name: string
+    email: string
+    subject: string
+    content: string
+}
+
+const config = useRuntimeConfig()
+const { createItems } = useDirectusItems();
+
+const error = ref('')
+const verified = ref(false)
+const sent = ref(false)
+
+const { defineField, handleSubmit, resetForm } = useForm<FormType>({
+    validationSchema: {
+        name: 'required',
+        email: 'required|email',
+        subject: 'required',
+        content: 'required|min:10'
+    }
+})
+
+const [name, nameProps] = defineField('name', vuetifyConfig)
+const [email, emailProps] = defineField('email', vuetifyConfig)
+const [subject, subjectProps] = defineField('subject', vuetifyConfig)
+const [content, contentProps] = defineField('content', vuetifyConfig)
+
+const formValid = useIsFormValid()
+
+const hcSitekey = computed(() => config.public.hcSitekey ?? undefined)
+
+const submit = handleSubmit(async (form) => {
+    if (!formValid || !verified.value) return
+    sent.value = false
+
+    try {
+        await createItems<FormType>({
+            collection: 'Inquiries',
+            items: [form],
+        })
+
+        resetForm()
+        sent.value = true
+    } catch (e: any) {
+        console.error(e)
+    }
+    
+})
+
+const onVerify = () => {
+    error.value = ''
+    verified.value = true
+}
+
+const onError = (e: string) => {
+    error.value = e
+    verified.value = false
+}
+
+const onExpire = () => {
+    // error.value = t('captcha.expired')
+    verified.value = false
+}
+
+const onChallengeExpire = () => {
+    // error.value = t('captcha.expired')
+    verified.value = false
+}
+
+</script>
+
 <template>
     <section id="contact">
         <VContainer>
@@ -91,79 +167,6 @@
     </section>
 </template>
 
-<script setup lang="ts">
-import VueHcaptcha from '@hcaptcha/vue3-hcaptcha'
-import Button from "~~/components/layout/Button.vue"
-
-interface FormType {
-    name: string
-    email: string
-    subject: string
-    content: string
-}
-
-const config = useRuntimeConfig()
-const { createItems } = useDirectusItems();
-
-const error = ref('')
-const verified = ref(false)
-const sent = ref(false)
-
-const { defineField, handleSubmit, resetForm } = useForm<FormType>({
-    validationSchema: {
-        name: 'required',
-        email: 'required|email',
-        subject: 'required',
-        content: 'required|min:10'
-    }
-})
-
-const [name, nameProps] = defineField('name', vuetifyConfig)
-const [email, emailProps] = defineField('email', vuetifyConfig)
-const [subject, subjectProps] = defineField('subject', vuetifyConfig)
-const [content, contentProps] = defineField('content', vuetifyConfig)
-
-const formValid = useIsFormValid()
-
-const hcSitekey = computed(() => config.public.hcSitekey ?? undefined)
-
-const submit = handleSubmit(async (form) => {
-    if (!formValid || !verified.value) return
-
-    try {
-        await createItems<FormType>({
-            collection: 'Inquiries',
-            items: [form],
-        })
-
-        resetForm()
-    } catch (e: any) {
-        console.error(e)
-    }
-    
-})
-
-const onVerify = () => {
-    error.value = ''
-    verified.value = true
-}
-
-const onError = (e: string) => {
-    error.value = e
-    verified.value = false
-}
-
-const onExpire = () => {
-    // error.value = t('captcha.expired')
-    verified.value = false
-}
-
-const onChallengeExpire = () => {
-    // error.value = t('captcha.expired')
-    verified.value = false
-}
-
-</script>
 
 <style scoped lang="scss">
 #contact {
