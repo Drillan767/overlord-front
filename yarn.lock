@@ -1257,6 +1257,11 @@
     hookable "^5.5.3"
     unhead "1.9.9"
 
+"@vee-validate/i18n@^4.12.6":
+  version "4.12.6"
+  resolved "https://registry.yarnpkg.com/@vee-validate/i18n/-/i18n-4.12.6.tgz#fa2fa9b42e35d194fb2887f04127d93af74cf955"
+  integrity sha512-K3xbjLIQQwDrllS18Ka5nyQDIF/1FuHnedXTr6bfmTm44/7C4MyMGo9KDahnrMWTcFkYIKR7XMshM3R6o54MFg==
+
 "@vee-validate/nuxt@^4.12.6":
   version "4.12.6"
   resolved "https://registry.yarnpkg.com/@vee-validate/nuxt/-/nuxt-4.12.6.tgz#1bd1363e8f148721bd2f0c704d75faa2ee0bb6d2"
@@ -1264,6 +1269,13 @@
   dependencies:
     "@nuxt/kit" "^3.8.2"
     local-pkg "^0.5.0"
+    vee-validate "4.12.6"
+
+"@vee-validate/rules@^4.12.6":
+  version "4.12.6"
+  resolved "https://registry.yarnpkg.com/@vee-validate/rules/-/rules-4.12.6.tgz#a105242ed6df83f46288bbad58337b2297d21fe6"
+  integrity sha512-vXhunbllildEbCWaBI2m6mij7U4pDTeoqX9CQ7/0gVMhtkTZh+QhKsDSaGI2evatECINH2cpLOBaMkubdN82VQ==
+  dependencies:
     vee-validate "4.12.6"
 
 "@vercel/nft@^0.26.4":

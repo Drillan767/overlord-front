@@ -4,7 +4,7 @@
         {{ content }}
 
         <span class="version" :data-text="config.version">
-            {{ config.version }}
+            {{ config.public.version }}
         </span>
     </button>
 

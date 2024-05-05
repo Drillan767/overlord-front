@@ -108,9 +108,10 @@ onMounted(() => fetchFeatured())
 <style scoped lang="scss">
 @import '../../assets/styles/mixins';
 
-
-
-.c-title {
-    font-size: clamp(1.5rem,1.3239rem + .5634vw,2rem);
+#featured {
+    height: 100vh;
+    display: flex;
+    align-items: center;
 }
+
 </style>
