@@ -96,7 +96,7 @@ const onChallengeExpire = () => {
                         ? Drop a mail!
                     </h2>
                 </VCol>
-                <VCol cols="4">
+                <VCol cols="12" md="4">
                     <VForm>
                         <VRow v-if="sent">
                             <VAlert

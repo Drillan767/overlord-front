@@ -1,6 +1,5 @@
 <template>
     <VLayout>
-        <Navbar />
         <slot />
     </VLayout>
     <!-- <div id="default">

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useDisplay } from 'vuetify';
 import type { Homepage } from '~/types'
 
 const navLinks = [
@@ -19,6 +20,9 @@ const navLinks = [
 const homepage = useState<Homepage>('homepage')
 
 const { getSingletonItem  } = useDirectusItems()
+const { mobile } = useDisplay()
+
+const threshold = computed(() => mobile ? 1000 : 1100)
 
 async function loadHomepageData() {
     const data = await getSingletonItem<Homepage>({
@@ -33,7 +37,11 @@ onMounted(() => loadHomepageData())
 </script>
 
 <template>
-    <VAppBar class="nav">
+    <VAppBar
+        class="nav"
+        scroll-behavior="inverted hide"
+        :scroll-threshold="threshold"
+    >
         <VContainer>
             <VRow>
                 <VCol>

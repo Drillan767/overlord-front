@@ -58,15 +58,6 @@ const scrollNext = () => goTo('#about', {
     easing: 'easeInOutCubic'
 })
 
-/* const typeLetters = () => {
-    document.querySelector('.input-cursor')?.classList.add('typing')
-
-    typedText.value = scrollText.split('').reduce((acc, val) => {
-        acc += val
-        return acc
-    }, '')
-} */
-
 const typeLetters = async () => {
     document.querySelector('.input-cursor')?.classList.add('typing');
 
