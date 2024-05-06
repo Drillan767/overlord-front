@@ -21,8 +21,14 @@ const homepage = useState<Homepage>('homepage')
 
 const { getSingletonItem  } = useDirectusItems()
 const { mobile } = useDisplay()
+const route = useRoute()
 
-const threshold = computed(() => mobile ? 1000 : 1100)
+const threshold = computed(() => {
+    if (route.name !== 'index') return 300
+    return mobile ? 1000 : 1100
+})
+
+const behavior = computed(() => route.name === 'index' ? 'inverted hide' : undefined)
 
 async function loadHomepageData() {
     const data = await getSingletonItem<Homepage>({
@@ -39,7 +45,7 @@ onMounted(() => loadHomepageData())
 <template>
     <VAppBar
         class="nav"
-        scroll-behavior="inverted hide"
+        :scroll-behavior="behavior"
         :scroll-threshold="threshold"
     >
         <VContainer>

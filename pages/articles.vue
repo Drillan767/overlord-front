@@ -1,7 +1,49 @@
 <template>
-    <div id="articles" class="slide-in">
+    <VContainer id="articles" class="slide-in mt-16">
+        <VRow class="mt-8">
+            <VCol>
+                <h1 class="glitch" data-text="ARTICLES">
+                    ARTICLES
+                </h1>
+            </VCol>
+        </VRow>
+        <VRow>
+            <VCol>
+                <VChipGroup
+                    v-model="activeTags"
+                    :filter="true"
+                    :multiple="true"
+                    class="text-center"
+                >
+                    <template #default="{ isSelected }">
+                        <VChip
+                            v-for="(tag, i) in uniqueTags"
+                            :key="i"
+                            :text="tag.name"
+                            :variant="isSelected(i) ? 'outlined': 'plain'"
+                            :append-icon="`mdi-numeric-${tag.count > 9 ? '9-plus' : tag.count}-circle`"
+                        />
+                    </template>
+                </VChipGroup>
+            </VCol>
+        </VRow>
+        <VRow
+            v-for="(article, i) in filteredArticles"
+            :key="i"
+        >
+            <VCol>
+                <VCard>
+                    
+                </VCard>
+            </VCol>
+            
+        </VRow>
+    </VContainer>
+    <div >
+        
+        
 
-        <Head>
+        <!-- <Head>
             <Title>Articles</Title>
         </Head>
 
@@ -28,15 +70,83 @@
             <p v-if="filteredArticles.length === 0" class="text-center text-white text-xl">
                 Nothing to see here for now...
             </p>
-        </div>
+        </div> -->
     </div>
 </template>
 
 <script setup lang="ts">
+import type { Article } from '~/types'
+
+interface TagFilter {
+    name: string
+    count: number
+}
+
+useHead({
+    title: 'Articles',
+})
+
+
+definePageMeta({
+    layout: 'blog',
+})
+
+const { getItems  } = useDirectusItems()
+
+const loading = ref(false)
+const activeTags = ref([])
+const allArticles = ref<Article[]>([])
+const filteredArticles = ref<Article[]>([])
+
+const uniqueTags = computed<TagFilter[]>(() => {
+    const allTags = allArticles.value.reduce((acc, article) => {
+        article.tags.forEach((tag) => {
+            const tagName = tag.Tag_id.title
+            const tagIndex = acc.findIndex((a) => a.name === tagName)
+
+            if (tagIndex > -1) {
+                acc[tagIndex].count++
+            } else {
+                acc.push({
+                    name: tagName,
+                    count: 1,
+                })
+            }
+        })
+        return acc
+    }, [] as TagFilter[])
+
+    return allTags
+})
+
+const fetchArticles = async () => {
+    loading.value = true
+
+    try {
+        allArticles.value = await getItems<Article>({
+            collection: 'Articles',
+            params: {
+                filter: {
+                    status: 'Published'
+                },
+                fields: ['title, tags, illustration, slug', 'date_updated', 'tags.Tag_id.title']
+            }
+        })
+
+        // allArticles.value = data
+    } catch (e) {
+        console.error(e)
+    } finally {
+        loading.value = false
+    }
+}
+
+onMounted(() => fetchArticles())
+
+/* 
 import { useSeoMeta } from '@unhead/vue'
 import type { Article, TagFilter, ArticlesReceived } from '~~/types';
 import SingleArticle from '~~/components/content/SingleArticle.vue'
-import articlesQuery from '~~/queries/articles.gql'
 
 definePageMeta({
     layout: "blog",
@@ -124,6 +234,6 @@ const filteredArticles = computed(() => {
     return activeTag.value !== ''
         ? articleList.value.filter((a) => a.tags.some((t) => t.Tag_id.title === activeTag.value))
         : articleList.value
-})
+}) */
 
 </script>

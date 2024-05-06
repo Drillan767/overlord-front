@@ -1,7 +1,7 @@
 <template>
-    <div id="blog">
+    <!-- <div id="blog">
         <Html>
-            <!-- :lang="head.htmlAttrs?.lang" :dir="head.htmlAttrs?.dir"
+            :lang="head.htmlAttrs?.lang" :dir="head.htmlAttrs?.dir"
             <Head>
                 <template v-for="link in head.link" :key="link.id">
                     <Link :id="link.id" :rel="link.rel" :href="link.href" :hreflang="link.hreflang" />
@@ -9,7 +9,7 @@
                 <template v-for="meta in head.meta" :key="meta.id">
                     <Meta :id="meta.id" :property="meta.property" :content="meta.content" />
                 </template>
-            </Head> -->
+            </Head>
 
             <Body>
                 <Navbar />
@@ -19,7 +19,10 @@
                 <Footer />
             </Body>
         </Html>
-    </div>
+    </div> -->
+    <VLayout>
+        <slot />
+    </VLayout>
 </template>
 
 <script setup lang="ts">
