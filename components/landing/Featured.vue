@@ -88,7 +88,7 @@ onMounted(() => fetchFeatured())
                         content="View all projects"
                     />
                 </VCol>
-                
+
                 <VCol
                     v-for="(project, i) in featuredProjects"
                     :key="i"

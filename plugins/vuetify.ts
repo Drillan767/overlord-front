@@ -11,11 +11,14 @@ export default defineNuxtPlugin((app) => {
         defaults: {
             VTextField: {
                 variant: 'underlined',
-                color: 'purple-darken-2'
+                color: 'purple-darken-2',
             },
             VTextarea: {
                 variant: 'underlined',
-                color: 'purple-darken-2'
+                color: 'purple-darken-2',
+            },
+            VCardTitle: {
+                style: 'white-space: initial;',
             }
         }
     })

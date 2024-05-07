@@ -41,8 +41,12 @@ const homepage = useState<Homepage>('homepage')
     min-height: 100vh;
 
     .description :deep(p) {
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        letter-spacing: 0.03125em;
+        font-family: "Space Grotesk", sans-serif;
         margin-bottom: 1.25em;
-        font-size: 20px;
 
         &:last-of-type::after {
             @include cursor;

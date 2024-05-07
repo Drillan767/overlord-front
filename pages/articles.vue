@@ -8,35 +8,87 @@
             </VCol>
         </VRow>
         <VRow>
-            <VCol>
-                <VChipGroup
-                    v-model="activeTags"
-                    :filter="true"
-                    :multiple="true"
-                    class="text-center"
-                >
-                    <template #default="{ isSelected }">
-                        <VChip
-                            v-for="(tag, i) in uniqueTags"
-                            :key="i"
-                            :text="tag.name"
-                            :variant="isSelected(i) ? 'outlined': 'plain'"
-                            :append-icon="`mdi-numeric-${tag.count > 9 ? '9-plus' : tag.count}-circle`"
-                        />
-                    </template>
-                </VChipGroup>
-            </VCol>
+            <VBreadcrumbs :items="breadcrumb">
+                <template #divider>
+                    <VIcon icon="mdi-chevron-right" />
+                </template>
+            </VBreadcrumbs>
         </VRow>
-        <VRow
-            v-for="(article, i) in filteredArticles"
-            :key="i"
-        >
+        <VRow>
             <VCol>
                 <VCard>
-                    
+                    <template #text>
+                        <VSkeletonLoader
+                            :loading="loading"
+                            type="chip@3"
+                            class="d-flex justify-center"
+                        >
+                            <VChipGroup
+                                v-model="activeTags"
+                                :filter="true"
+                                :multiple="true"
+                                selected-class="bg-purple-darken-2"
+                                class="chip-group"
+                            >
+                                <VChip
+                                    v-for="(tag, i) in uniqueTags"
+                                    :key="i"
+                                    :value="tag.id"
+                                    :text="tag.name"
+                                    :append-icon="`mdi-numeric-${tag.count > 9 ? '9-plus' : tag.count}-circle`"
+                                    variant="flat"
+                                />
+                            </VChipGroup>
+                        </VSkeletonLoader>
+
+                        <VRow
+                            v-if="loading"
+                            class="mt-8"
+                        >
+                            <VCol
+                                v-for="i in 4"
+                                :key="i"
+                            >
+                                <VSkeletonLoader type="image, text, article" />
+                            </VCol>
+                        </VRow>
+
+                        <VRow v-else class="mt-8">
+                            <VCol
+                                v-for="(article, i) in filteredArticles"
+                                :key="i"
+                                cols="3"
+                            >
+                                <VCard
+                                    :to="`/article/${article.slug}`"
+                                    variant="text"
+                                >
+                                    <VImg
+                                        :src="`${config.public.apiUrl}/assets/${article.illustration}?width=300&height=200&fit=cover`"
+                                    />
+                                    <VCardSubtitle class="mt-4">
+                                        {{ date.format(article.date_updated, 'keyboardDateTime24h') }}
+                                    </VCardSubtitle>
+                                    <VCardTitle>
+                                        {{ article.title }}
+                                    </VCardTitle>
+
+                                    <VCardActions class="justify-end">
+                                        <VChip
+                                            v-for="(tag, i) in article.tags"
+                                            :key="i"
+                                            :text="tag.Tag_id.title"
+                                            :color="activeTags.includes(tag.Tag_id.id) ? 'purple-darken-2': undefined"
+                                            variant="flat"
+                                            density="compact"
+                                        />
+                                    </VCardActions>
+                                </VCard>
+                            </VCol>
+                        </VRow>
+                    </template>
                 </VCard>
             </VCol>
-            
         </VRow>
     </VContainer>
     <div >
@@ -76,8 +128,10 @@
 
 <script setup lang="ts">
 import type { Article } from '~/types'
+import { useDate } from 'vuetify'
 
 interface TagFilter {
+    id: number
     name: string
     count: number
 }
@@ -91,32 +145,48 @@ definePageMeta({
     layout: 'blog',
 })
 
+const breadcrumb = [
+    {
+        title: 'Home',
+        to: '/'
+    },
+    {
+        title: 'Articles',
+    }
+]
+
 const { getItems  } = useDirectusItems()
+const config = useRuntimeConfig()
+const date = useDate()
 
 const loading = ref(false)
-const activeTags = ref([])
+const activeTags = ref<number[]>([])
 const allArticles = ref<Article[]>([])
-const filteredArticles = ref<Article[]>([])
 
-const uniqueTags = computed<TagFilter[]>(() => {
-    const allTags = allArticles.value.reduce((acc, article) => {
-        article.tags.forEach((tag) => {
-            const tagName = tag.Tag_id.title
-            const tagIndex = acc.findIndex((a) => a.name === tagName)
+const uniqueTags = computed<TagFilter[]>(() => allArticles.value.reduce((acc, article) => {
+    article.tags.forEach((tag) => {
+        const tagName = tag.Tag_id.title
+        const tagIndex = acc.findIndex((a) => a.name === tagName)
 
-            if (tagIndex > -1) {
-                acc[tagIndex].count++
-            } else {
-                acc.push({
-                    name: tagName,
-                    count: 1,
-                })
-            }
-        })
-        return acc
-    }, [] as TagFilter[])
+        if (tagIndex > -1) {
+            acc[tagIndex].count++
+        } else {
+            acc.push({
+                name: tagName,
+                id: tag.Tag_id.id,
+                count: 1,
+            })
+        }
+    })
+    return acc
+}, [] as TagFilter[]))
 
-    return allTags
+const filteredArticles = computed(() => {
+    if (activeTags.value.length > 0) {
+        return allArticles.value.filter((a) => a.tags.some((t) => activeTags.value.includes(t.Tag_id.id)))
+    }
+
+    return allArticles.value
 })
 
 const fetchArticles = async () => {
@@ -129,11 +199,10 @@ const fetchArticles = async () => {
                 filter: {
                     status: 'Published'
                 },
-                fields: ['title, tags, illustration, slug', 'date_updated', 'tags.Tag_id.title']
+                fields: ['title, tags, illustration, slug', 'date_updated', 'tags.Tag_id.*']
             }
         })
 
-        // allArticles.value = data
     } catch (e) {
         console.error(e)
     } finally {
@@ -160,66 +229,6 @@ const fullLocale = useFullLocale()
 const articleList = ref([] as Article[])
 const activeTag = ref('')
 
-const query = {
-    featured: false,
-    locale: fullLocale.value,
-    limit: 3,
-    filters: {
-        status: {_eq: 'published'},
-        featured: {_eq: true}
-    }
-}
-
-useSeoMeta({
-    ogTitle: 'Articles',
-    ogType: 'website',
-    ogImage: url + '/icons/logo.svg',
-    description: baseline.replace(/_/g, ''),
-    ogDescription: baseline.replace(/_/g, ''),
-    twitterTitle: 'Articles',
-    twitterImage: url + '/icons/logo.svg',
-    twitterDescription: baseline.replace(/_/g, '')
-})
-
-await useAsyncQuery<ArticlesReceived>(articlesQuery, query)
-    .then(({ data }) => {
-        if (data.value) {
-            articleList.value = data.value.Articles_translations.map((article) => {
-                const { title, slug, description, body } = article
-                const { Articles_id: { date_created, date_updated, illustration, tags } } = article
-
-                return {
-                    title,
-                    slug,
-                    tags,
-                    body,
-                    description,
-                    illustration,
-                    date_created,
-                    date_updated,
-                }
-            })
-        }
-    })
-
-const uniqueTags = computed<TagFilter[]>(() => {
-    const allTags: TagFilter[] = []
-    articleList.value.forEach((article) => {
-        article.tags.forEach((tag) => {
-            const { Tag_id: { title } } = tag
-            const nbArticles = articleList.value.filter((a) => {
-                return a.tags.some((t) => t.Tag_id.title === title)
-            }).length
-
-            if (!allTags.some((at) => at.title === title)) {
-                allTags.push({ title, nbArticles })
-            }
-        })
-    })
-
-    return allTags
-})
-
 const handleFilter = (filter: string) => {
     if (activeTag.value === '') {
         activeTag.value = filter
@@ -237,3 +246,13 @@ const filteredArticles = computed(() => {
 }) */
 
 </script>
+
+<style scoped lang="scss">
+.v-skeleton-loader .chip-group :deep(.v-slide-group__content) {
+    justify-content: center;
+}
+
+.c-title {
+    font-size: clamp(1.5rem,1.3239rem + .5634vw,2rem);
+}
+</style>
