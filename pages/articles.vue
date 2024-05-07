@@ -1,5 +1,5 @@
 <template>
-    <VContainer id="articles" class="slide-in mt-16">
+    <VContainer id="articles" class="slide-in my-16">
         <VRow class="mt-8">
             <VCol>
                 <h1 class="glitch" data-text="ARTICLES">
@@ -91,39 +91,6 @@
             </VCol>
         </VRow>
     </VContainer>
-    <div >
-        
-        
-
-        <!-- <Head>
-            <Title>Articles</Title>
-        </Head>
-
-        <div class="content">
-            <h1 class="glitch" data-text="ARTICLES">
-                ARTICLES
-            </h1>
-
-            <div class="tagList">
-                <template v-for="(tag, i) in uniqueTags" :key="i" class="tag">
-                    <span v-if="i !== 0" class="mx-2 separator">/</span>
-                    <span :class="{ 'current': tag.title === activeTag }" class="cursor-pointer"
-                        @click="handleFilter(tag.title)">
-                        {{ tag.title }} ({{ tag.nbArticles }})
-                    </span>
-                </template>
-            </div>
-
-            <div class="articlesList mx-auto">
-                <SingleArticle v-for="(article, i) in filteredArticles" :key="i" :activeTag="activeTag"
-                    :article="article" @change-tag="handleFilter" />
-            </div>
-
-            <p v-if="filteredArticles.length === 0" class="text-center text-white text-xl">
-                Nothing to see here for now...
-            </p>
-        </div> -->
-    </div>
 </template>
 
 <script setup lang="ts">
@@ -211,39 +178,6 @@ const fetchArticles = async () => {
 }
 
 onMounted(() => fetchArticles())
-
-/* 
-import { useSeoMeta } from '@unhead/vue'
-import type { Article, TagFilter, ArticlesReceived } from '~~/types';
-import SingleArticle from '~~/components/content/SingleArticle.vue'
-
-definePageMeta({
-    layout: "blog",
-})
-
-const { t } = useI18n()
-const { url } = useRuntimeConfig()
-const homepage = useHomepage()
-const { baseline } = homepage.value
-const fullLocale = useFullLocale()
-const articleList = ref([] as Article[])
-const activeTag = ref('')
-
-const handleFilter = (filter: string) => {
-    if (activeTag.value === '') {
-        activeTag.value = filter
-    } else if (activeTag.value === filter) {
-        activeTag.value = ''
-    } else {
-        activeTag.value = filter
-    }
-}
-
-const filteredArticles = computed(() => {
-    return activeTag.value !== ''
-        ? articleList.value.filter((a) => a.tags.some((t) => t.Tag_id.title === activeTag.value))
-        : articleList.value
-}) */
 
 </script>
 

@@ -65,40 +65,37 @@ const year = new Date().getFullYear()
             </VRow>
             <VDivider class="my-5" />
             <VRow>
-                <VCol cols="12" md="6">
+                <VCol cols="12" md="4">
                     <span>
                         © {{ year }} {{ homepage.fullname }}. All Rights Reserved.
                     </span>
                 </VCol>
                 <VSpacer />
                 <VCol>
-                    <div class="internal">
-                        <VBtn
-                            to="/versions"
-                            variant="text"
-                        >
-                            Versions
-                        </VBtn>
-                        <VBtn
-                            v-for="(link, i) in homepage.legal"
-                            :key="i"
-                            :to="link.url"
-                            variant="text"
-                        >
-                            {{ link.title }}
-                        </VBtn>
-                        <div>
-                            <VBtn
-                                v-for="(link, i) in homepage.links"
-                                :key="i"
-                                :href="link.url"
-                                :icon="true"
-                                variant="text"
-                            >
-                                <span class="svg-container" v-html="link.svg" />
-                            </VBtn>
-                        </div>
-                    </div>
+                    <VBtn
+                        to="/versions"
+                        variant="text"
+                    >
+                        Versions
+                    </VBtn>
+                    <VBtn
+                        v-for="(link, i) in homepage.legal"
+                        :key="i"
+                        :to="link.url"
+                        variant="text"
+                    >
+                        {{ link.title }}
+                    </VBtn>
+
+                    <VBtn
+                        v-for="(link, i) in homepage.links"
+                        :key="i"
+                        :href="link.url"
+                        :icon="true"
+                        variant="text"
+                    >
+                        <span class="svg-container" v-html="link.svg" />
+                    </VBtn>
                 </VCol>
             </VRow>
         </VContainer>

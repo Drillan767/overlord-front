@@ -29,6 +29,5 @@ definePageMeta({
         <LandingAbout />
         <LandingFeatured />
         <LandingContactForm />
-        <Footer />
     </VMain>
 </template>
