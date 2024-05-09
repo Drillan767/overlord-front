@@ -11,6 +11,7 @@ export default defineNuxtConfig({
         'nuxt-directus',
         '@vee-validate/nuxt',
         '@vueuse/nuxt',
+        'dayjs-nuxt',
         (_options, nuxt) => {
             nuxt.hooks.hook('vite:extendConfig', (config) => {
                 // @ts-expect-error

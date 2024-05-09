@@ -23,6 +23,7 @@
     "@vee-validate/rules": "^4.12.7",
     "@vueuse/core": "^10.9.0",
     "@vueuse/nuxt": "^10.9.0",
+    "dayjs-nuxt": "^2.1.9",
     "highlight.js": "^11.9.0",
     "nuxt": "^3.11.2",
     "nuxt-directus": "^5.6.1",

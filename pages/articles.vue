@@ -67,7 +67,7 @@
                                         :src="`${config.public.apiUrl}/assets/${article.illustration}?width=300&height=200&fit=cover`"
                                     />
                                     <VCardSubtitle class="mt-4">
-                                        {{ date.format(article.date_updated, 'keyboardDateTime24h') }}
+                                        {{ dayjs(article.date_updated).format('DD/MM/YYYY HH:mm') }}
                                     </VCardSubtitle>
                                     <VCardTitle>
                                         {{ article.title }}
@@ -95,7 +95,7 @@
 
 <script setup lang="ts">
 import type { Article } from '~/types'
-import { useDate } from 'vuetify'
+import { useDayjs } from '#dayjs'
 
 interface TagFilter {
     id: number
@@ -106,7 +106,6 @@ interface TagFilter {
 useHead({
     title: 'Articles',
 })
-
 
 definePageMeta({
     layout: 'blog',
@@ -124,7 +123,7 @@ const breadcrumb = [
 
 const { getItems  } = useDirectusItems()
 const config = useRuntimeConfig()
-const date = useDate()
+const dayjs = useDayjs()
 
 const loading = ref(false)
 const activeTags = ref<number[]>([])

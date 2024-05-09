@@ -1,5 +1,59 @@
 <template>
-    <div class="article">
+    <VContainer fluid id="article" class="slide-in my-16 pa-0">
+        <VRow>
+            <VCol>
+                <VCard
+                    :image="`${config.public.apiUrl}/assets/${article?.illustration}?width=1200&height=627&fit=cover`"
+                    height="630"
+                    rounded="0"
+                    class="d-flex align-end banner"
+                >
+                    <VContainer>
+                        <VRow justify="center">
+                            <VCol cols="12" md="6">
+                                <VCardTitle class="text-center c-title">
+                                    {{ article?.title }}
+                                </VCardTitle>
+                            </VCol>
+                        </VRow>
+                        <VRow justify="center">
+                            <VCol cols="3">
+                                <VIcon
+                                    icon="mdi-calendar-blank"
+                                    class="mr-2"
+                                />
+                                <span v-if="article">
+                                    Last commit — {{ dayjs(article.date_updated).format('DD/MM/YYYY HH:mm') }}
+                                </span>
+                            </VCol>
+                            <VCol
+                                cols="3"
+                                class="text-right"
+                            >
+                                <VIcon
+                                    class="mr-2"
+                                    icon="mdi-clock-time-eight-outline"
+                                />
+                                <span>
+                                    X minutes read
+                                </span>
+                            </VCol>
+                        </VRow>
+                        <VCol class="text-center">
+                            <VChip
+                                v-for="(tag, i) in article?.tags ?? []"
+                                :key="i"
+                                :text="tag.Tag_id.title"
+                                variant="flat"
+
+                            />
+                        </VCol>
+                    </VContainer>
+                </VCard>
+            </VCol>
+        </VRow>
+    </VContainer>
+    <!-- <div class="article">
         <Head>
             <Title>{{ article.title }}</Title>
             <Meta property="article:author" content="Joseph Levarato" />
@@ -38,24 +92,61 @@
 
                 </div>
             </header>
-            <div class="progress">
-                <span class="global">
-                    {{ displayPercentage }}
-                </span>
-                <span class="bar">
-                    {{ progressBar }}
-                </span>
-            </div>
+            
 
             <article class="px-2">
                 <div v-html="articleBody" class="prose lg:prose-xl" />
             </article>
         </main>
-    </div>
+    </div> -->
 </template>
 
 <script setup lang="ts">
-import { useSeoMeta } from '@unhead/vue'
+import type { Article } from '~/types'
+
+definePageMeta({
+    layout: 'blog',
+})
+
+const { getItems  } = useDirectusItems()
+const config = useRuntimeConfig()
+const route = useRoute()
+const dayjs = useDayjs()
+
+const loading = ref(false)
+const minuteRead = ref(0)
+const article = ref<Article>()
+
+useHead({
+    title: () => article.value?.title ?? '',
+})
+
+const fetchArticle = async() => {
+    loading.value = true
+
+    try {
+        const data = await getItems<Article>({
+            collection: 'Articles',
+            params: {
+                limit: 1,
+                filter: {
+                slug: route.params.slug,
+            },
+            fields: ['*', 'tags.Tag_id.*']
+            }
+        })
+        article.value = data[0]
+    } catch (e) {
+        console.error(e)
+    } finally {
+        loading.value = false
+    }
+}
+
+onMounted(() => fetchArticle())
+
+
+/* import { useSeoMeta } from '@unhead/vue'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/tokyo-night-dark.css'
 import { Article, ArticlesReceived } from '~~/types'
@@ -128,19 +219,7 @@ const displayPercentage = computed(() => {
     return result
 })
 
-const progressBar = computed(() => {
-    const charWidth = 9.6
-    const total = Math.floor(Math.floor(barWidth.value - 10) / charWidth) - 2
-    const progress = Math.floor((readPercentage.value / 100) * total)
 
-    let response = '['
-
-    for (let i = 0; i <= total; i++) {
-        response += i <= progress ? '#' : '.'
-    }
-
-    return response + ']'
-})
 
 const articleBody = computed(() => {
     return brEnabled
@@ -181,12 +260,21 @@ useSeoMeta({
     twitterTitle: article.value.title,
     twitterImage: getIllustration(),
     twitterDescription: article.value.description,
-})
+}) */
 
 </script>
 
-<style lang="scss">
-main {
+<style scoped lang="scss">
+
+.banner :deep(.v-responsive__sizer) {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+}
+
+.c-title {
+    font-size: clamp(2.5rem,2.1479rem + 1.1268vw,3.5rem);
+    line-height: 1 !important;
+}
+/* main {
     position: relative;
 
     svg {
@@ -397,33 +485,7 @@ main {
 
         .prose {
             @apply prose-a:text-violet-600 prose-img:mx-auto mx-auto dark:prose-invert;
-/* 
-            margin: auto;
-
-            p {
-                color: var(--font-color);
-            }
-
-            h2,
-            h3,
-            h4,
-            h5,
-            h6 {
-                color: var(--title-color);
-            } */
-
         }
     }
-}
+} */
 </style>
-
-<i18n lang="json">
-{
-    "fr": {
-
-    },
-    "en": {
-        "404": ""
-    }
-}
-</i18n>
