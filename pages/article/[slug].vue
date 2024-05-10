@@ -61,12 +61,16 @@
         <VRow no-gutters>
             <VCol>
                 <VCard>
-                    
                     <VCol
                         cols="12"
                         md="10"
                         class="mx-md-auto"
                     >
+                        <VBreadcrumbs class="mb-4" :items="breadcrumb">
+                            <template #divider>
+                                <VIcon icon="mdi-chevron-right" />
+                            </template>
+                        </VBreadcrumbs>
                         <VCardText v-if="article" v-html="article.body" />
                     </VCol>
                 </VCard>
@@ -74,7 +78,6 @@
         </VRow>
     </VContainer>
     <!-- <div class="article">
-        <ProgressBar />
         <Head>
             <Title>{{ article.title }}</Title>
             <Meta property="article:author" content="Joseph Levarato" />
@@ -91,7 +94,6 @@ import hljs from 'highlight.js'
 import ProgressBar from '~/components/content/ProgressBar.vue'
 import 'highlight.js/styles/tokyo-night-dark.css'
 
-
 definePageMeta({
     layout: 'blog',
 })
@@ -107,6 +109,20 @@ const article = ref<Article>()
 useHead({
     title: () => article.value?.title ?? '',
 })
+
+const breadcrumb = computed(() => ([
+    {
+        title: 'Home',
+        to: '/'
+    },
+    {
+        title: 'Articles',
+        to: '/articles',
+    },
+    {
+        title: article.value?.title ?? ''
+    }
+]))
 
 const minuteRead = computed(() => {
     if (!article.value) return 0
