@@ -34,7 +34,7 @@ const homepage = useState<Homepage>('homepage')
 </script>
 
 <style scoped lang="scss">
-@import '../../assets/styles/_variables';
+@import '~~/assets/styles/_variables';
 
 #about {
     display: flex;

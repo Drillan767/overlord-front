@@ -106,7 +106,7 @@ onMounted(() => fetchFeatured())
 </template>
 
 <style scoped lang="scss">
-@import '../../assets/styles/mixins';
+@import '~~/assets/styles/mixins';
 
 #featured {
     min-height: 100vh;

@@ -96,7 +96,7 @@ onMounted(() => loadHomepageData())
 </template>
 
 <style scoped lang="scss">
-@import '../../assets/styles/_variables';
+@import '~~/assets/styles/_variables';
 
 .nav {
     border-bottom: solid 4px var(--purple);
