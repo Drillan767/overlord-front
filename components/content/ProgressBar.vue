@@ -33,15 +33,78 @@ const displayPercentage = computed(() => {
     return result
 })
 
+const getScrollPercent = () => {
+    const prose = document.querySelector<HTMLDivElement>('.v-card-text')
+
+    if (prose) {
+        const proseTop = prose.getBoundingClientRect().top + document.documentElement.scrollTop
+        const proseBottom = proseTop + prose.clientHeight
+        const browserBottom = window.scrollY + window.innerHeight
+
+        if (browserBottom < proseTop) {
+            return 0
+        } else if (browserBottom > proseTop && browserBottom < proseBottom) {
+            return Math.floor((browserBottom - proseTop) / prose.offsetHeight * 100)
+        } else {
+            return 100
+        }
+    } else {
+        return 0
+    }
+}
+
+onMounted(() => {
+    const bar = document.querySelector<HTMLElement>('.progress .bar')
+
+    if (bar) barWidth.value = bar.clientWidth
+
+    document.addEventListener('scroll', () => {
+        readPercentage.value = getScrollPercent()
+    })
+})
+
 </script>
 
 <template>
-    <div class="progress">
-        <span class="global">
-            {{ displayPercentage }}
-        </span>
-        <span class="bar">
-            {{ progressBar }}
-        </span>
-    </div>
+    <VRow class="progress-container" no-gutters>
+        <VCol>
+            <div class="progress">
+                <span class="global">
+                    {{ displayPercentage }}
+                </span>
+                <span class="bar">
+                    {{ progressBar }}
+                </span>
+            </div>
+        </VCol>
+    </VRow>
 </template>
+
+<style scoped lang="scss">
+@import "~~/assets/styles/_variables.scss";
+
+.progress-container {
+    position: fixed;
+    top: 64px;
+    width: 100%;
+    z-index: 1;
+}
+
+.progress {
+    background-color: rgb(var(--v-theme-surface));
+    padding: 10px;
+    font-family: 'Jetbrains Mono', monospace;
+    display: flex;
+    gap: 10px;
+
+    .global {
+        background-color: green;
+        flex: 0 0 auto;
+    }
+
+    .bar {
+        flex: 1;
+        display: inline-block;
+    }
+}
+</style>
