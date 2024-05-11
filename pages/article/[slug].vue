@@ -138,7 +138,6 @@ const illustration = computed(() => {
 })
 
 const fetchArticle = async() => {
-    console.log(route.params.slug)
     loading.value = true
 
     try {
@@ -147,9 +146,9 @@ const fetchArticle = async() => {
             params: {
                 limit: 1,
                 filter: {
-                slug: route.params.slug,
-            },
-            fields: ['*', 'tags.Tag_id.*']
+                    slug: route.params.slug,
+                },
+                fields: ['*', 'tags.Tag_id.*']
             }
         })
         article.value = data[0]

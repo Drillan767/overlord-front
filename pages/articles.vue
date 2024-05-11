@@ -81,6 +81,7 @@
                                             :color="activeTags.includes(tag.Tag_id.id) ? 'purple-darken-2': undefined"
                                             variant="flat"
                                             density="compact"
+                                            class="ml-1"
                                         />
                                     </VCardActions>
                                 </VCard>
