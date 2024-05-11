@@ -1,7 +1,0 @@
-query Pages($slug: String!, $locale: String) {
-	Pages_translations(filter: {slug: {_eq: $slug}, languages_id: {code: {_eq: $locale}}}) {
-		title
-		slug
-		body
-	}
-}
