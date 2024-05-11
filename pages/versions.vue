@@ -1,34 +1,98 @@
 <template>
-    <div id="versions">
-        <Navbar />
-        <Head>
-            <Title>Versions</Title>
-        </Head>
+    <VContainer id="versions" class="slide-in my-16">
+        <VRow justify="center" class="mt-16">
+            <header>
+                <h1
+                    class="glitch"
+                    data-text="Versions"
+                >
+                    Versions
+                </h1>
+            </header>
+        </VRow>
+        <VRow>
+            <VBreadcrumbs :items="breadcrumb">
+                <template #divider>
+                    <VIcon icon="mdi-chevron-right" />
+                </template>
+            </VBreadcrumbs>
+        </VRow>
+        <VSkeletonLoader
+            v-if="loading"
+            type="heading, paragraph, heading, paragraph"
+        />
 
-        <header>
-            <h1 class="glitch" data-text="Versions">Versions</h1>
-        </header>
-
-        <section v-for="(version, i) in versions">
-            <h1>Version {{ version.version }}</h1>
-
-            <div v-html="version.description" class="prose"></div>
-        </section>
-        <Footer />
-    </div>
+        <VRow
+            v-else
+            v-for="(release, i) in versions"
+            :key="i"
+        >
+            <VCol>
+                <VCard>
+                    <template #text>
+                        <VContainer>
+                            <VRow>
+                                <VCol>
+                                    <h2 class="text-center">Version {{ release.version }}</h2>
+                                </VCol>
+                            </VRow>
+                            <VRow>
+                                <VCol v-html="release.description" />
+                            </VRow>
+                        </VContainer>
+                    </template>
+                </VCard>
+            </VCol>
+            
+        </VRow>
+    </VContainer>
 </template>
 
 <script setup lang="ts">
-import Navbar from '~~/components/layout/Navbar.vue';
-import Footer from '~~/components/layout/Footer.vue';
-import type { Version, ReceivedVersion } from '~~/types'
-import versionQuery from '~~/queries/versions.gql'
+import type { Version } from '~~/types'
 
-const { url } = useRuntimeConfig()
-const fullLocale = useFullLocale()
-const homepage = useHomepage()
-const { baseline } = homepage.value
+useHead({
+    title: 'Versions',
+})
+
+const breadcrumb = [
+    {
+        title: 'Home',
+        to: '/'
+    },
+    {
+        title: 'Versions',
+    }
+]
+
+const { getItems  } = useDirectusItems()
+
 const versions = ref<Version[]>([])
+const loading = ref(false)
+
+const fetchReleases = async () => {
+    loading.value = true
+
+    try {
+        versions.value = await getItems<Version>({
+            collection: 'Releases',
+            params: {
+                fields: ['id', 'version', 'description'],
+                sort: '-id' 
+            }
+        })
+
+    } catch (e) {
+        console.error(e)
+    } finally {
+        loading.value = false
+    }
+}
+
+onMounted(() => fetchReleases())
+
+
+/*
 
 useSeoMeta({
     ogTitle: 'Versions',
@@ -40,26 +104,44 @@ useSeoMeta({
     twitterImage: url + '/icons/logo.svg',
     twitterDescription: baseline.replace(/_/g, '')
 })
-
-await useAsyncQuery<ReceivedVersion>(versionQuery, {locale: fullLocale.value})
-    .then(({ data }) => {
-        if (!data.value) {
-            throw createError({
-                statusCode: 500,
-                fatal: true
-            })
-        }
-
-        versions.value = data.value.Releases_translations.map((release) => {
-            const { description, Releases_id: { version } } = release
-            return { description, version }
-        })
-    })
+ */
 
 </script>
 
 <style scoped lang="scss">
 #versions {
+    h1 {
+        font-size: 6rem;
+        line-height: 1;
+    }
+
+    :deep(.v-col) {
+        h2 {
+            font-size: 1.8em;
+            line-height: 1.1111111;
+            margin-bottom: .8888889em;
+            margin-top: 1.5555556em;
+        }
+
+        h3 {
+            font-size: 1.5em;
+            line-height: 1.3333333;
+            margin-bottom: .6666667em;
+        }
+
+        ul {
+            margin-bottom: 1.2em;
+            margin-top: 1.2em;
+            padding-left: 1.6em;
+            font-size: 1.25rem;
+            
+            li {
+                margin-bottom: .6em;
+                margin-top: .6em;
+            }
+        }
+    }
+    /*
     header {
         height: 33vh;
         @apply flex justify-center items-center;
@@ -79,7 +161,6 @@ await useAsyncQuery<ReceivedVersion>(versionQuery, {locale: fullLocale.value})
             @apply lg:prose-xl mx-auto mt-4 prose-img:mx-auto dark:prose-invert prose-a:text-violet-600 px-2;
         }
     }
-
-    
+    */
 }
 </style>
