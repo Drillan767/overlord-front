@@ -49,6 +49,11 @@
                                 md="8"
                                 class="mx-md-auto"
                             >
+                                <VBreadcrumbs class="mb-4" :items="breadcrumb">
+                                    <template #divider>
+                                        <VIcon icon="mdi-chevron-right" />
+                                    </template>
+                                </VBreadcrumbs>
                                 <VCardText v-html="project.body" />
                             </VCol>
                         </VRow>
