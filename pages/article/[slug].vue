@@ -212,10 +212,6 @@ useSeoMeta({
             @include cursor;
         }
 
-        /* &:last-of-type::after {
-            @include cursor;
-        } */
-
         &:has(img) {
             text-align: center;
         }

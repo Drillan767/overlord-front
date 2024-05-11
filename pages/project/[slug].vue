@@ -106,7 +106,6 @@ definePageMeta({
 const route = useRoute()
 const { getItems  } = useDirectusItems()
 const config = useRuntimeConfig()
-const dayjs = useDayjs()
 
 const loading = ref(false)
 const project = ref<Project>()
