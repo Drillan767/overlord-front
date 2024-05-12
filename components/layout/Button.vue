@@ -1,6 +1,6 @@
 <script setup lang="ts">
 interface Props {
-    type: string
+    type: 'link' | 'button'
     content: string
     showTag?: boolean
     link?: string

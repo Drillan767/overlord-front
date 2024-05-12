@@ -1,46 +1,94 @@
 <script setup lang="ts">
-/* const { t } = useI18n()
-const { url } = useRuntimeConfig()
-const img = useImage()
+import Button from '~~/components/layout/Button.vue'
+
 const { error } = defineProps(['error'])
 
-const color = useTheme()
+const config = useRuntimeConfig()
+
+const bg = computed(() => `${config.public.url}/img/404.jpg`)
+
+const redirectHome = () => clearError({ redirect: '/' })
 
 useHead({
-    title: error.statusCode,
-    bodyAttrs: {
-        class: color
-    }
+    title: 'Error',
 })
-
-const bg = computed(() => {
-    const imgUrl = img(url + '/img/404.jpg', { modifiers: { format: 'webp' } })
-    return `background-image: url('${imgUrl}')`
-}) */
-
-// const redirectHome = () => clearError({ redirect: '/' })
 </script>
 
 <template>
-    <p>Error</p>
-    <!-- <div class="error" :style="bg">
+    <div class="error">
         <div class="glitch-thumb">
-            <div class="glitch-img" v-for="i in 5" :key="i" :style="bg" />
+            <div v-for="i in 5" :key="i" class="glitch-img" :style="`background-image: url('${bg}')`" />
         </div>
 
         <div class="message">
-            <h1 class="glitch" :data-text="error.statusCode">{{ error.statusCode }}</h1>
+            <h1
+                class="glitch"
+                :data-text="error.statusCode"
+            >
+                {{ error.statusCode }}
+            </h1>
             <h2>{{ error.statusMessage }}</h2>
-            <Button @click="redirectHome" type="button" :content="'home'" />
+            <Button
+                type="button"
+                content="Head back home"
+                @click="redirectHome"
+            />
         </div>
-    </div> -->
+    </div>
 </template>
 
 <style scoped lang="scss">
 @import '~~/assets/styles/mixins';
 
 .error {
-    @apply relative h-screen;
+    height: 100vh;
+    position: relative;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    &::before {
+        content: '';
+        z-index: 1;
+        position: absolute;
+        background-color: black;
+        opacity: 0.6;
+        height: 100%;
+        width: 100%;
+    }
+
+    .glitch-thumb {
+        z-index: 0;
+        height: 100vh;
+        width: 100%;
+        position: absolute;
+        @include glitch-items(true);
+
+        &::before {
+            height: 100vh;
+        }
+    }
+
+    .message {
+        z-index: 2;
+    }
+    /*     position: relative;
+    height: 100vh;
+
+    .glitch-thumb {
+        z-index: 0;
+        position: absolute;
+
+        @include glitch-items(true);
+
+        &::before {
+            height: 100vh;
+        }
+    } */
+
+    /* @apply relative h-screen;
     @include content-item(100%);
 
     .glitch-thumb {
@@ -67,17 +115,6 @@ const bg = computed(() => {
             content: '';
             @apply absolute inset-0 bg-black opacity-60;
         }
-    }
+    } */
 }
 </style>
-
-<i18n lang="json">
-{
-    "fr": {
-        "home": "Retourner à l'accueil"
-    },
-    "en": {
-        "home": "Head back home"
-    }
-}
-</i18n>

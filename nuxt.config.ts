@@ -62,7 +62,7 @@ export default defineNuxtConfig({
     runtimeConfig: {
         public: {
             apiUrl: process.env.API_URL || 'localhost:8055',
-            url: process.env.URL || 'localhost:3000',
+            url: process.env.URL || 'http://localhost:3000',
             version,
             hcSitekey: process.env.HCAPTCHA_SITEKEY,
             directus: {

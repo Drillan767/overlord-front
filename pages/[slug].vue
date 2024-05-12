@@ -20,6 +20,7 @@ async function loadPage() {
     if (!data.length) {
         throw createError({
             statusCode: 404,
+            message: 'The page you\'re searching for does not exist',
             fatal: true,
         })
     }

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { Article, DisplayedProject } from '~~/types'
+import type { Article, Project } from '~~/types'
 
 interface Props {
     itemType: string
-    item: Article | DisplayedProject
+    item: Article | Project
 }
 
 defineProps<Props>()
