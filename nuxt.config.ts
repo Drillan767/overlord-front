@@ -54,60 +54,6 @@ export default defineNuxtConfig({
         }
     },
 
-/* 
-    i18n: {
-        locales: [
-            {
-                code: 'en',
-                iso: 'en-US'
-            },
-            {
-                code: 'fr',
-                iso: 'fr-FR'
-            }
-        ],
-        baseUrl: process.env.URL,
-        strategy: 'prefix',
-        defaultLocale: 'en',
-        customRoutes: 'config',
-        vueI18n: {
-            legacy: false,
-            messages: {
-                en: {
-                    projects: 'Projects',
-                },
-                fr: {
-                    projects: 'Projets'
-                }
-            }
-        },
-        pages: {
-            projects: {
-                fr: '/projets'
-            },
-            'project/[slug]': {
-                fr: '/projet/[slug]'
-            }
-        },
-        detectBrowserLanguage: {
-            useCookie: false,
-        }
-    },
-
-    apollo: {
-        clients: {
-            default: {
-                httpEndpoint: process.env.GQL_HOST || 'localhost:8055'
-            }
-        }
-    }, 
-
-    tailwindcss: {
-        viewer: false,
-        cssPath: '~/assets/css/tailwind.css'
-    },
-    */
-
     css: [
         'vuetify/lib/styles/main.sass',
         '@/assets/styles/main.scss'
