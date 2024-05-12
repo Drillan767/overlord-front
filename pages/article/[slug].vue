@@ -94,10 +94,6 @@ import hljs from 'highlight.js'
 import ProgressBar from '~/components/content/ProgressBar.vue'
 import 'highlight.js/styles/tokyo-night-dark.css'
 
-definePageMeta({
-    layout: 'blog',
-})
-
 const { getItems  } = useDirectusItems()
 const config = useRuntimeConfig()
 const route = useRoute()

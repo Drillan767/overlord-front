@@ -99,10 +99,6 @@ import Button from '~~/components/layout/Button.vue'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/tokyo-night-dark.css'
 
-definePageMeta({
-    layout: 'blog'
-})
-
 const route = useRoute()
 const { getItems  } = useDirectusItems()
 const config = useRuntimeConfig()

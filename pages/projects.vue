@@ -110,10 +110,6 @@ useHead({
     title: 'Projects',
 })
 
-definePageMeta({
-    layout: 'blog',
-})
-
 const breadcrumb = [
     {
         title: 'Home',
