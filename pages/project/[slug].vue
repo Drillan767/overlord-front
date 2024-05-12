@@ -1,96 +1,71 @@
-<template>
-    <div class="project">
-
-        <Head>
-            <Title>{{ project.title }}</Title>
-            <Meta property="article:author" content="Joseph Levarato" />
-            <Meta property="article:published_time" :content="project.date_created" />
-            <Meta property="article:modified_time" v-if="project.date_updated" :content="project.date_updated" />
-            <Link rel="canonical" :href="`${url}/article/${project.slug}`" />
-        </Head>
-
-        <header >
-            <div :style="`background-image: url('${getIllustration()}')`" class="banner "></div>
-
-            <div class="info">
-                <h1>
-                    {{ project.title }}
-                </h1>
-                <p class="description">
-                    {{ project.description }}
-                </p>
-                <div class="tags">
-                    {{ tagList }}
-                </div>
-            </div>
-        </header>
-
-        <article v-html="project.body" class="prose" />
-
-        <div class="links">
-            <Button type="link" :link="project.repo_link" content="Github repo" target="_blank" />
-            <Button type="link" :link="project.website" content="View site" target="_blank" />
-        </div>
-    </div>
-</template>
-
 <script setup lang="ts">
-import { useSeoMeta } from '@unhead/vue'
 import hljs from 'highlight.js'
+import type { Project } from '~~/types'
+import Button from '~~/components/layout/Button.vue'
 import 'highlight.js/styles/tokyo-night-dark.css'
-import projectQuery from '~~/queries/project.gql'
-import Button from '~~/components/layout/Button.vue';
-import type { Project, ProjectReceived } from '~~/types';
-
-definePageMeta({
-    layout: "blog",
-})
 
 const route = useRoute()
-const { url, apiUrl } = useRuntimeConfig()
-const fullLocale = useFullLocale()
+const { getItems } = useDirectusItems()
+const config = useRuntimeConfig()
 
-const project = ref({} as Project)
-const tagList = ref('')
+const loading = ref(false)
+const project = ref<Project>()
 
-const filters = {
-    languages_code: {code: {_eq: fullLocale.value}},
-    Project_id: {
-        status: {_eq: 'published'},
-        slug: {_eq: route.params.slug.toString()}
+useHead({
+    title: () => project.value?.title ?? '',
+})
+
+const breadcrumb = computed(() => ([
+    {
+        title: 'Home',
+        to: '/',
+    },
+    {
+        title: 'Projects',
+        to: '/projects',
+    },
+    {
+        title: project.value?.title ?? '',
+    },
+]))
+
+const illustration = computed(() => {
+    if (!project.value)
+        return undefined
+    return `${config.public.apiUrl}/assets/${project.value.illustration}?width=1200&height=627&fit=cover`
+})
+
+async function fetchProject() {
+    loading.value = true
+
+    try {
+        const data = await getItems<Project>({
+            collection: 'Project',
+            params: {
+                limit: 1,
+                filter: {
+                    slug: route.params.slug,
+                },
+                fields: ['*', 'tags.Tag_id.*'],
+            },
+        })
+        project.value = data[0]
+    }
+    catch (e) {
+        console.error(e)
+    }
+    finally {
+        loading.value = false
     }
 }
 
-await useAsyncQuery<ProjectReceived>(projectQuery, filters)
-    .then(({data}) => {
-        if (!data.value || !data.value.Project_translations.length) {
-            throw createError({
-                statusCode: 404,
-                fatal: true,
-            })
-        }
+onMounted(async () => {
+    await fetchProject()
 
-        const { title, slug, body, description, Project_id } = data.value.Project_translations[0]
-        const { date_created, date_updated, repo_link, website, tags, illustration } = Project_id
-
-        project.value = {
-            title, slug, body, description, date_created, date_updated, repo_link, website, tags, illustration
-        }
-
-        tagList.value = project.value.tags.map((t) => t.Tag_id.title).join(' • ')
-
-    })
-
-onMounted(() => {
-    setTimeout(() => {
-        document.querySelectorAll<HTMLElement>('.prose pre')
-            .forEach((block) => hljs.highlightBlock(block))
-    }, 1000)
+    document.querySelectorAll<HTMLElement>('pre').forEach(block => hljs.highlightBlock(block))
 })
 
-const getIllustration = () => {
-    return `${apiUrl}/assets/${project.value.illustration.id}?width=600&height=800&fit=cover`
-}
+/*
 
 useSeoMeta({
     ogTitle: project.value.title,
@@ -101,51 +76,139 @@ useSeoMeta({
     twitterTitle: project.value.title,
     twitterImage: getIllustration(),
     twitterDescription: project.value.description,
-})
-
+}) */
 </script>
 
+<template>
+    <VContainer fluid class="slide-in pa-0 mt-16 project">
+        <VRow>
+            <VCol>
+                <VCard
+                    :image="illustration"
+                    class="banner"
+                >
+                    <VContainer>
+                        <VRow>
+                            <VCol>
+                                <h1 class="text-center">
+                                    {{ project?.title }}
+                                </h1>
+                            </VCol>
+                        </VRow>
+                        <VRow>
+                            <VCol>
+                                <p class="text-center">
+                                    {{ project?.description }}
+                                </p>
+                            </VCol>
+                        </VRow>
+                        <VRow>
+                            <VCol
+                                v-if="project"
+                                class="text-center mt-4"
+                            >
+                                <VChip
+                                    v-for="(tag, i) in project.tags"
+                                    :key="i"
+                                    :text="tag.Tag_id.title"
+                                    variant="outlined"
+                                    class="mx-1"
+                                />
+                            </VCol>
+                        </VRow>
+                    </VContainer>
+                </VCard>
+            </VCol>
+        </VRow>
+        <VRow v-if="project" no-gutters>
+            <VCol>
+                <VCard>
+                    <VContainer>
+                        <VRow>
+                            <VCol
+                                cols="12"
+                                md="8"
+                                class="mx-md-auto"
+                            >
+                                <VBreadcrumbs class="mb-4" :items="breadcrumb">
+                                    <template #divider>
+                                        <VIcon icon="mdi-chevron-right" />
+                                    </template>
+                                </VBreadcrumbs>
+                                <VCardText v-html="project.body" />
+                            </VCol>
+                        </VRow>
+                        <VRow v-if="project">
+                            <VCol
+                                cols="12"
+                                md="8"
+                                class="d-flex justify-space-between mx-md-auto"
+                            >
+                                <Button
+                                    :link="project.repo_link"
+                                    type="link"
+                                    content="Github repo"
+                                    target="_blank"
+                                />
+                                <Button
+                                    :link="project.website"
+                                    type="link"
+                                    content="View site"
+                                    target="_blank"
+                                />
+                            </VCol>
+                        </VRow>
+                    </VContainer>
+                </VCard>
+            </VCol>
+        </VRow>
+
+        <!-- <Head>
+            <Title>{{ project.title }}</Title>
+            <Meta property="article:author" content="Joseph Levarato" />
+            <Meta property="article:published_time" :content="project.date_created" />
+            <Meta property="article:modified_time" v-if="project.date_updated" :content="project.date_updated" />
+            <Link rel="canonical" :href="`${url}/article/${project.slug}`" />
+        </Head>
+        -->
+    </VContainer>
+</template>
+
 <style scoped lang="scss">
-header {
-    height: 100vh;
-    @apply relative flex items-center justify-center;
-
+.project {
     .banner {
-        @apply absolute inset-0 z-0 h-full bg-center bg-no-repeat bg-cover;
+        :deep(.v-responsive__sizer) {
+            background: linear-gradient(
+                0deg,
+                #12181b,
+                rgba(18, 18, 18, 0.9) 40%,
+                rgba(18, 18, 18, 0.9)
+            );
+        }
 
-        &::before {
-            content: '';
+        .v-container {
+            height: calc(100vh - 64px);
 
-            @apply absolute inset-0 h-full;
-
-            background: linear-gradient(0deg,#12181b,rgba(31,34,53,.9) 40%,rgba(31,34,53,.9));
+            .v-row:first-of-type {
+                margin-top: 33vh;
+            }
         }
     }
 
-    .info {
-        @apply relative z-10 w-11/12 md:w-1/2 text-center text-white;
-
-        h1 {
-            @apply leading-none mb-2;
+    :deep(.v-card-text) {
+        p,
+        li {
+            font-size: 1.25rem;
+            margin: 1.2em 0;
         }
 
-        .description {
-            @apply text-base md:text-xl;
+        ol {
+            padding-left: 24px;
         }
 
-        .tags {
-            color: var(--purple);
-            @apply mt-8;
+        pre {
+            overflow: scroll;
         }
     }
 }
-
-article {
-    @apply lg:prose-xl mx-auto mt-4 prose-img:mx-auto prose-a:text-violet-600 px-2 dark:prose-invert;
-}
-
-.links {
-    @apply max-w-prose mx-auto flex justify-evenly md:justify-between md:text-xl mt-4 flex-row;
-}
-
 </style>

@@ -1,132 +1,190 @@
-<template>
-    <div id="projects" class="slide-in">
-
-        <Head>
-            <Title>Projects</Title>
-        </Head>
-
-        <div class="content">
-            <h1 class="glitch" data-text="PROJECTS">
-                PROJECTS
-            </h1>
-
-            <div class="tagList">
-                <template v-for="(tag, i) in uniqueTags" :key="i" class="tag">
-                    <span v-if="i !== 0" class="mx-2 separator">/</span>
-                    <span :class="{ 'current': tag.title === activeTag }" class="cursor-pointer"
-                        @click="handleFilter(tag.title)">
-                        {{ tag.title }} ({{ tag.nbProjects }})
-                    </span>
-                </template>
-            </div>
-
-            <div class="projectsList mx-auto">
-                <SingleProject v-for="(project, i) in filteredProjects" :key="i" :activeTag="activeTag"
-                    :project="project" @change-tag="handleFilter" />
-            </div>
-
-            <p v-if="filteredProjects.length === 0" class="text-center text-white text-xl">
-                Nothing to see here for now...
-            </p>
-        </div>
-    </div>
-</template>
-
 <script setup lang="ts">
-import { useSeoMeta } from '@unhead/vue'
-import type { TagFilter, DisplayedProjectsReceived, DisplayedProject } from '~~/types'
-import projectQuery from '~~/queries/projects.gql'
-import SingleProject from '~~/components/content/SingleProject.vue';
+import type { Project } from '~/types'
+import { useDayjs } from '#dayjs'
 
-definePageMeta({
-    layout: "blog",
-})
-
-const { t } = useI18n()
-const { url } = useRuntimeConfig()
-const homepage = useHomepage()
-const fullLocale = useFullLocale()
-const { baseline } = homepage.value
-const projectList = ref<DisplayedProject[]>([])
-const activeTag = ref('')
-const params = {
-    locale: fullLocale.value,
-    filters: {
-        status: {_eq: 'published'}
-    }
+interface TagFilter {
+    id: number
+    name: string
+    count: number
 }
 
-useSeoMeta({
-    ogTitle: t('projets'),
-    ogType: 'website',
-    ogImage: url + '/icons/logo.svg',
-    description: baseline.replace(/_/g, ''),
-    ogDescription: baseline.replace(/_/g, ''),
-    twitterTitle: ('projects'),
-    twitterImage: url + '/icons/logo.svg',
-    twitterDescription: baseline.replace(/_/g, '')
+useHead({
+    title: 'Projects',
 })
 
-const uniqueTags = computed<TagFilter[]>(() => {
-    const allTags: TagFilter[] = []
-    projectList.value.forEach((project) => {
-        project.tags.forEach((tag) => {
-            const { Tag_id: { title } } = tag
-            const nbProjects = projectList.value.filter((a) => {
-                return a.tags.some((t) => t.Tag_id.title === title)
-            }).length
+const breadcrumb = [
+    {
+        title: 'Home',
+        to: '/',
+    },
+    {
+        title: 'Projects',
+    },
+]
 
-            if (!allTags.some((at) => at.title === title)) {
-                allTags.push({ title, nbProjects })
-            }
-        })
-    })
+const { getItems } = useDirectusItems()
+const config = useRuntimeConfig()
+const dayjs = useDayjs()
 
-    return allTags
-})
+const loading = ref(false)
+const activeTags = ref<number[]>([])
+const allProjects = ref<Project[]>([])
 
-const handleFilter = (filter: string) => {
-    if (activeTag.value === '') {
-        activeTag.value = filter
-    } else if (activeTag.value === filter) {
-        activeTag.value = ''
-    } else {
-        activeTag.value = filter
-    }
-}
+const uniqueTags = computed<TagFilter[]>(() => allProjects.value.reduce((acc, project) => {
+    project.tags.forEach((tag) => {
+        const tagName = tag.Tag_id.title
+        const tagIndex = acc.findIndex(a => a.name === tagName)
 
-await useAsyncQuery<DisplayedProjectsReceived>(projectQuery, params)
-    .then(({ data }) => {
-        if (data.value) {
-            projectList.value = data.value.Project_translations.map((project) => {
-                const { title, slug } = project
-                const { Project_id: {illustration, tags} } = project
-
-                return {
-                    title, slug, illustration, tags
-                }
+        if (tagIndex > -1) {
+            acc[tagIndex].count++
+        }
+        else {
+            acc.push({
+                name: tagName,
+                id: tag.Tag_id.id,
+                count: 1,
             })
         }
     })
+    return acc
+}, [] as TagFilter[]))
 
-const filteredProjects = computed(() => {
-    return activeTag.value !== ''
-        ? projectList.value.filter((a) => a.tags.some((t) => t.Tag_id.title === activeTag.value))
-        : projectList.value
+const filteredArticles = computed(() => {
+    if (activeTags.value.length > 0)
+        return allProjects.value.filter(a => a.tags.some(t => activeTags.value.includes(t.Tag_id.id)))
+
+    return allProjects.value
 })
 
+async function fetchArticles() {
+    loading.value = true
+
+    try {
+        allProjects.value = await getItems<Project>({
+            collection: 'Project',
+            params: {
+                filter: {
+                    status: 'Published',
+                },
+                fields: ['title, tags, illustration, slug', 'date_updated', 'tags.Tag_id.*'],
+            },
+        })
+    }
+    catch (e) {
+        console.error(e)
+    }
+    finally {
+        loading.value = false
+    }
+}
+
+onMounted(() => fetchArticles())
 </script>
 
-<style scoped lang="scss">
-.projectsList {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 300px));
-    grid-gap: 25px;
-    justify-content: center;
-    align-items: baseline;
+<template>
+    <VContainer id="projects" class="slide-in my-16">
+        <VRow class="mt-8">
+            <VCol>
+                <h1 class="glitch" data-text="PROJECTS">
+                    PROJECTS
+                </h1>
+            </VCol>
+        </VRow>
+        <VRow>
+            <VBreadcrumbs :items="breadcrumb">
+                <template #divider>
+                    <VIcon icon="mdi-chevron-right" />
+                </template>
+            </VBreadcrumbs>
+        </VRow>
+        <VRow>
+            <VCol>
+                <VCard>
+                    <template #text>
+                        <VSkeletonLoader
+                            :loading="loading"
+                            type="chip@3"
+                            class="d-flex justify-center"
+                        >
+                            <VChipGroup
+                                v-model="activeTags"
+                                :filter="true"
+                                :multiple="true"
+                                selected-class="bg-purple-darken-2"
+                                class="chip-group"
+                            >
+                                <VChip
+                                    v-for="(tag, i) in uniqueTags"
+                                    :key="i"
+                                    :value="tag.id"
+                                    :text="tag.name"
+                                    :append-icon="`mdi-numeric-${tag.count > 9 ? '9-plus' : tag.count}-circle`"
+                                    variant="flat"
+                                />
+                            </VChipGroup>
+                        </VSkeletonLoader>
 
-    @media (max-width: 768px) {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 400px));
-    }
+                        <VRow
+                            v-if="loading"
+                            class="mt-8"
+                        >
+                            <VCol
+                                v-for="i in 4"
+                                :key="i"
+                            >
+                                <VSkeletonLoader type="image, text, article" />
+                            </VCol>
+                        </VRow>
+
+                        <VRow v-else class="mt-8">
+                            <VCol
+                                v-for="(project, i) in filteredArticles"
+                                :key="i"
+                                cols="12"
+                                md="3"
+                                class="mb-4"
+                            >
+                                <VCard
+                                    :to="`/project/${project.slug}`"
+                                    variant="text"
+                                >
+                                    <VImg
+                                        :src="`${config.public.apiUrl}/assets/${project.illustration}?width=300&height=200&fit=cover`"
+                                    />
+                                    <VCardSubtitle class="mt-4">
+                                        {{ dayjs(project.date_updated).format('DD/MM/YYYY HH:mm') }}
+                                    </VCardSubtitle>
+                                    <VCardTitle>
+                                        {{ project.title }}
+                                    </VCardTitle>
+
+                                    <VCardActions class="justify-end">
+                                        <VChip
+                                            v-for="(tag, j) in project.tags"
+                                            :key="j"
+                                            :text="tag.Tag_id.title"
+                                            :color="activeTags.includes(tag.Tag_id.id) ? 'purple-darken-2' : undefined"
+                                            variant="flat"
+                                            density="compact"
+                                            class="ml-1"
+                                        />
+                                    </VCardActions>
+                                </VCard>
+                            </VCol>
+                        </VRow>
+                    </template>
+                </VCard>
+            </VCol>
+        </VRow>
+    </VContainer>
+</template>
+
+<style scoped lang="scss">
+.v-skeleton-loader .chip-group :deep(.v-slide-group__content) {
+    justify-content: center;
+}
+
+.c-title {
+    font-size: clamp(1.5rem, 1.3239rem + 0.5634vw, 2rem);
 }
 </style>

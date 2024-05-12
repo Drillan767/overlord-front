@@ -1,6 +1,10 @@
 <template>
-    <div id="default">
-        <Html :lang="head.htmlAttrs?.lang" :dir="head.htmlAttrs?.dir">
+    <VLayout>
+        <slot />
+    </VLayout>
+    <!-- <div id="default">
+        <Html>
+            :lang="head.htmlAttrs?.lang" :dir="head.htmlAttrs?.dir"
             <Head>
                 <template v-for="link in head.link" :key="link.id">
                     <Link :id="link.id" :rel="link.rel" :href="link.href" :hreflang="link.hreflang" />
@@ -14,15 +18,5 @@
                 <slot />
             </Body>
         </Html>
-    </div>
+    </div> -->
 </template>
-
-<script setup lang="ts">
-
-const head = useLocaleHead({
-    addDirAttribute: true,
-    identifierAttribute: 'id',
-    addSeoAttributes: true
-})
-
-</script>

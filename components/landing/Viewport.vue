@@ -1,6 +1,73 @@
+<script setup lang="ts">
+import { useGoTo } from 'vuetify'
+import type { Homepage } from '~/types'
+
+const scrollText = 'Scroll down...'
+
+const goTo = useGoTo()
+const homepage = useState<Homepage>('homepage')
+
+const typedText = ref('')
+
+const subtitle = computed(() => {
+    if (!homepage.value)
+        return ''
+
+    return homepage.value.baseline.replaceAll(/_([a-zA-Zéè]*)_/g, (m, g) =>
+        `<span class="glitch" data-text="${g}">${g}</span>`)
+})
+
+function scrollNext() {
+    return goTo('#about', {
+        duration: 500,
+        easing: 'easeInOutCubic',
+    })
+}
+
+async function typeLetters() {
+    document.querySelector('.input-cursor')?.classList.add('typing')
+
+    const characters = scrollText.split('')
+    let typedTextAccumulator = ''
+
+    for (const char of characters) {
+        typedTextAccumulator += char
+        typedText.value = typedTextAccumulator
+        await new Promise(resolve => setTimeout(resolve, 150))
+    }
+
+    document.querySelector('.input-cursor')?.classList.remove('typing')
+    document.querySelector('.typed-text')?.classList.add('text-decoration-underline', 'cursor-pointer')
+}
+
+onMounted(() => {
+    setTimeout(() => typeLetters(), 2000)
+})
+</script>
+
 <template>
-    <header id="viewport">
-        <div class="content">
+    <section id="viewport">
+        <h1
+            v-if="homepage"
+            class="title glitch"
+            :data-text="homepage.fullname"
+        >
+            {{ homepage.fullname }}
+        </h1>
+
+        <p class="subtitle" v-html="subtitle" />
+
+        <div class="scroll">
+            <span
+                class="typed-text"
+                @click="scrollNext"
+            >
+                {{ typedText }}
+            </span>
+            <span v-if="homepage" class="input-cursor" />
+        </div>
+
+        <!-- <div class="content">
             <h1 class="title glitch" :data-text="fullname">{{ fullname }}</h1>
             <p class="subtitle" v-html="subtitle"></p>
 
@@ -8,80 +75,39 @@
                 <span class="typed-text" @click="scrollNext">{{ typedText }}</span>
                 <span class="input-cursor"></span>
             </div>
-        </div>
-    </header>
+        </div> -->
+    </section>
 </template>
 
-<script setup lang="ts">
-
-const { t } = useI18n() 
-const homepage = useHomepage()
-const { fullname } = homepage.value
-const scrollText = t('scrollText')
-const typedText = ref('')
-
-let i = 0
-
-onMounted(() => {
-    setTimeout(() => {
-        document.querySelector('.input-cursor')?.classList.add('typing')
-        typeLetters()
-
-    }, 2000)
-})
-
-const subtitle = computed(() =>
-    homepage.value.baseline.replaceAll(/_([a-zA-Zéè]*)_/g, (m, g) =>
-        `<span class="glitch" data-text="${g}">${g}</span>`))
-
-const scrollNext = () => {
-    document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })
-}
-
-const typeLetters = () => {
-    if (i < scrollText.length) {
-        typedText.value += scrollText.charAt(i)
-        i++
-        setTimeout(typeLetters, 150)
-    } else {
-        document.querySelector('.input-cursor')?.classList.remove('typing')
-        document.querySelector('.typed-text')?.classList.add('underline', 'cursor-pointer')
-
-    }
-}
-
-</script>
-
 <style scoped lang="scss">
+@import '~~/assets/styles/_variables';
+
 #viewport {
-    background-color: var(--bg-color);
-    @apply flex flex-col justify-center items-center;
-    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+
+    .title {
+        font-size: clamp(2.25rem, -2.75rem + 16vw, 6.25rem);
+        font-weight: 800;
+        text-align: center;
+    }
+
+    .subtitle {
+        text-align: center;
+        font-size: clamp(1.25rem, 0.4688rem + 2.5vw, 1.875rem);
+    }
+
+    .scroll {
+        font-family: 'JetBrains Mono';
+        margin-top: 80px;
+        font-size: 20px;
+    }
 
     .content {
         position: relative;
-
-        .title {
-            font-size: clamp(2.25rem, -2.75rem + 16vw, 6.25rem);
-            font-weight: 800;
-            text-align: center;
-            color: var(--title-color);
-        }
-
-        .subtitle {
-            color: var(--font-color);
-            text-align: center;
-            font-size: clamp(1.25rem, 0.4688rem + 2.5vw, 1.875rem);
-        }
-
-        .scroll {
-            @apply absolute flex justify-center w-full;
-            top: 38vh;
-
-            p {
-                color: white;
-            }
-        }
     }
 
     .input-cursor {
@@ -90,7 +116,7 @@ const typeLetters = () => {
         height: 28px;
         background-color: white;
         margin-left: 8px;
-        animation: blink .6s linear infinite alternate;
+        animation: blink 0.6s linear infinite alternate;
     }
 
     .typed-text {
@@ -103,14 +129,3 @@ const typeLetters = () => {
     }
 }
 </style>
-
-<i18n lang="json">
-{
-    "fr": {
-        "scrollText": "Découvrez..."
-    },
-    "en": {
-        "scrollText": "Discover..."
-    }
-}
-</i18n>

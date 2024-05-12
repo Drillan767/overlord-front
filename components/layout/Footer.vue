@@ -1,210 +1,132 @@
-<template>
-    <footer>
-        <div class="first-row">
-            <div class="flex gap-x-5">
-                <NuxtLink to="/">
-                    <nuxt-img format="webp" :src="`${config.apiUrl}/assets/${icon.id}`" :alt="icon.title" />
-                    <span>{{ fullname }}</span>
-                </NuxtLink>
-            </div>
-            <div class="links">
-                <ul>
-                    <li v-for="(link, i) in footerLinks" :key="i">
-                        <NuxtLink :to="{name: link.url}" :class="{ 'current': isCurrentRoute(link.item) }">
-                            {{ link.title }}
-                        </NuxtLink>
-                    </li>
-                </ul>
-                
-                <div class="buttons">
-                    <LanguageSwitcher />
-
-                    <button @click="toggleTheme" :aria-label="`toggle ${color === 'dark' ? 'light' : 'dark'} theme`">
-                        <LandingDark v-if="color === 'dark'" />
-                        <LandingLight v-if="color === 'light'" />
-                    </button>
-                </div>
-            </div>
-        </div>
-        <hr />
-        <div class="second-row">
-            <span>
-                © {{ year }} <NuxtLink href="/">{{ fullname }}</NuxtLink>. {{ t('arr') }}.
-            </span>
-            <div class="links">
-                <div class="internal">
-                    <NuxtLink to="/versions">
-                        Versions
-                    </NuxtLink>
-                    <NuxtLink v-for="(link, i) in legal" :key="i" :to="link.url">
-                        {{ link.title }}
-                    </NuxtLink>
-                </div>
-
-                <span class="separator">|</span>
-                <div class="socials">
-                    <a v-for="(link, i) in links" :href="link.url" :key="i" :aria-label="link.display" v-html="link.svg"
-                    target="_blank" />
-                </div>
-            </div>
-        </div>
-    </footer>
-
-</template>
-
 <script setup lang="ts">
-import LandingLight from '~~/components/svg/Light.vue'
-import LandingDark from '~~/components/svg/Dark.vue'
-import LanguageSwitcher from '~~/components/layout/LanguageSwitcher.vue'
+import type { Homepage } from '~/types'
 
-const date = new Date;
-const year = ref(date.getFullYear())
+const router = useRouter()
 const config = useRuntimeConfig()
-const { t, locale } = useI18n()
-const color = useTheme()
-const route = useRoute()
-const homepage = useHomepage()
-const { fullname, links, icon, legal } = homepage.value
+const homepage = useState<Homepage>('homepage')
+const year = new Date().getFullYear()
 
-const footerLinks = ref([
+const icon = computed(() => {
+    if (!homepage.value)
+        return undefined
+
+    return `${config.public.apiUrl}/assets/${homepage.value.icon}`
+})
+
+const navLinks = [
     {
-        url: `articles___${locale.value}`,
         title: 'Articles',
-        item: 'article',
+        to: '/articles',
     },
     {
-        url: `projects___${locale.value}`,
-        title: t('projects'),
-        item: 'project',
-    }
-])
+        title: 'Projects',
+        to: '/projects',
+    },
+/*     {
+        title: 'Gaming',
+        to: '/test'
+    } */
+]
 
-const isCurrentRoute = (link: string) => {
-    if (route.name) {
-        return route.name.toString().includes(link)
-    }
-
-    return false
+function getHome() {
+    router.push('/')
 }
-
-const toggleTheme = () => color.value = color.value === 'dark' ? 'light' : 'dark'
-
 </script>
 
+<template>
+    <VFooter v-if="homepage">
+        <VContainer>
+            <VRow>
+                <VCol class="text-h4 d-flex align-center">
+                    <div>
+                        <VImg
+                            :src="icon"
+                            :width="32"
+                            :height="32"
+                            class="cursor-pointer"
+                            @click="getHome"
+                        />
+                    </div>
+                    <h6 class="ml-2">
+                        {{ homepage.fullname }}
+                    </h6>
+                </VCol>
+                <VSpacer />
+                <VCol class="d-none d-md-flex justify-end">
+                    <VBtn
+                        v-for="(link, i) in navLinks"
+                        :key="i"
+                        :to="link.to"
+                        class="mr-2"
+                        variant="text"
+                    >
+                        {{ link.title }}
+                    </VBtn>
+                </VCol>
+
+                <VCol class="d-flex d-md-none justify-end">
+                    <VMenu>
+                        <template #activator="{ props: menu }">
+                            <VBtn
+                                v-bind="menu"
+                                variant="outlined"
+                            >
+                                <VIcon icon="mdi-menu" />
+                            </VBtn>
+                        </template>
+
+                        <VList>
+                            <VListItem
+                                v-for="(link, i) in navLinks"
+                                :key="i"
+                                :to="link.to"
+                                :title="link.title"
+                            />
+                        </VList>
+                    </VMenu>
+                </VCol>
+            </VRow>
+            <VDivider class="my-5" />
+            <VRow>
+                <VCol cols="12" md="4">
+                    <span>
+                        © {{ year }} {{ homepage.fullname }}. All Rights Reserved.
+                    </span>
+                </VCol>
+                <VSpacer />
+                <VCol class="d-flex d-md-block flex-column align-center">
+                    <VBtn
+                        to="/versions"
+                        variant="text"
+                    >
+                        Versions
+                    </VBtn>
+                    <VBtn
+                        v-for="(link, i) in homepage.legal"
+                        :key="i"
+                        :to="link.url"
+                        variant="text"
+                    >
+                        {{ link.title }}
+                    </VBtn>
+
+                    <VBtn
+                        v-for="(link, i) in homepage.links"
+                        :key="i"
+                        :href="link.url"
+                        :icon="true"
+                        variant="text"
+                    >
+                        <span class="svg-container" v-html="link.svg" />
+                    </VBtn>
+                </VCol>
+            </VRow>
+        </VContainer>
+    </VFooter>
+</template>
+
 <style scoped lang="scss">
-footer {
-    background-color: var(--bg-footer);
-    @apply p-4 sm:p-6;
-
-    .first-row {
-        @apply md:flex md:justify-between;
-
-        a {
-            @apply flex items-center;
-
-            img {
-                @apply mr-3 h-8;
-            }
-
-            span {
-                color: var(--title-color);
-                @apply self-center text-2xl font-semibold whitespace-nowrap;
-            }
-        }
-
-        .links {
-            @apply flex justify-between sm:justify-start gap-x-5 my-4 md:my-0;
-
-            ul {
-                @apply flex flex-wrap items-center text-sm text-gray-500 gap-x-5;
-
-                li a {
-
-                    &:not(.current),
-                    &:not(.router-link-exact-active) {
-                        color: var(--font-color);
-                    }
-
-                    &.current,
-                    &.router-link-exact-active {
-                        color: var(--purple);
-                    }
-                }
-            }
-
-            .buttons {
-                @apply flex items-center ml-2 gap-x-5;
-
-                button {
-                    color: var(--font-color);
-                    @apply py-2 pr-4 pl-3 border border-gray-700 rounded;
-                }
-            }
-        }
-    }
-
-    hr {
-        @apply my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8;
-    }
-
-    .second-row {
-        color: var(--font-color);
-        @apply sm:flex sm:items-center sm:justify-between;
-
-        .links {
-            @apply block md:flex gap-x-5;
-
-            .internal {
-                @apply flex gap-x-4;
-
-                @media (max-width: 768px) {
-                    @apply justify-center my-4;
-                }
-
-                a {
-                    &:not(.current),
-                    &:not(.router-link-exact-active) {
-                        color: var(--font-color);
-                    }
-
-                    &.current,
-                    &.router-link-exact-active {
-                        color: var(--purple);
-                    }
-                }
-            }
-
-            .separator {
-                @apply hidden md:inline-block;
-            }
-        }
-
-        .socials {
-            @apply flex mt-4 justify-center space-x-6 sm:mt-0;
-
-            
-
-            a {
-                color: var(--font-color);
-
-                svg {
-                    @apply w-5 h-5;
-                }
-            }
-        }
-    }
+.svg-container :deep(svg) {
+    height: 20px;
 }
 </style>
-
-<i18n lang="json">
-{
-    "fr": {
-        "arr": "Tous Droits Réservés",
-        "projects": "Projets"
-    },
-    "en": {
-        "arr": "All Rights Reserved",
-        "projects": "Projects"
-    }
-}
-</i18n>

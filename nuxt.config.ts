@@ -1,12 +1,23 @@
+import process from 'node:process'
 import { defineNuxtConfig } from 'nuxt/config'
-import pkg from './package.json'
+import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
+import { version } from './package.json'
 
 export default defineNuxtConfig({
+    devtools: {
+        enabled: true,
+    },
+
     modules: [
-        '@nuxtjs/tailwindcss',
-        '@nuxtjs/apollo',
-        '@nuxt/image-edge',
-        '@nuxtjs/i18n',
+        'nuxt-directus',
+        '@vee-validate/nuxt',
+        '@vueuse/nuxt',
+        'dayjs-nuxt',
+        (_options, nuxt) => {
+            nuxt.hooks.hook('vite:extendConfig', (config) => {
+                config.plugins?.push(vuetify({ autoImport: true }))
+            })
+        },
     ],
 
     app: {
@@ -22,7 +33,7 @@ export default defineNuxtConfig({
             ],
 
             link: [
-                { rel: 'icon', type: 'image/svg+xml', href: `${process.env.URL}/icons/logo.svg` }
+                { rel: 'icon', type: 'image/svg+xml', href: `${process.env.URL}/icons/logo.svg` },
             ],
 
             script: [{
@@ -38,75 +49,37 @@ export default defineNuxtConfig({
                         var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
                         g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
                     })();
-                `
-            }]
-        }
-    },
-
-    nitro: {
-        compressPublicAssets: true,
-    },
-
-    i18n: {
-        locales: [
-            {
-                code: 'en',
-                iso: 'en-US'
-            },
-            {
-                code: 'fr',
-                iso: 'fr-FR'
-            }
-        ],
-        baseUrl: process.env.URL,
-        strategy: 'prefix',
-        defaultLocale: 'en',
-        customRoutes: 'config',
-        vueI18n: {
-            legacy: false,
-            messages: {
-                en: {
-                    projects: 'Projects',
-                },
-                fr: {
-                    projects: 'Projets'
-                }
-            }
+                `,
+            }],
         },
-        pages: {
-            projects: {
-                fr: '/projets'
-            },
-            'project/[slug]': {
-                fr: '/projet/[slug]'
-            }
-        },
-        detectBrowserLanguage: {
-            useCookie: false,
-        }
     },
 
-    apollo: {
-        clients: {
-            default: {
-                httpEndpoint: process.env.GQL_HOST || 'localhost:8055'
-            }
-        }
-    },
-
-    tailwindcss: {
-        viewer: false,
-        cssPath: '~/assets/css/tailwind.css'
-    },
-
-    css: ["@/assets/styles/main.scss"],
+    css: [
+        'vuetify/lib/styles/main.sass',
+        '@/assets/styles/main.scss',
+    ],
 
     runtimeConfig: {
         public: {
             apiUrl: process.env.API_URL || 'localhost:8055',
-            url: process.env.URL || 'localhost:3000',
-            version: pkg.version,
-            hcSitekey: process.env.HCAPTCHA_SITEKEY
-        }
-    }
+            url: process.env.URL || 'http://localhost:3000',
+            version,
+            hcSitekey: process.env.HCAPTCHA_SITEKEY,
+            directus: {
+                url: process.env.API_URL || 'localhost:8055',
+            },
+        },
+    },
+
+    build: {
+        transpile: ['vuetify'],
+    },
+
+    vite: {
+        vue: {
+            template: {
+                transformAssetUrls,
+            },
+        },
+    },
 })

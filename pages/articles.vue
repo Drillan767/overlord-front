@@ -1,129 +1,190 @@
-<template>
-    <div id="articles" class="slide-in">
-
-        <Head>
-            <Title>Articles</Title>
-        </Head>
-
-        <div class="content">
-            <h1 class="glitch" data-text="ARTICLES">
-                ARTICLES
-            </h1>
-
-            <div class="tagList">
-                <template v-for="(tag, i) in uniqueTags" :key="i" class="tag">
-                    <span v-if="i !== 0" class="mx-2 separator">/</span>
-                    <span :class="{ 'current': tag.title === activeTag }" class="cursor-pointer"
-                        @click="handleFilter(tag.title)">
-                        {{ tag.title }} ({{ tag.nbArticles }})
-                    </span>
-                </template>
-            </div>
-
-            <div class="articlesList mx-auto">
-                <SingleArticle v-for="(article, i) in filteredArticles" :key="i" :activeTag="activeTag"
-                    :article="article" @change-tag="handleFilter" />
-            </div>
-
-            <p v-if="filteredArticles.length === 0" class="text-center text-white text-xl">
-                Nothing to see here for now...
-            </p>
-        </div>
-    </div>
-</template>
-
 <script setup lang="ts">
-import { useSeoMeta } from '@unhead/vue'
-import type { Article, TagFilter, ArticlesReceived } from '~~/types';
-import SingleArticle from '~~/components/content/SingleArticle.vue'
-import articlesQuery from '~~/queries/articles.gql'
+import type { Article } from '~/types'
+import { useDayjs } from '#dayjs'
 
-definePageMeta({
-    layout: "blog",
-})
-
-const { t } = useI18n()
-const { url } = useRuntimeConfig()
-const homepage = useHomepage()
-const { baseline } = homepage.value
-const fullLocale = useFullLocale()
-const articleList = ref([] as Article[])
-const activeTag = ref('')
-
-const query = {
-    featured: false,
-    locale: fullLocale.value,
-    limit: 3,
-    filters: {
-        status: {_eq: 'published'},
-        featured: {_eq: true}
-    }
+interface TagFilter {
+    id: number
+    name: string
+    count: number
 }
 
-useSeoMeta({
-    ogTitle: 'Articles',
-    ogType: 'website',
-    ogImage: url + '/icons/logo.svg',
-    description: baseline.replace(/_/g, ''),
-    ogDescription: baseline.replace(/_/g, ''),
-    twitterTitle: 'Articles',
-    twitterImage: url + '/icons/logo.svg',
-    twitterDescription: baseline.replace(/_/g, '')
+useHead({
+    title: 'Articles',
 })
 
-await useAsyncQuery<ArticlesReceived>(articlesQuery, query)
-    .then(({ data }) => {
-        if (data.value) {
-            articleList.value = data.value.Articles_translations.map((article) => {
-                const { title, slug, description, body } = article
-                const { Articles_id: { date_created, date_updated, illustration, tags } } = article
+const breadcrumb = [
+    {
+        title: 'Home',
+        to: '/',
+    },
+    {
+        title: 'Articles',
+    },
+]
 
-                return {
-                    title,
-                    slug,
-                    tags,
-                    body,
-                    description,
-                    illustration,
-                    date_created,
-                    date_updated,
-                }
+const { getItems } = useDirectusItems()
+const config = useRuntimeConfig()
+const dayjs = useDayjs()
+
+const loading = ref(false)
+const activeTags = ref<number[]>([])
+const allArticles = ref<Article[]>([])
+
+const uniqueTags = computed<TagFilter[]>(() => allArticles.value.reduce((acc, article) => {
+    article.tags.forEach((tag) => {
+        const tagName = tag.Tag_id.title
+        const tagIndex = acc.findIndex(a => a.name === tagName)
+
+        if (tagIndex > -1) {
+            acc[tagIndex].count++
+        }
+        else {
+            acc.push({
+                name: tagName,
+                id: tag.Tag_id.id,
+                count: 1,
             })
         }
     })
+    return acc
+}, [] as TagFilter[]))
 
-const uniqueTags = computed<TagFilter[]>(() => {
-    const allTags: TagFilter[] = []
-    articleList.value.forEach((article) => {
-        article.tags.forEach((tag) => {
-            const { Tag_id: { title } } = tag
-            const nbArticles = articleList.value.filter((a) => {
-                return a.tags.some((t) => t.Tag_id.title === title)
-            }).length
+const filteredArticles = computed(() => {
+    if (activeTags.value.length > 0)
+        return allArticles.value.filter(a => a.tags.some(t => activeTags.value.includes(t.Tag_id.id)))
 
-            if (!allTags.some((at) => at.title === title)) {
-                allTags.push({ title, nbArticles })
-            }
-        })
-    })
-
-    return allTags
+    return allArticles.value
 })
 
-const handleFilter = (filter: string) => {
-    if (activeTag.value === '') {
-        activeTag.value = filter
-    } else if (activeTag.value === filter) {
-        activeTag.value = ''
-    } else {
-        activeTag.value = filter
+async function fetchArticles() {
+    loading.value = true
+
+    try {
+        allArticles.value = await getItems<Article>({
+            collection: 'Articles',
+            params: {
+                filter: {
+                    status: 'Published',
+                },
+                fields: ['title, tags, illustration, slug', 'date_updated', 'tags.Tag_id.*'],
+            },
+        })
+    }
+    catch (e) {
+        console.error(e)
+    }
+    finally {
+        loading.value = false
     }
 }
 
-const filteredArticles = computed(() => {
-    return activeTag.value !== ''
-        ? articleList.value.filter((a) => a.tags.some((t) => t.Tag_id.title === activeTag.value))
-        : articleList.value
-})
-
+onMounted(() => fetchArticles())
 </script>
+
+<template>
+    <VContainer id="articles" class="slide-in my-16">
+        <VRow class="mt-8">
+            <VCol>
+                <h1 class="glitch" data-text="ARTICLES">
+                    ARTICLES
+                </h1>
+            </VCol>
+        </VRow>
+        <VRow>
+            <VBreadcrumbs :items="breadcrumb">
+                <template #divider>
+                    <VIcon icon="mdi-chevron-right" />
+                </template>
+            </VBreadcrumbs>
+        </VRow>
+        <VRow>
+            <VCol>
+                <VCard>
+                    <template #text>
+                        <VSkeletonLoader
+                            :loading="loading"
+                            type="chip@3"
+                            class="d-flex justify-center"
+                        >
+                            <VChipGroup
+                                v-model="activeTags"
+                                :filter="true"
+                                :multiple="true"
+                                selected-class="bg-purple-darken-2"
+                                class="chip-group"
+                            >
+                                <VChip
+                                    v-for="(tag, i) in uniqueTags"
+                                    :key="i"
+                                    :value="tag.id"
+                                    :text="tag.name"
+                                    :append-icon="`mdi-numeric-${tag.count > 9 ? '9-plus' : tag.count}-circle`"
+                                    variant="flat"
+                                />
+                            </VChipGroup>
+                        </VSkeletonLoader>
+
+                        <VRow
+                            v-if="loading"
+                            class="mt-8"
+                        >
+                            <VCol
+                                v-for="i in 4"
+                                :key="i"
+                            >
+                                <VSkeletonLoader type="image, text, article" />
+                            </VCol>
+                        </VRow>
+
+                        <VRow v-else class="mt-8">
+                            <VCol
+                                v-for="(article, j) in filteredArticles"
+                                :key="j"
+                                cols="12"
+                                md="3"
+                                class="mb-4"
+                            >
+                                <VCard
+                                    :to="`/article/${article.slug}`"
+                                    variant="text"
+                                >
+                                    <VImg
+                                        :src="`${config.public.apiUrl}/assets/${article.illustration}?width=300&height=200&fit=cover`"
+                                    />
+                                    <VCardSubtitle class="mt-4">
+                                        {{ dayjs(article.date_updated).format('DD/MM/YYYY HH:mm') }}
+                                    </VCardSubtitle>
+                                    <VCardTitle>
+                                        {{ article.title }}
+                                    </VCardTitle>
+
+                                    <VCardActions class="justify-end">
+                                        <VChip
+                                            v-for="(tag, i) in article.tags"
+                                            :key="i"
+                                            :text="tag.Tag_id.title"
+                                            :color="activeTags.includes(tag.Tag_id.id) ? 'purple-darken-2' : undefined"
+                                            variant="flat"
+                                            density="compact"
+                                            class="ml-1"
+                                        />
+                                    </VCardActions>
+                                </VCard>
+                            </VCol>
+                        </VRow>
+                    </template>
+                </VCard>
+            </VCol>
+        </VRow>
+    </VContainer>
+</template>
+
+<style scoped lang="scss">
+.v-skeleton-loader .chip-group :deep(.v-slide-group__content) {
+    justify-content: center;
+}
+
+.c-title {
+    font-size: clamp(1.5rem, 1.3239rem + 0.5634vw, 2rem);
+}
+</style>

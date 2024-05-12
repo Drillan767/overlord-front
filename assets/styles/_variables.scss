@@ -1,27 +1,43 @@
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    40% {
+        opacity: 1;
+    }
+    60% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
 :root {
+    --purple: hsl(274, 93%, 63%);
     /*=== Dark theme (default) ===*/
-    --font-light: rgb(245, 245, 247);
+    /* --font-light: rgb(245, 245, 247);
     --title-light: #fff;
     --bg-dark: #12181b;
     --bg-dark-alt: #000;
     --cursor-light: #fff;
-
+ */
     /*=== Light theme ===*/
-    --font-dark: #121212;
+    /* --font-dark: #121212;
     --title-dark: #000;
     --bg-light: #f8f8f8;
     --bg-light-alt: #b2becd;
-    --cursor-dark: #000;
-    
+    --cursor-dark: #000; */
+
     /*=== Misc. === */
-    --landing-padding: 2rem;
+    /* --landing-padding: 2rem;
     --landing-min-height: 100vh;
     --glitch-width: 100vw;
     --glitch-height: 100vh;
     --gap-vertical: 5px;
     --gap-horizontal: 10px;
     --time-anim: 4s;
-    --purple: hsl(274, 93%, 63%);
+
     --bg-navbar-footer: var(--bg-dark);
     --bg-about: var(--bg-dark);
     --bg-contact: var(--bg-dark-alt);
@@ -30,10 +46,10 @@
     --bg-color: var(--bg-dark);
     --bg-footer: var(--bg-dark);
     --bg-color-alt: var(--bg-dark-alt);
-    --bg-cursor: var(--cursor-dark);
+    --bg-cursor: var(--cursor-dark); */
 }
 
-.light {
+/* .light {
     --bg-about: var(--bg-light);
     --bg-contact: var(--bg-light);
     --bg-footer: var(--bg-light);
@@ -42,17 +58,17 @@
     --bg-color: var(--bg-light);
     --bg-color-alt: var(--bg-light-alt);
     --bg-cursor: var(--cursor-light);
-}
+} */
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
     :root {
         --landing-padding: 10px;
     }
-}
+} */
 
-body.dark, body.light {
+/* body.dark, body.light {
     background-color: var(--bg-color);
-}
+} */
 
 @font-face {
     font-family: 'Space Grotesk';
@@ -78,7 +94,12 @@ html {
     font-variant-ligatures: common-ligatures;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: 'Emelind', 'sans-serif';
 }
 
@@ -101,7 +122,7 @@ h1 {
     display: inline-block;
     margin-left: 5px;
     font-size: 25px;
-    animation: blink .6s linear infinite alternate;
+    animation: blink 0.6s linear infinite alternate;
 }
 
 @keyframes slide-in {

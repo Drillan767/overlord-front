@@ -1,44 +1,46 @@
+<script setup lang="ts">
+interface Props {
+    type: 'link' | 'button'
+    content: string
+    showTag?: boolean
+    link?: string
+}
+
+withDefaults(defineProps<Props>(), {
+    showTag: true,
+    link: undefined,
+})
+
+const config = useRuntimeConfig()
+</script>
+
 <template>
     <button v-if="type === 'button'">
-        <span class="kave"></span>
+        <span class="kave" />
         {{ content }}
 
         <span class="version" :data-text="config.version">
-            {{ config.version }}
+            {{ config.public.version }}
         </span>
     </button>
 
-    <NuxtLink :to="link" v-else>
-        <span class="kave"></span>
+    <NuxtLink
+        v-else
+        :to="link"
+        class="text-decoration-none"
+    >
+        <span class="kave" />
         {{ content }}
 
         <span class="version" :data-text="config.version">
-            {{ config.version }}
+            {{ config.public.version }}
         </span>
     </NuxtLink>
-
 </template>
 
-<script setup lang="ts">
-const config = useRuntimeConfig()
-
-defineProps({
-    type: String,
-    content: String,
-    showTag: {
-        type: Boolean,
-        default: true,
-    },
-    link: {
-        type: String,
-        required: false,
-    }
-})
-
-</script>
-
 <style scoped lang="scss">
-button, a {
+button,
+a {
     position: relative;
     border: solid 1px rgba(172, 73, 248, 0.3);
     background: none;
@@ -50,8 +52,9 @@ button, a {
     transition: all 0.25s ease;
     outline: none;
 
-    &::before, &::after {
-        content: "";
+    &::before,
+    &::after {
+        content: '';
         position: absolute;
         width: 60px;
         height: 1px;
@@ -64,7 +67,7 @@ button, a {
         left: 10%;
         transform: translateY(-1px);
     }
-    
+
     &::after {
         top: -2px;
         right: 10%;
@@ -98,8 +101,9 @@ button, a {
     }
 
     .kave {
-        &::before, &::after {
-            content: "";
+        &::before,
+        &::after {
+            content: '';
             position: absolute;
             width: 1px;
             height: 20px;

@@ -1,48 +1,52 @@
-<template>
-    <div id="page">
-        <Navbar />
-        <Head>
-            <Title>{{ page.title }}</Title>
-        </Head>
-
-        <header>
-            <h1>{{ page.title }}</h1>
-        </header>
-
-        <div v-html="page.body" class="prose"></div>
-        <Footer />
-    </div>
-</template>
-
 <script setup lang="ts">
-import type { Page, PagesReceived } from '~~/types'
-import Navbar from '~~/components/layout/Navbar.vue';
-import Footer from '~~/components/layout/Footer.vue';
-import pageQuery from '~~/queries/page.gql'
+import type { Page } from '~/types'
 
 const route = useRoute()
-const { url } = useRuntimeConfig()
-const fullLocale = useFullLocale()
-const homepage = useHomepage()
-const { baseline } = homepage.value
+const { getItems } = useDirectusItems()
 
-const page = ref({} as Page)
+const page = ref<Page>()
 
-await useAsyncQuery<PagesReceived>(pageQuery, {
-    slug: route.params.slug.toString(),
-    locale: fullLocale.value,
-})
-    .then(({ data }) => {
-        if (!data.value || !data.value.Pages_translations.length) {
-            throw createError({
-                statusCode: 404,
-                fatal: true,
-            })
-        }
-
-        page.value = data.value.Pages_translations[0]
+async function loadPage() {
+    const data = await getItems<Page>({
+        collection: 'Pages',
+        params: {
+            filter: {
+                slug: route.params.slug,
+            },
+            limit: 1,
+        },
     })
 
+    if (!data.length) {
+        throw createError({
+            statusCode: 404,
+            message: 'The page you\'re searching for does not exist',
+            fatal: true,
+        })
+    }
+
+    page.value = data[0]
+}
+
+useHead({
+    title: () => page.value?.title ?? '',
+})
+
+onMounted(() => loadPage())
+
+watch(() => route.params.slug, () => loadPage())
+
+const breadcrumb = computed(() => ([
+    {
+        title: 'Home',
+        to: '/',
+    },
+    {
+        title: page.value?.title ?? '',
+    },
+]))
+
+/*
 useSeoMeta({
     ogTitle: page.value.title,
     ogType: 'website',
@@ -52,23 +56,78 @@ useSeoMeta({
     twitterTitle: page.value.title,
     twitterImage: url + '/icons/logo.svg',
     twitterDescription: baseline.replace(/_/g, '')
-})
-
+}) */
 </script>
 
-<style scoped lang="scss">
-#page {
-    header {
-        height: 33vh;
-        @apply flex justify-center items-center;
+<template>
+    <VContainer class="slide-in mt-16">
+        <VRow>
+            <VCol class="text-center mt-8">
+                <h1>{{ page?.title }}</h1>
+            </VCol>
+        </VRow>
+        <VRow>
+            <VCol
+                cols="12"
+                md="8"
+                class="mx-md-auto"
+            >
+                <VBreadcrumbs
+                    v-if="page"
+                    class="mb-4"
+                    :items="breadcrumb"
+                >
+                    <template #divider>
+                        <VIcon icon="mdi-chevron-right" />
+                    </template>
+                </VBreadcrumbs>
+            </VCol>
+        </VRow>
+        <VRow>
+            <VCol
+                v-if="page"
+                cols="12"
+                md="8"
+                class="mx-md-auto"
+                v-html="page.body"
+            />
+        </VRow>
+    </VContainer>
+</template>
 
-        h1 {
-            color: var(--title-color);
+<style scoped lang="scss">
+@import '~~/assets/styles/_variables';
+
+:deep(.v-row) {
+    p,
+    li {
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        letter-spacing: 0.03125em;
+        font-family: 'Space Grotesk', sans-serif;
+        margin-bottom: 1.25em;
+
+        &::last-child {
+            @include cursor;
         }
     }
 
-    .prose {
-        @apply lg:prose-xl mx-auto mt-4 prose-img:mx-auto dark:prose-invert prose-a:text-violet-600 px-2;
+    ul {
+        padding-left: 24px;
+    }
+
+    h2 {
+        font-size: 1.8em;
+        line-height: 1.1111111;
+        margin-bottom: 0.8888889em;
+        margin-top: 1.5555556em;
+    }
+
+    h3 {
+        font-size: 1.5em;
+        line-height: 1.3333333;
+        margin-bottom: 0.6666667em;
     }
 }
 </style>
