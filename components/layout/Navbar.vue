@@ -22,6 +22,8 @@ const homepage = useState<Homepage>('homepage')
 const { getSingletonItem  } = useDirectusItems()
 const { mobile } = useDisplay()
 const route = useRoute()
+const router = useRouter()
+const config = useRuntimeConfig()
 
 const threshold = computed(() => {
     if (route.name !== 'index') return 300
@@ -38,6 +40,16 @@ async function loadHomepageData() {
     homepage.value = data
 }
 
+function getHome() {
+    router.push('/')
+}
+
+const icon = computed(() => {
+    if (!homepage.value) return undefined
+
+    return `${config.public.apiUrl}/assets/${homepage.value.icon}`
+})
+
 onMounted(() => loadHomepageData())
 
 </script>
@@ -52,7 +64,19 @@ onMounted(() => loadHomepageData())
             <VRow>
                 <VCol>
                     <VAppBarTitle v-if="homepage">
-                        {{ homepage.fullname }}
+                        <div class="d-flex">
+                            <div>
+                                <VImg
+                                    :src="icon"
+                                    :width="32"
+                                    :height="32"
+                                    @click="getHome"
+                                />
+                            </div>
+                            <span class="ml-2">
+                                {{ homepage.fullname }}
+                            </span>
+                        </div>
                     </VAppBarTitle>
                 </VCol>
                 
@@ -88,8 +112,6 @@ onMounted(() => loadHomepageData())
                         </VList>
                     </VMenu>
                 </VCol>
-
-               
             </VRow>
         </VContainer>
     </VAppBar>

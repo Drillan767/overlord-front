@@ -57,7 +57,9 @@
                             <VCol
                                 v-for="(project, i) in filteredArticles"
                                 :key="i"
-                                cols="3"
+                                cols="12"
+                                md="3"
+                                class="mb-4"
                             >
                                 <VCard
                                     :to="`/project/${project.slug}`"

@@ -204,6 +204,10 @@ useSeoMeta({
         ol {
             padding-left: 24px;
         }
+
+        pre {
+            overflow: scroll;
+        }
     }
 }
 

@@ -1,7 +1,16 @@
 <script setup lang="ts">
 import type { Homepage } from '~/types'
 
+const router = useRouter()
+const config = useRuntimeConfig()
 const homepage = useState<Homepage>('homepage')
+const year = new Date().getFullYear()
+
+const icon = computed(() => {
+    if (!homepage.value) return undefined
+
+    return `${config.public.apiUrl}/assets/${homepage.value.icon}`
+})
 
 const navLinks = [
     {
@@ -18,15 +27,27 @@ const navLinks = [
     }
 ]
 
-const year = new Date().getFullYear()
+function getHome() {
+    router.push('/')
+}
+
+
 </script>
 
 <template>
     <VFooter v-if="homepage">
         <VContainer>
             <VRow>
-                <VCol class="text-h4">
-                    <h6>{{ homepage.fullname }}</h6>
+                <VCol class="text-h4 d-flex align-center">
+                    <div>
+                        <VImg
+                            :src="icon"
+                            :width="32"
+                            :height="32"
+                            @click="getHome"
+                        />
+                    </div>
+                    <h6 class="ml-2">{{ homepage.fullname }}</h6>
                 </VCol>
                 <VSpacer />
                 <VCol class="d-none d-md-flex justify-end">
@@ -71,7 +92,7 @@ const year = new Date().getFullYear()
                     </span>
                 </VCol>
                 <VSpacer />
-                <VCol>
+                <VCol class="d-flex d-md-block flex-column align-center">
                     <VBtn
                         to="/versions"
                         variant="text"
