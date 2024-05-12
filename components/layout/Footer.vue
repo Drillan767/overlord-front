@@ -44,6 +44,7 @@ function getHome() {
                             :src="icon"
                             :width="32"
                             :height="32"
+                            class="cursor-pointer"
                             @click="getHome"
                         />
                     </div>
