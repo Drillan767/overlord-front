@@ -1,8 +1,16 @@
 @keyframes blink {
-    0% {opacity: 1;}
-    40% {opacity: 1;}
-    60% {opacity: 0;}
-    100% {opacity: 0;}
+    0% {
+        opacity: 1;
+    }
+    40% {
+        opacity: 1;
+    }
+    60% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
 }
 
 :root {
@@ -20,7 +28,7 @@
     --bg-light: #f8f8f8;
     --bg-light-alt: #b2becd;
     --cursor-dark: #000; */
-    
+
     /*=== Misc. === */
     /* --landing-padding: 2rem;
     --landing-min-height: 100vh;
@@ -29,7 +37,7 @@
     --gap-vertical: 5px;
     --gap-horizontal: 10px;
     --time-anim: 4s;
-    
+
     --bg-navbar-footer: var(--bg-dark);
     --bg-about: var(--bg-dark);
     --bg-contact: var(--bg-dark-alt);
@@ -86,7 +94,12 @@ html {
     font-variant-ligatures: common-ligatures;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: 'Emelind', 'sans-serif';
 }
 
@@ -109,7 +122,7 @@ h1 {
     display: inline-block;
     margin-left: 5px;
     font-size: 25px;
-    animation: blink .6s linear infinite alternate;
+    animation: blink 0.6s linear infinite alternate;
 }
 
 @keyframes slide-in {

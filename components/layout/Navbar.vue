@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useDisplay } from 'vuetify';
+import { useDisplay } from 'vuetify'
 import type { Homepage } from '~/types'
 
 const navLinks = [
@@ -19,14 +19,15 @@ const navLinks = [
 
 const homepage = useState<Homepage>('homepage')
 
-const { getSingletonItem  } = useDirectusItems()
+const { getSingletonItem } = useDirectusItems()
 const { mobile } = useDisplay()
 const route = useRoute()
 const router = useRouter()
 const config = useRuntimeConfig()
 
 const threshold = computed(() => {
-    if (route.name !== 'index') return 300
+    if (route.name !== 'index')
+        return 300
     return mobile ? 1000 : 1100
 })
 
@@ -34,7 +35,7 @@ const behavior = computed(() => route.name === 'index' ? 'inverted hide' : undef
 
 async function loadHomepageData() {
     const data = await getSingletonItem<Homepage>({
-        collection: 'Homepage'
+        collection: 'Homepage',
     })
 
     homepage.value = data
@@ -45,13 +46,13 @@ function getHome() {
 }
 
 const icon = computed(() => {
-    if (!homepage.value) return undefined
+    if (!homepage.value)
+        return undefined
 
     return `${config.public.apiUrl}/assets/${homepage.value.icon}`
 })
 
 onMounted(() => loadHomepageData())
-
 </script>
 
 <template>
@@ -80,7 +81,7 @@ onMounted(() => loadHomepageData())
                         </div>
                     </VAppBarTitle>
                 </VCol>
-                
+
                 <VCol class="d-none d-md-flex justify-end">
                     <VBtn
                         v-for="(link, i) in navLinks"
@@ -125,4 +126,3 @@ onMounted(() => loadHomepageData())
     border-bottom: solid 4px var(--purple);
 }
 </style>
-

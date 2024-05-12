@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useSeoMeta } from '@unhead/vue'
-
 useHead({
     title: 'Landing',
 })
@@ -15,7 +13,6 @@ useHead({
     twitterImage: url + '/icons/logo.svg',
     twitterDescription: baseline.replace(/_/g, '')
 }) */
-
 </script>
 
 <template>

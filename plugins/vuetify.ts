@@ -6,7 +6,7 @@ export default defineNuxtPlugin((app) => {
     const vuetify = createVuetify({
         ssr: true,
         theme: {
-            defaultTheme: 'dark'
+            defaultTheme: 'dark',
         },
         defaults: {
             VTextField: {
@@ -19,8 +19,8 @@ export default defineNuxtPlugin((app) => {
             },
             VCardTitle: {
                 style: 'white-space: initial;',
-            }
-        }
+            },
+        },
     })
 
     app.vueApp.use(vuetify)

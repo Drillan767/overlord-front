@@ -1,3 +1,10 @@
+<script setup lang="ts">
+import type { Homepage } from '~/types'
+
+const config = useRuntimeConfig()
+const homepage = useState<Homepage>('homepage')
+</script>
+
 <template>
     <section id="about">
         <VContainer class="d-flex align-center">
@@ -25,14 +32,6 @@
     </section>
 </template>
 
-<script setup lang="ts">
-import type { Homepage } from '~/types'
-
-const config = useRuntimeConfig()
-const homepage = useState<Homepage>('homepage')
-
-</script>
-
 <style scoped lang="scss">
 @import '~~/assets/styles/_variables';
 
@@ -45,7 +44,7 @@ const homepage = useState<Homepage>('homepage')
         font-weight: 400;
         line-height: 1.5;
         letter-spacing: 0.03125em;
-        font-family: "Space Grotesk", sans-serif;
+        font-family: 'Space Grotesk', sans-serif;
         margin-bottom: 1.25em;
 
         &:last-of-type::after {

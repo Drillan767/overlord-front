@@ -1,3 +1,84 @@
+<script setup lang="ts">
+import hljs from 'highlight.js'
+import type { Project } from '~~/types'
+import Button from '~~/components/layout/Button.vue'
+import 'highlight.js/styles/tokyo-night-dark.css'
+
+const route = useRoute()
+const { getItems } = useDirectusItems()
+const config = useRuntimeConfig()
+
+const loading = ref(false)
+const project = ref<Project>()
+
+useHead({
+    title: () => project.value?.title ?? '',
+})
+
+const breadcrumb = computed(() => ([
+    {
+        title: 'Home',
+        to: '/',
+    },
+    {
+        title: 'Projects',
+        to: '/projects',
+    },
+    {
+        title: project.value?.title ?? '',
+    },
+]))
+
+const illustration = computed(() => {
+    if (!project.value)
+        return undefined
+    return `${config.public.apiUrl}/assets/${project.value.illustration}?width=1200&height=627&fit=cover`
+})
+
+async function fetchProject() {
+    loading.value = true
+
+    try {
+        const data = await getItems<Project>({
+            collection: 'Project',
+            params: {
+                limit: 1,
+                filter: {
+                    slug: route.params.slug,
+                },
+                fields: ['*', 'tags.Tag_id.*'],
+            },
+        })
+        project.value = data[0]
+    }
+    catch (e) {
+        console.error(e)
+    }
+    finally {
+        loading.value = false
+    }
+}
+
+onMounted(async () => {
+    await fetchProject()
+
+    document.querySelectorAll<HTMLElement>('pre').forEach(block => hljs.highlightBlock(block))
+})
+
+/*
+
+useSeoMeta({
+    ogTitle: project.value.title,
+    ogType: 'article',
+    ogImage: getIllustration(),
+    description: project.value.description,
+    ogDescription: project.value.description,
+    twitterTitle: project.value.title,
+    twitterImage: getIllustration(),
+    twitterDescription: project.value.description,
+}) */
+</script>
+
 <template>
     <VContainer fluid class="slide-in pa-0 mt-16 project">
         <VRow>
@@ -39,7 +120,7 @@
                 </VCard>
             </VCol>
         </VRow>
-        <VRow no-gutters v-if="project">
+        <VRow v-if="project" no-gutters>
             <VCol>
                 <VCard>
                     <VContainer>
@@ -90,96 +171,19 @@
             <Link rel="canonical" :href="`${url}/article/${project.slug}`" />
         </Head>
         -->
-    </VContainer> 
+    </VContainer>
 </template>
 
-<script setup lang="ts">
-import type { Project } from '~~/types'
-import Button from '~~/components/layout/Button.vue'
-import hljs from 'highlight.js'
-import 'highlight.js/styles/tokyo-night-dark.css'
-
-const route = useRoute()
-const { getItems  } = useDirectusItems()
-const config = useRuntimeConfig()
-
-const loading = ref(false)
-const project = ref<Project>()
-
-useHead({
-    title: () => project.value?.title ?? ''
-})
-
-const breadcrumb = computed(() => ([
-    {
-        title: 'Home',
-        to: '/'
-    },
-    {
-        title: 'Projects',
-        to: '/projects',
-    },
-    {
-        title: project.value?.title ?? ''
-    }
-]))
-
-const illustration = computed(() => {
-    if (!project.value) return undefined
-    return `${config.public.apiUrl}/assets/${project.value.illustration}?width=1200&height=627&fit=cover`
-})
-
-const fetchProject = async() => {
-    loading.value = true
-    console.log(route.params.slug)
-
-    try {
-        const data = await getItems<Project>({
-            collection: 'Project',
-            params: {
-                limit: 1,
-                filter: {
-                slug: route.params.slug,
-            },
-            fields: ['*', 'tags.Tag_id.*']
-            }
-        })
-        project.value = data[0]
-    } catch (e) {
-        console.error(e)
-    } finally {
-        loading.value = false
-    }
-}
-
-onMounted(async() => {
-    await fetchProject()
-
-    document.querySelectorAll<HTMLElement>('pre').forEach((block) => hljs.highlightBlock(block))
-})
-
-/* 
-
-useSeoMeta({
-    ogTitle: project.value.title,
-    ogType: 'article',
-    ogImage: getIllustration(),
-    description: project.value.description,
-    ogDescription: project.value.description,
-    twitterTitle: project.value.title,
-    twitterImage: getIllustration(),
-    twitterDescription: project.value.description,
-}) */
-
-</script>
-
 <style scoped lang="scss">
-
 .project {
-
     .banner {
         :deep(.v-responsive__sizer) {
-            background: linear-gradient(0deg,#12181b,rgba(18,18,18,.9) 40%,rgba(18,18,18,.9)); 
+            background: linear-gradient(
+                0deg,
+                #12181b,
+                rgba(18, 18, 18, 0.9) 40%,
+                rgba(18, 18, 18, 0.9)
+            );
         }
 
         .v-container {
@@ -192,7 +196,8 @@ useSeoMeta({
     }
 
     :deep(.v-card-text) {
-        p, li {
+        p,
+        li {
             font-size: 1.25rem;
             margin: 1.2em 0;
         }
@@ -206,5 +211,4 @@ useSeoMeta({
         }
     }
 }
-
 </style>

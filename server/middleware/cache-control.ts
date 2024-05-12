@@ -1,6 +1,6 @@
 export default defineEventHandler((event) => {
-    let res = event.node.res
-    const {node: {req: { url}}} = event
+    const res = event.node.res
+    const { node: { req: { url } } } = event
 
     if (url) {
         const maxAge = url.match(/(.+)\.(jpg|jpeg|webp|png|gif|css|js|ico|svg|mjs)/)

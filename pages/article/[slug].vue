@@ -1,5 +1,96 @@
+<script setup lang="ts">
+import hljs from 'highlight.js'
+import type { Article } from '~/types'
+import ProgressBar from '~/components/content/ProgressBar.vue'
+import 'highlight.js/styles/tokyo-night-dark.css'
+
+const { getItems } = useDirectusItems()
+const config = useRuntimeConfig()
+const route = useRoute()
+const dayjs = useDayjs()
+
+const loading = ref(false)
+const article = ref<Article>()
+
+useHead({
+    title: () => article.value?.title ?? '',
+})
+
+const breadcrumb = computed(() => ([
+    {
+        title: 'Home',
+        to: '/',
+    },
+    {
+        title: 'Articles',
+        to: '/articles',
+    },
+    {
+        title: article.value?.title ?? '',
+    },
+]))
+
+const minuteRead = computed(() => {
+    if (!article.value)
+        return 0
+    const wpm = 200
+    const stripped = article.value.body.replace(/(<([^>]+)>)/ig, '')
+    const nbWords = stripped.trim().split(/\s+/).length
+    return Math.ceil(nbWords / wpm)
+})
+
+const illustration = computed(() => {
+    if (!article.value)
+        return undefined
+    return `${config.public.apiUrl}/assets/${article.value.illustration}?width=1200&height=627&fit=cover`
+})
+
+async function fetchArticle() {
+    loading.value = true
+
+    try {
+        const data = await getItems<Article>({
+            collection: 'Articles',
+            params: {
+                limit: 1,
+                filter: {
+                    slug: route.params.slug,
+                },
+                fields: ['*', 'tags.Tag_id.*'],
+            },
+        })
+        article.value = data[0]
+    }
+    catch (e) {
+        console.error(e)
+    }
+    finally {
+        loading.value = false
+    }
+}
+
+onMounted(async () => {
+    await fetchArticle()
+
+    document.querySelectorAll<HTMLElement>('pre').forEach(block => hljs.highlightBlock(block))
+})
+
+/* import { useSeoMeta } from '@unhead/vue'
+
+useSeoMeta({
+    ogTitle: article.value.title,
+    ogType: 'article',
+    ogImage: getIllustration(),
+    description: article.value.description,
+    ogDescription: article.value.description,
+    twitterTitle: article.value.title,
+    twitterImage: getIllustration(),
+    twitterDescription: article.value.description,
+}) */
+</script>
+
 <template>
-    <VContainer fluid id="article" class="slide-in article">
+    <VContainer id="article" fluid class="slide-in article">
         <VRow>
             <VCol>
                 <VCard
@@ -88,95 +179,6 @@
     </div> -->
 </template>
 
-<script setup lang="ts">
-import type { Article } from '~/types'
-import hljs from 'highlight.js'
-import ProgressBar from '~/components/content/ProgressBar.vue'
-import 'highlight.js/styles/tokyo-night-dark.css'
-
-const { getItems  } = useDirectusItems()
-const config = useRuntimeConfig()
-const route = useRoute()
-const dayjs = useDayjs()
-
-const loading = ref(false)
-const article = ref<Article>()
-
-useHead({
-    title: () => article.value?.title ?? '',
-})
-
-const breadcrumb = computed(() => ([
-    {
-        title: 'Home',
-        to: '/'
-    },
-    {
-        title: 'Articles',
-        to: '/articles',
-    },
-    {
-        title: article.value?.title ?? ''
-    }
-]))
-
-const minuteRead = computed(() => {
-    if (!article.value) return 0
-    const wpm = 200
-    const stripped = article.value.body.replace(/(<([^>]+)>)/ig, '')
-    const nbWords = stripped.trim().split(/\s+/).length
-    return Math.ceil(nbWords / wpm)
-})
-
-const illustration = computed(() => {
-    if (!article.value) return undefined
-    return `${config.public.apiUrl}/assets/${article.value.illustration}?width=1200&height=627&fit=cover`
-})
-
-const fetchArticle = async() => {
-    loading.value = true
-
-    try {
-        const data = await getItems<Article>({
-            collection: 'Articles',
-            params: {
-                limit: 1,
-                filter: {
-                    slug: route.params.slug,
-                },
-                fields: ['*', 'tags.Tag_id.*']
-            }
-        })
-        article.value = data[0]
-    } catch (e) {
-        console.error(e)
-    } finally {
-        loading.value = false
-    }
-}
-
-onMounted(async() => {
-    await fetchArticle()
-
-    document.querySelectorAll<HTMLElement>('pre').forEach((block) => hljs.highlightBlock(block))
-})
-
-
-/* import { useSeoMeta } from '@unhead/vue'
-
-useSeoMeta({
-    ogTitle: article.value.title,
-    ogType: 'article',
-    ogImage: getIllustration(),
-    description: article.value.description,
-    ogDescription: article.value.description,
-    twitterTitle: article.value.title,
-    twitterImage: getIllustration(),
-    twitterDescription: article.value.description,
-}) */
-
-</script>
-
 <style scoped lang="scss">
 @import '~~/assets/styles/_variables';
 
@@ -191,7 +193,7 @@ useSeoMeta({
 }
 
 .c-title {
-    font-size: clamp(2.5rem,2.1479rem + 1.1268vw,3.5rem);
+    font-size: clamp(2.5rem, 2.1479rem + 1.1268vw, 3.5rem);
     line-height: 1 !important;
 }
 
@@ -201,7 +203,7 @@ useSeoMeta({
         font-weight: 400;
         line-height: 1.5;
         letter-spacing: 0.03125em;
-        font-family: "Space Grotesk", sans-serif;
+        font-family: 'Space Grotesk', sans-serif;
         margin-bottom: 1.25em;
 
         &::last-child {
@@ -216,7 +218,7 @@ useSeoMeta({
             max-width: 100%;
         }
     }
-    
+
     pre {
         overflow: scroll;
     }

@@ -1,3 +1,86 @@
+<script setup lang="ts">
+import type { Article } from '~/types'
+import { useDayjs } from '#dayjs'
+
+interface TagFilter {
+    id: number
+    name: string
+    count: number
+}
+
+useHead({
+    title: 'Articles',
+})
+
+const breadcrumb = [
+    {
+        title: 'Home',
+        to: '/',
+    },
+    {
+        title: 'Articles',
+    },
+]
+
+const { getItems } = useDirectusItems()
+const config = useRuntimeConfig()
+const dayjs = useDayjs()
+
+const loading = ref(false)
+const activeTags = ref<number[]>([])
+const allArticles = ref<Article[]>([])
+
+const uniqueTags = computed<TagFilter[]>(() => allArticles.value.reduce((acc, article) => {
+    article.tags.forEach((tag) => {
+        const tagName = tag.Tag_id.title
+        const tagIndex = acc.findIndex(a => a.name === tagName)
+
+        if (tagIndex > -1) {
+            acc[tagIndex].count++
+        }
+        else {
+            acc.push({
+                name: tagName,
+                id: tag.Tag_id.id,
+                count: 1,
+            })
+        }
+    })
+    return acc
+}, [] as TagFilter[]))
+
+const filteredArticles = computed(() => {
+    if (activeTags.value.length > 0)
+        return allArticles.value.filter(a => a.tags.some(t => activeTags.value.includes(t.Tag_id.id)))
+
+    return allArticles.value
+})
+
+async function fetchArticles() {
+    loading.value = true
+
+    try {
+        allArticles.value = await getItems<Article>({
+            collection: 'Articles',
+            params: {
+                filter: {
+                    status: 'Published',
+                },
+                fields: ['title, tags, illustration, slug', 'date_updated', 'tags.Tag_id.*'],
+            },
+        })
+    }
+    catch (e) {
+        console.error(e)
+    }
+    finally {
+        loading.value = false
+    }
+}
+
+onMounted(() => fetchArticles())
+</script>
+
 <template>
     <VContainer id="articles" class="slide-in my-16">
         <VRow class="mt-8">
@@ -55,8 +138,8 @@
 
                         <VRow v-else class="mt-8">
                             <VCol
-                                v-for="(article, i) in filteredArticles"
-                                :key="i"
+                                v-for="(article, j) in filteredArticles"
+                                :key="j"
                                 cols="12"
                                 md="3"
                                 class="mb-4"
@@ -80,7 +163,7 @@
                                             v-for="(tag, i) in article.tags"
                                             :key="i"
                                             :text="tag.Tag_id.title"
-                                            :color="activeTags.includes(tag.Tag_id.id) ? 'purple-darken-2': undefined"
+                                            :color="activeTags.includes(tag.Tag_id.id) ? 'purple-darken-2' : undefined"
                                             variant="flat"
                                             density="compact"
                                             class="ml-1"
@@ -96,95 +179,12 @@
     </VContainer>
 </template>
 
-<script setup lang="ts">
-import type { Article } from '~/types'
-import { useDayjs } from '#dayjs'
-
-interface TagFilter {
-    id: number
-    name: string
-    count: number
-}
-
-useHead({
-    title: 'Articles',
-})
-
-const breadcrumb = [
-    {
-        title: 'Home',
-        to: '/'
-    },
-    {
-        title: 'Articles',
-    }
-]
-
-const { getItems  } = useDirectusItems()
-const config = useRuntimeConfig()
-const dayjs = useDayjs()
-
-const loading = ref(false)
-const activeTags = ref<number[]>([])
-const allArticles = ref<Article[]>([])
-
-const uniqueTags = computed<TagFilter[]>(() => allArticles.value.reduce((acc, article) => {
-    article.tags.forEach((tag) => {
-        const tagName = tag.Tag_id.title
-        const tagIndex = acc.findIndex((a) => a.name === tagName)
-
-        if (tagIndex > -1) {
-            acc[tagIndex].count++
-        } else {
-            acc.push({
-                name: tagName,
-                id: tag.Tag_id.id,
-                count: 1,
-            })
-        }
-    })
-    return acc
-}, [] as TagFilter[]))
-
-const filteredArticles = computed(() => {
-    if (activeTags.value.length > 0) {
-        return allArticles.value.filter((a) => a.tags.some((t) => activeTags.value.includes(t.Tag_id.id)))
-    }
-
-    return allArticles.value
-})
-
-const fetchArticles = async () => {
-    loading.value = true
-
-    try {
-        allArticles.value = await getItems<Article>({
-            collection: 'Articles',
-            params: {
-                filter: {
-                    status: 'Published'
-                },
-                fields: ['title, tags, illustration, slug', 'date_updated', 'tags.Tag_id.*']
-            }
-        })
-
-    } catch (e) {
-        console.error(e)
-    } finally {
-        loading.value = false
-    }
-}
-
-onMounted(() => fetchArticles())
-
-</script>
-
 <style scoped lang="scss">
 .v-skeleton-loader .chip-group :deep(.v-slide-group__content) {
     justify-content: center;
 }
 
 .c-title {
-    font-size: clamp(1.5rem,1.3239rem + .5634vw,2rem);
+    font-size: clamp(1.5rem, 1.3239rem + 0.5634vw, 2rem);
 }
 </style>

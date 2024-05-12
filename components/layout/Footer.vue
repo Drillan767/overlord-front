@@ -7,7 +7,8 @@ const homepage = useState<Homepage>('homepage')
 const year = new Date().getFullYear()
 
 const icon = computed(() => {
-    if (!homepage.value) return undefined
+    if (!homepage.value)
+        return undefined
 
     return `${config.public.apiUrl}/assets/${homepage.value.icon}`
 })
@@ -30,8 +31,6 @@ const navLinks = [
 function getHome() {
     router.push('/')
 }
-
-
 </script>
 
 <template>
@@ -48,7 +47,9 @@ function getHome() {
                             @click="getHome"
                         />
                     </div>
-                    <h6 class="ml-2">{{ homepage.fullname }}</h6>
+                    <h6 class="ml-2">
+                        {{ homepage.fullname }}
+                    </h6>
                 </VCol>
                 <VSpacer />
                 <VCol class="d-none d-md-flex justify-end">
@@ -128,5 +129,4 @@ function getHome() {
 .svg-container :deep(svg) {
     height: 20px;
 }
-
 </style>

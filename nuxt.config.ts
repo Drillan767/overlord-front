@@ -1,3 +1,4 @@
+import process from 'node:process'
 import { defineNuxtConfig } from 'nuxt/config'
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 import { version } from './package.json'
@@ -14,8 +15,7 @@ export default defineNuxtConfig({
         'dayjs-nuxt',
         (_options, nuxt) => {
             nuxt.hooks.hook('vite:extendConfig', (config) => {
-                // @ts-expect-error
-                config.plugins.push(vuetify({ autoImport: true }))
+                config.plugins?.push(vuetify({ autoImport: true }))
             })
         },
     ],
@@ -33,7 +33,7 @@ export default defineNuxtConfig({
             ],
 
             link: [
-                { rel: 'icon', type: 'image/svg+xml', href: `${process.env.URL}/icons/logo.svg` }
+                { rel: 'icon', type: 'image/svg+xml', href: `${process.env.URL}/icons/logo.svg` },
             ],
 
             script: [{
@@ -49,14 +49,14 @@ export default defineNuxtConfig({
                         var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
                         g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
                     })();
-                `
-            }]
-        }
+                `,
+            }],
+        },
     },
 
     css: [
         'vuetify/lib/styles/main.sass',
-        '@/assets/styles/main.scss'
+        '@/assets/styles/main.scss',
     ],
 
     runtimeConfig: {
@@ -67,8 +67,8 @@ export default defineNuxtConfig({
             hcSitekey: process.env.HCAPTCHA_SITEKEY,
             directus: {
                 url: process.env.API_URL || 'localhost:8055',
-            }
-        }
+            },
+        },
     },
 
     build: {

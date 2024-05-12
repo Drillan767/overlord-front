@@ -2,15 +2,13 @@
 import type { Article, DisplayedProject } from '~~/types'
 
 interface Props {
-    itemType: string,
-    item: Article|DisplayedProject
+    itemType: string
+    item: Article | DisplayedProject
 }
 
 defineProps<Props>()
 
 const config = useRuntimeConfig()
-
-
 </script>
 
 <template>
@@ -20,23 +18,22 @@ const config = useRuntimeConfig()
     >
         <VHover>
             <template #default="{ isHovering, props: hover }">
-
                 <div
                     v-bind="hover"
-                    :class="{ 'animate': isHovering }"
+                    :class="{ animate: isHovering }"
                     class="glitch-thumb"
                 >
                     <div
                         v-for="i in 5"
                         :key="i"
-                        class="glitch-img" 
+                        class="glitch-img"
                         :style="`background-image: url('${config.public.apiUrl}/assets/${item.illustration}?width=300&height=200&fit=cover')`"
                     />
                 </div>
 
                 <VCardText v-bind="hover">
                     <span
-                        :class="{ 'glitch': isHovering }"
+                        :class="{ glitch: isHovering }"
                         :data-text="item.title"
                         class="c-title"
                     >
@@ -60,6 +57,6 @@ const config = useRuntimeConfig()
 
 <style scoped lang="scss">
 .c-title {
-    font-size: clamp(1.5rem,1.3239rem + .5634vw,2rem);
+    font-size: clamp(1.5rem, 1.3239rem + 0.5634vw, 2rem);
 }
 </style>

@@ -1,6 +1,52 @@
+<script setup lang="ts">
+import { useGoTo } from 'vuetify'
+import type { Homepage } from '~/types'
+
+const scrollText = 'Scroll down...'
+
+const goTo = useGoTo()
+const homepage = useState<Homepage>('homepage')
+
+const typedText = ref('')
+
+const subtitle = computed(() => {
+    if (!homepage.value)
+        return ''
+
+    return homepage.value.baseline.replaceAll(/_([a-zA-Zéè]*)_/g, (m, g) =>
+        `<span class="glitch" data-text="${g}">${g}</span>`)
+})
+
+function scrollNext() {
+    return goTo('#about', {
+        duration: 500,
+        easing: 'easeInOutCubic',
+    })
+}
+
+async function typeLetters() {
+    document.querySelector('.input-cursor')?.classList.add('typing')
+
+    const characters = scrollText.split('')
+    let typedTextAccumulator = ''
+
+    for (const char of characters) {
+        typedTextAccumulator += char
+        typedText.value = typedTextAccumulator
+        await new Promise(resolve => setTimeout(resolve, 150))
+    }
+
+    document.querySelector('.input-cursor')?.classList.remove('typing')
+    document.querySelector('.typed-text')?.classList.add('text-decoration-underline', 'cursor-pointer')
+}
+
+onMounted(() => {
+    setTimeout(() => typeLetters(), 2000)
+})
+</script>
+
 <template>
     <section id="viewport">
-
         <h1
             v-if="homepage"
             class="title glitch"
@@ -9,7 +55,7 @@
             {{ homepage.fullname }}
         </h1>
 
-        <p class="subtitle" v-html="subtitle"></p>
+        <p class="subtitle" v-html="subtitle" />
 
         <div class="scroll">
             <span
@@ -18,9 +64,8 @@
             >
                 {{ typedText }}
             </span>
-            <span v-if="homepage" class="input-cursor"></span>
+            <span v-if="homepage" class="input-cursor" />
         </div>
-
 
         <!-- <div class="content">
             <h1 class="title glitch" :data-text="fullname">{{ fullname }}</h1>
@@ -33,53 +78,6 @@
         </div> -->
     </section>
 </template>
-
-<script setup lang="ts">
-import type { Homepage } from '~/types'
-import { useGoTo } from 'vuetify'
-
-
-const scrollText = 'Scroll down...'
-
-const goTo = useGoTo()
-const homepage = useState<Homepage>('homepage')
-
-const typedText = ref('')
-
-const subtitle = computed(() => {
-    if (!homepage.value) return ''
-
-    return homepage.value.baseline.replaceAll(/_([a-zA-Zéè]*)_/g, (m, g) =>
-        `<span class="glitch" data-text="${g}">${g}</span>`)
-})
-
-const scrollNext = () => goTo('#about', {
-    duration: 500,
-    easing: 'easeInOutCubic'
-})
-
-const typeLetters = async () => {
-    document.querySelector('.input-cursor')?.classList.add('typing');
-
-    const characters = scrollText.split('');
-    let typedTextAccumulator = '';
-
-    for (const char of characters) {
-        typedTextAccumulator += char;
-        typedText.value = typedTextAccumulator;
-        await new Promise(resolve => setTimeout(resolve, 150));
-    }
-
-    document.querySelector('.input-cursor')?.classList.remove('typing')
-    document.querySelector('.typed-text')?.classList.add('text-decoration-underline', 'cursor-pointer')
-};
-
-
-onMounted(() => {
-    setTimeout(() => typeLetters(), 2000)
-})
-
-</script>
 
 <style scoped lang="scss">
 @import '~~/assets/styles/_variables';
@@ -110,8 +108,6 @@ onMounted(() => {
 
     .content {
         position: relative;
-
-
     }
 
     .input-cursor {
@@ -120,7 +116,7 @@ onMounted(() => {
         height: 28px;
         background-color: white;
         margin-left: 8px;
-        animation: blink .6s linear infinite alternate;
+        animation: blink 0.6s linear infinite alternate;
     }
 
     .typed-text {

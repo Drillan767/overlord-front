@@ -1,9 +1,9 @@
 // import { parse } from 'node-html-parser'
 
-export const scrollSpy = (headers: NodeListOf<Element>) => {
-    let scrollTop = window.scrollY;
+export function scrollSpy(headers: NodeListOf<Element>) {
+    const scrollTop = window.scrollY
 
-    document.querySelectorAll('.toc li').forEach((li) => li.classList.remove('active'))
+    document.querySelectorAll('.toc li').forEach(li => li.classList.remove('active'))
 
     for (let i = headers.length - 1; i >= 0; i--) {
         const currentH = headers[i]
@@ -11,12 +11,12 @@ export const scrollSpy = (headers: NodeListOf<Element>) => {
 
         if (scrollTop > offset - 102) {
             document.querySelector(`.toc li a[href="#${currentH.id}"]`)?.parentElement?.classList.add('active')
-            break;
+            break
         }
     }
 }
 
-export const toBionicReading = (text: string) => {
+export function toBionicReading(text: string) {
     /* const raw = parse(text)
     const allParagraphs = raw.querySelectorAll('p')
     // allParagraphs.forEach((p))
@@ -29,5 +29,5 @@ export const toBionicReading = (text: string) => {
         even length words: half bold
         odd length words: bold on less than the half (ie: 7 letters, the 3 firsts will be bold)
     */
-    return ''
+    return text
 }

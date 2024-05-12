@@ -1,34 +1,32 @@
 <script setup lang="ts">
-import type { Article, DisplayedProject } from '~~/types'
+import ItemThumbnail from '../content/ItemThumbnail.vue'
+import type { Article, Project } from '~~/types'
 import Button from '~~/components/layout/Button.vue'
-import ItemThumbnail from '../content/ItemThumbnail.vue';
 
-const config = useRuntimeConfig()
-
-const { getItems  } = useDirectusItems()
+const { getItems } = useDirectusItems()
 
 const featuredArticles = ref<Article[]>([])
-const featuredProjects = ref<DisplayedProject[]>([])
+const featuredProjects = ref<Project[]>([])
 
-const fetchFeatured = async () => {
+async function fetchFeatured() {
     featuredArticles.value = await getItems<Article>({
         collection: 'Articles',
         params: {
             filter: {
-                featured: true
+                featured: true,
             },
-            fields: ['title, tags, illustration, slug', 'tags.Tag_id.title']
+            fields: ['title, tags, illustration, slug', 'tags.Tag_id.title'],
         },
     })
 
-    featuredProjects.value = await getItems<DisplayedProject>({
+    featuredProjects.value = await getItems<Project>({
         collection: 'Project',
         params: {
             filter: {
-                featured: true
+                featured: true,
             },
-            fields: ['title, tags, illustration, slug', 'tags.Tag_id.title']
-        }
+            fields: ['title, tags, illustration, slug', 'tags.Tag_id.title'],
+        },
     })
 }
 
@@ -113,5 +111,4 @@ onMounted(() => fetchFeatured())
     display: flex;
     align-items: center;
 }
-
 </style>

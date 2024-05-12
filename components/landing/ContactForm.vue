@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import VueHcaptcha from '@hcaptcha/vue3-hcaptcha'
-import Button from "~~/components/layout/Button.vue"
+import Button from '~~/components/layout/Button.vue'
 
 interface FormType {
     name: string
@@ -10,7 +10,7 @@ interface FormType {
 }
 
 const config = useRuntimeConfig()
-const { createItems } = useDirectusItems();
+const { createItems } = useDirectusItems()
 
 const error = ref('')
 const verified = ref(false)
@@ -21,8 +21,8 @@ const { defineField, handleSubmit, resetForm } = useForm<FormType>({
         name: 'required',
         email: 'required|email',
         subject: 'required',
-        content: 'required|min:10'
-    }
+        content: 'required|min:10',
+    },
 })
 
 const [name, nameProps] = defineField('name', vuetifyConfig)
@@ -35,7 +35,8 @@ const formValid = useIsFormValid()
 const hcSitekey = computed(() => config.public.hcSitekey ?? undefined)
 
 const submit = handleSubmit(async (form) => {
-    if (!formValid || !verified.value) return
+    if (!formValid || !verified.value)
+        return
     sent.value = false
 
     try {
@@ -46,32 +47,31 @@ const submit = handleSubmit(async (form) => {
 
         resetForm()
         sent.value = true
-    } catch (e: any) {
+    }
+    catch (e: any) {
         console.error(e)
     }
-    
 })
 
-const onVerify = () => {
+function onVerify() {
     error.value = ''
     verified.value = true
 }
 
-const onError = (e: string) => {
+function onError(e: string) {
     error.value = e
     verified.value = false
 }
 
-const onExpire = () => {
+function onExpire() {
     // error.value = t('captcha.expired')
     verified.value = false
 }
 
-const onChallengeExpire = () => {
+function onChallengeExpire() {
     // error.value = t('captcha.expired')
     verified.value = false
 }
-
 </script>
 
 <template>
@@ -84,7 +84,7 @@ const onChallengeExpire = () => {
                     class="offset-md-2"
                 >
                     <h2>
-                        Need help? <br />
+                        Need help? <br>
                         Want to ask
                         <span class="glitch" data-text="something">
                             something
@@ -166,7 +166,6 @@ const onChallengeExpire = () => {
         </VContainer>
     </section>
 </template>
-
 
 <style scoped lang="scss">
 #contact {

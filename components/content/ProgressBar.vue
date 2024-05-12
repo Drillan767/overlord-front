@@ -9,11 +9,10 @@ const progressBar = computed(() => {
 
     let response = '['
 
-    for (let i = 0; i <= total; i++) {
+    for (let i = 0; i <= total; i++)
         response += i <= progress ? '#' : '.'
-    }
 
-    return response + ']'
+    return `${response}]`
 })
 
 const displayPercentage = computed(() => {
@@ -33,7 +32,7 @@ const displayPercentage = computed(() => {
     return result
 })
 
-const getScrollPercent = () => {
+function getScrollPercent() {
     const prose = document.querySelector<HTMLDivElement>('.v-card-text')
 
     if (prose) {
@@ -41,14 +40,14 @@ const getScrollPercent = () => {
         const proseBottom = proseTop + prose.clientHeight
         const browserBottom = window.scrollY + window.innerHeight
 
-        if (browserBottom < proseTop) {
+        if (browserBottom < proseTop)
             return 0
-        } else if (browserBottom > proseTop && browserBottom < proseBottom) {
+        else if (browserBottom > proseTop && browserBottom < proseBottom)
             return Math.floor((browserBottom - proseTop) / prose.offsetHeight * 100)
-        } else {
+        else
             return 100
-        }
-    } else {
+    }
+    else {
         return 0
     }
 }
@@ -56,13 +55,13 @@ const getScrollPercent = () => {
 onMounted(() => {
     const bar = document.querySelector<HTMLElement>('.progress .bar')
 
-    if (bar) barWidth.value = bar.clientWidth
+    if (bar)
+        barWidth.value = bar.clientWidth
 
     document.addEventListener('scroll', () => {
         readPercentage.value = getScrollPercent()
     })
 })
-
 </script>
 
 <template>
@@ -81,7 +80,7 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
-@import "~~/assets/styles/_variables.scss";
+@import '~~/assets/styles/_variables.scss';
 
 .progress-container {
     position: fixed;

@@ -1,21 +1,4 @@
-<template>
-    <p>Error</p>
-    <!-- <div class="error" :style="bg">
-        <div class="glitch-thumb">
-            <div class="glitch-img" v-for="i in 5" :key="i" :style="bg" />
-        </div>
-
-        <div class="message">
-            <h1 class="glitch" :data-text="error.statusCode">{{ error.statusCode }}</h1>
-            <h2>{{ error.statusMessage }}</h2>
-            <Button @click="redirectHome" type="button" :content="'home'" />
-        </div> 
-    </div>-->
-</template>
-
 <script setup lang="ts">
-import Button from '~~/components/layout/Button.vue'
-
 /* const { t } = useI18n()
 const { url } = useRuntimeConfig()
 const img = useImage()
@@ -35,8 +18,23 @@ const bg = computed(() => {
     return `background-image: url('${imgUrl}')`
 }) */
 
-const redirectHome = () => clearError({ redirect: '/' })
+// const redirectHome = () => clearError({ redirect: '/' })
 </script>
+
+<template>
+    <p>Error</p>
+    <!-- <div class="error" :style="bg">
+        <div class="glitch-thumb">
+            <div class="glitch-img" v-for="i in 5" :key="i" :style="bg" />
+        </div>
+
+        <div class="message">
+            <h1 class="glitch" :data-text="error.statusCode">{{ error.statusCode }}</h1>
+            <h2>{{ error.statusMessage }}</h2>
+            <Button @click="redirectHome" type="button" :content="'home'" />
+        </div>
+    </div> -->
+</template>
 
 <style scoped lang="scss">
 @import '~~/assets/styles/mixins';

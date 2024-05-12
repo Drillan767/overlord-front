@@ -1,3 +1,62 @@
+<script setup lang="ts">
+import type { Version } from '~~/types'
+
+useHead({
+    title: 'Versions',
+})
+
+const breadcrumb = [
+    {
+        title: 'Home',
+        to: '/',
+    },
+    {
+        title: 'Versions',
+    },
+]
+
+const { getItems } = useDirectusItems()
+
+const versions = ref<Version[]>([])
+const loading = ref(false)
+
+async function fetchReleases() {
+    loading.value = true
+
+    try {
+        versions.value = await getItems<Version>({
+            collection: 'Releases',
+            params: {
+                fields: ['id', 'version', 'description'],
+                sort: '-id',
+            },
+        })
+    }
+    catch (e) {
+        console.error(e)
+    }
+    finally {
+        loading.value = false
+    }
+}
+
+onMounted(() => fetchReleases())
+
+/*
+
+useSeoMeta({
+    ogTitle: 'Versions',
+    ogType: 'website',
+    ogImage: url + '/icons/logo.svg',
+    description: baseline.replace(/_/g, ''),
+    ogDescription: baseline.replace(/_/g, ''),
+    twitterTitle: 'Versions',
+    twitterImage: url + '/icons/logo.svg',
+    twitterDescription: baseline.replace(/_/g, '')
+})
+ */
+</script>
+
 <template>
     <VContainer id="versions" class="slide-in my-16">
         <VRow justify="center" class="mt-16">
@@ -23,8 +82,8 @@
         />
 
         <VRow
-            v-else
             v-for="(release, i) in versions"
+            v-else
             :key="i"
         >
             <VCol>
@@ -33,7 +92,9 @@
                         <VContainer>
                             <VRow>
                                 <VCol>
-                                    <h2 class="text-center">Version {{ release.version }}</h2>
+                                    <h2 class="text-center">
+                                        Version {{ release.version }}
+                                    </h2>
                                 </VCol>
                             </VRow>
                             <VRow>
@@ -43,70 +104,9 @@
                     </template>
                 </VCard>
             </VCol>
-            
         </VRow>
     </VContainer>
 </template>
-
-<script setup lang="ts">
-import type { Version } from '~~/types'
-
-useHead({
-    title: 'Versions',
-})
-
-const breadcrumb = [
-    {
-        title: 'Home',
-        to: '/'
-    },
-    {
-        title: 'Versions',
-    }
-]
-
-const { getItems  } = useDirectusItems()
-
-const versions = ref<Version[]>([])
-const loading = ref(false)
-
-const fetchReleases = async () => {
-    loading.value = true
-
-    try {
-        versions.value = await getItems<Version>({
-            collection: 'Releases',
-            params: {
-                fields: ['id', 'version', 'description'],
-                sort: '-id' 
-            }
-        })
-
-    } catch (e) {
-        console.error(e)
-    } finally {
-        loading.value = false
-    }
-}
-
-onMounted(() => fetchReleases())
-
-
-/*
-
-useSeoMeta({
-    ogTitle: 'Versions',
-    ogType: 'website',
-    ogImage: url + '/icons/logo.svg',
-    description: baseline.replace(/_/g, ''),
-    ogDescription: baseline.replace(/_/g, ''),
-    twitterTitle: 'Versions',
-    twitterImage: url + '/icons/logo.svg',
-    twitterDescription: baseline.replace(/_/g, '')
-})
- */
-
-</script>
 
 <style scoped lang="scss">
 #versions {
@@ -119,14 +119,14 @@ useSeoMeta({
         h2 {
             font-size: 1.8em;
             line-height: 1.1111111;
-            margin-bottom: .8888889em;
+            margin-bottom: 0.8888889em;
             margin-top: 1.5555556em;
         }
 
         h3 {
             font-size: 1.5em;
             line-height: 1.3333333;
-            margin-bottom: .6666667em;
+            margin-bottom: 0.6666667em;
         }
 
         ul {
@@ -134,10 +134,10 @@ useSeoMeta({
             margin-top: 1.2em;
             padding-left: 1.6em;
             font-size: 1.25rem;
-            
+
             li {
-                margin-bottom: .6em;
-                margin-top: .6em;
+                margin-bottom: 0.6em;
+                margin-top: 0.6em;
             }
         }
     }

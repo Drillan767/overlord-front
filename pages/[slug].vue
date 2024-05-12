@@ -1,3 +1,63 @@
+<script setup lang="ts">
+import type { Page } from '~/types'
+
+const route = useRoute()
+const { getItems } = useDirectusItems()
+
+const page = ref<Page>()
+
+async function loadPage() {
+    const data = await getItems<Page>({
+        collection: 'Pages',
+        params: {
+            filter: {
+                slug: route.params.slug,
+            },
+            limit: 1,
+        },
+    })
+
+    if (!data.length) {
+        throw createError({
+            statusCode: 404,
+            fatal: true,
+        })
+    }
+
+    page.value = data[0]
+}
+
+useHead({
+    title: () => page.value?.title ?? '',
+})
+
+onMounted(() => loadPage())
+
+watch(() => route.params.slug, () => loadPage())
+
+const breadcrumb = computed(() => ([
+    {
+        title: 'Home',
+        to: '/',
+    },
+    {
+        title: page.value?.title ?? '',
+    },
+]))
+
+/*
+useSeoMeta({
+    ogTitle: page.value.title,
+    ogType: 'website',
+    ogImage: url + '/icons/logo.svg',
+    description: baseline.replace(/_/g, ''),
+    ogDescription: baseline.replace(/_/g, ''),
+    twitterTitle: page.value.title,
+    twitterImage: url + '/icons/logo.svg',
+    twitterDescription: baseline.replace(/_/g, '')
+}) */
+</script>
+
 <template>
     <VContainer class="slide-in mt-16">
         <VRow>
@@ -34,78 +94,17 @@
     </VContainer>
 </template>
 
-<script setup lang="ts">
-import type { Page } from '~/types'
-
-const route = useRoute()
-const { getItems } = useDirectusItems()
-
-const page = ref<Page>()
-
-async function loadPage() {
-    const data = await getItems<Page>({
-        collection: 'Pages',
-        params: {
-            filter: {
-                slug: route.params.slug,
-            },
-            limit: 1,
-        }
-    })
-
-    if (!data.length) {
-        throw createError({
-            statusCode: 404,
-            fatal: true,
-        })
-    }
-
-    page.value = data[0]
-}
-
-useHead({
-    title: () => page.value?.title ?? '',
-})
-
-onMounted(() => loadPage())
-
-watch(() => route.params.slug, () => loadPage())
-
-const breadcrumb = computed(() => ([
-    {
-        title: 'Home',
-        to: '/'
-    },
-    {
-        title: page.value?.title ?? '',
-    }
-]))
-
-
-/*
-useSeoMeta({
-    ogTitle: page.value.title,
-    ogType: 'website',
-    ogImage: url + '/icons/logo.svg',
-    description: baseline.replace(/_/g, ''),
-    ogDescription: baseline.replace(/_/g, ''),
-    twitterTitle: page.value.title,
-    twitterImage: url + '/icons/logo.svg',
-    twitterDescription: baseline.replace(/_/g, '')
-}) */
-
-</script>
-
 <style scoped lang="scss">
 @import '~~/assets/styles/_variables';
 
 :deep(.v-row) {
-    p, li {
+    p,
+    li {
         font-size: 1rem;
         font-weight: 400;
         line-height: 1.5;
         letter-spacing: 0.03125em;
-        font-family: "Space Grotesk", sans-serif;
+        font-family: 'Space Grotesk', sans-serif;
         margin-bottom: 1.25em;
 
         &::last-child {
@@ -120,14 +119,14 @@ useSeoMeta({
     h2 {
         font-size: 1.8em;
         line-height: 1.1111111;
-        margin-bottom: .8888889em;
+        margin-bottom: 0.8888889em;
         margin-top: 1.5555556em;
     }
 
     h3 {
         font-size: 1.5em;
         line-height: 1.3333333;
-        margin-bottom: .6666667em;
+        margin-bottom: 0.6666667em;
     }
 }
 </style>
