@@ -11,10 +11,10 @@ const navLinks = [
         title: 'Projects',
         to: '/projects',
     },
-    {
+/*     {
         title: 'Gaming',
         to: '/test'
-    }
+    } */
 ]
 
 const homepage = useState<Homepage>('homepage')

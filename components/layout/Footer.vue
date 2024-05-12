@@ -21,10 +21,10 @@ const navLinks = [
         title: 'Projects',
         to: '/projects',
     },
-    {
+/*     {
         title: 'Gaming',
         to: '/test'
-    }
+    } */
 ]
 
 function getHome() {
