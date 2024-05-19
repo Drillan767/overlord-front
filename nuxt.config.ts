@@ -34,6 +34,9 @@ export default defineNuxtConfig({
 
             link: [
                 { rel: 'icon', type: 'image/svg+xml', href: `${process.env.URL}/icons/logo.svg` },
+                { rel: 'preload', type: 'font/ttf', as: 'font', href: '/fonts/SpaceGrotesk-Light.ttf', crossorigin: '' },
+                { rel: 'preload', type: 'font/ttf', as: 'font', href: '/fonts/Emelind.ttf', crossorigin: '' },
+                { rel: 'preload', type: 'font/ttf', as: 'font', href: '/fonts/JetBrainsMono-Regular.ttf', crossorigin: '' },
             ],
 
             script: [{

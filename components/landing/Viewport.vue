@@ -64,18 +64,8 @@ onMounted(() => {
             >
                 {{ typedText }}
             </span>
-            <span v-if="homepage" class="input-cursor" />
+            <span v-if="homepage" class="input-cursor font-mono" />
         </div>
-
-        <!-- <div class="content">
-            <h1 class="title glitch" :data-text="fullname">{{ fullname }}</h1>
-            <p class="subtitle" v-html="subtitle"></p>
-
-            <div class="scroll">
-                <span class="typed-text" @click="scrollNext">{{ typedText }}</span>
-                <span class="input-cursor"></span>
-            </div>
-        </div> -->
     </section>
 </template>
 
@@ -117,11 +107,6 @@ onMounted(() => {
         background-color: white;
         margin-left: 8px;
         animation: blink 0.6s linear infinite alternate;
-    }
-
-    .typed-text {
-        @apply text-xl font-mono;
-        color: var(--font-color);
     }
 
     .typing {

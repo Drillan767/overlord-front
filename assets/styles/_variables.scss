@@ -15,74 +15,6 @@
 
 :root {
     --purple: hsl(274, 93%, 63%);
-    /*=== Dark theme (default) ===*/
-    /* --font-light: rgb(245, 245, 247);
-    --title-light: #fff;
-    --bg-dark: #12181b;
-    --bg-dark-alt: #000;
-    --cursor-light: #fff;
- */
-    /*=== Light theme ===*/
-    /* --font-dark: #121212;
-    --title-dark: #000;
-    --bg-light: #f8f8f8;
-    --bg-light-alt: #b2becd;
-    --cursor-dark: #000; */
-
-    /*=== Misc. === */
-    /* --landing-padding: 2rem;
-    --landing-min-height: 100vh;
-    --glitch-width: 100vw;
-    --glitch-height: 100vh;
-    --gap-vertical: 5px;
-    --gap-horizontal: 10px;
-    --time-anim: 4s;
-
-    --bg-navbar-footer: var(--bg-dark);
-    --bg-about: var(--bg-dark);
-    --bg-contact: var(--bg-dark-alt);
-    --font-color: var(--font-light);
-    --title-color: var(--title-light);
-    --bg-color: var(--bg-dark);
-    --bg-footer: var(--bg-dark);
-    --bg-color-alt: var(--bg-dark-alt);
-    --bg-cursor: var(--cursor-dark); */
-}
-
-/* .light {
-    --bg-about: var(--bg-light);
-    --bg-contact: var(--bg-light);
-    --bg-footer: var(--bg-light);
-    --font-color: var(--font-dark);
-    --title-color: var(--title-dark);
-    --bg-color: var(--bg-light);
-    --bg-color-alt: var(--bg-light-alt);
-    --bg-cursor: var(--cursor-light);
-} */
-
-/* @media (max-width: 768px) {
-    :root {
-        --landing-padding: 10px;
-    }
-} */
-
-/* body.dark, body.light {
-    background-color: var(--bg-color);
-} */
-
-@font-face {
-    font-family: 'Space Grotesk';
-    src: url('/fonts/SpaceGrotesk-Light.ttf');
-}
-
-@font-face {
-    font-family: 'Emelind';
-    src: url('/fonts/Emelind.ttf');
-}
-
-@font-face {
-    font-family: 'JetBrains Mono';
-    src: url('/fonts/JetBrainsMono-Regular.ttf');
 }
 
 html {
@@ -90,7 +22,7 @@ html {
 }
 
 .font-mono {
-    font-family: 'JetBrains Mono';
+    font-family: 'JetBrainsMono-Regular';
     font-variant-ligatures: common-ligatures;
 }
 
@@ -100,7 +32,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Emelind', 'sans-serif';
+    font-family: 'Emelind', sans-serif;
 }
 
 h1 {
@@ -108,7 +40,7 @@ h1 {
 }
 
 .font-mono {
-    font-family: 'JetBrains Mono';
+    font-family: 'JetBrainsMono-Regular';
     font-variant-ligatures: common-ligatures;
 }
 
