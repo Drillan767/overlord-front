@@ -93,8 +93,7 @@ function getHome() {
                         © {{ year }} {{ homepage.fullname }}. All Rights Reserved.
                     </span>
                 </VCol>
-                <VSpacer />
-                <VCol class="d-flex d-md-block flex-column align-center">
+                <VCol class="d-flex justify-end flex-column flex-md-row align-center">
                     <VBtn
                         to="/versions"
                         variant="text"

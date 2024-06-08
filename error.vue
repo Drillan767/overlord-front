@@ -22,7 +22,7 @@ useHead({
 
         <div class="message">
             <h1
-                class="glitch"
+                class="glitch text-h1 mb-4"
                 :data-text="error.statusCode"
             >
                 {{ error.statusCode }}
