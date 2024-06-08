@@ -1,3 +1,17 @@
+@font-face {
+    font-family: 'Emelind';
+    src: url('/fonts/Emelind.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Space Grotesk';
+    src: url('/fonts/SpaceGrotesk-Light.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 @keyframes blink {
     0% {
         opacity: 1;

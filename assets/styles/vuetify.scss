@@ -1,7 +1,15 @@
 $headings: 'Emelind', sans-serif;
 $body: 'Space Grotesk', sans-serif;
 
-// @use 'vuetify/styles' with (
-//     $heading-font-family: $headings,
-//     $body-font-family: $body
-// );
+/* @use 'vuetify/styles' with (
+    $heading-font-family: $headings,
+    $body-font-family: $body
+);
+ */
+
+
+
+ @forward 'vuetify/settings' with (
+    $body-font-family:$body,
+    $heading-font-family: $headings,
+ );
