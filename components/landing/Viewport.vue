@@ -2,7 +2,7 @@
 import { useGoTo } from 'vuetify'
 import type { Homepage } from '~/types'
 
-const scrollText = 'Scroll down...'
+const scrollText = 'Demain souar t\'es ché moa tabarnakkk...'
 
 const goTo = useGoTo()
 const homepage = useState<Homepage>('homepage')
