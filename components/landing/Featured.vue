@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import ItemThumbnail from '../content/ItemThumbnail.vue'
 import type { Article, Project } from '~~/types'
 import Button from '~~/components/layout/Button.vue'
+import ItemThumbnail from '../content/ItemThumbnail.vue'
 
 const { getItems } = useDirectusItems()
 

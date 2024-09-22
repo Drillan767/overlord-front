@@ -41,18 +41,18 @@ export default defineNuxtConfig({
 
             script: [{
                 children: `
-                    var _paq = window._paq = window._paq || [];
-                    _paq.push(['trackPageView']);
-                    _paq.push(['enableLinkTracking']);
-                    (function() {
-                        var u="//analytics.josephlevarato.me/";
-                        _paq.push(['setTrackerUrl', u+'matomo.php']);
-                        _paq.push(['setSiteId', '1']);
-                        _paq.push(['HeatmapSessionRecording::disable']);
-                        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-                        g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-                    })();
-                `,
+                  var _paq = window._paq = window._paq || [];
+                  _paq.push(['trackPageView']);
+                  _paq.push(['enableLinkTracking']);
+                  (function() {
+                      var u="//analytics.josephlevarato.me/";
+                      _paq.push(['setTrackerUrl', u+'matomo.php']);
+                      _paq.push(['setSiteId', '1']);
+                      _paq.push(['HeatmapSessionRecording::disable']);
+                      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+                      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+                  })();
+              `,
             }],
         },
     },
@@ -78,11 +78,25 @@ export default defineNuxtConfig({
         transpile: ['vuetify'],
     },
 
+    typescript: {
+        typeCheck: true,
+    },
+
     vite: {
+        css: {
+            preprocessorOptions: {
+                sass: {
+                    silenceDeprecations: ['legacy-js-api'],
+                    api: 'modern-compiler',
+                },
+            },
+        },
         vue: {
             template: {
                 transformAssetUrls,
             },
         },
     },
+
+    compatibilityDate: '2024-09-22',
 })
