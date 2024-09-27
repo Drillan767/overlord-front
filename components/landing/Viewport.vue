@@ -50,9 +50,9 @@ onMounted(() => {
         <h1
             v-if="homepage"
             class="title glitch"
-            :data-text="homepage.fullname"
+            :data-text="homepage.full_name"
         >
-            {{ homepage.fullname }}
+            {{ homepage.full_name }}
         </h1>
 
         <p class="subtitle" v-html="subtitle" />

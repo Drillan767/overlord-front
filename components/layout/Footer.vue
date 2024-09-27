@@ -10,7 +10,7 @@ const icon = computed(() => {
     if (!homepage.value)
         return undefined
 
-    return `${config.public.apiUrl}/assets/${homepage.value.icon}`
+    return `${config.public.apiUrl}/assets/${homepage.value.logo}`
 })
 
 const navLinks = [
@@ -48,7 +48,7 @@ function getHome() {
                         />
                     </div>
                     <h6 class="ml-2">
-                        {{ homepage.fullname }}
+                        {{ homepage.full_name }}
                     </h6>
                 </VCol>
                 <VSpacer />
@@ -90,7 +90,7 @@ function getHome() {
             <VRow>
                 <VCol cols="12" md="4">
                     <span>
-                        © {{ year }} {{ homepage.fullname }}. All Rights Reserved.
+                        © {{ year }} {{ homepage.full_name }}. All Rights Reserved.
                     </span>
                 </VCol>
                 <VCol class="d-flex justify-end flex-column flex-md-row align-center">
@@ -116,7 +116,7 @@ function getHome() {
                         :icon="true"
                         variant="text"
                     >
-                        <span class="svg-container" v-html="link.svg" />
+                        <span class="svg-container" v-html="link.logo" />
                     </VBtn>
                 </VCol>
             </VRow>

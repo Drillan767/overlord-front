@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Version } from '~~/types'
+import type { Release } from '~~/types'
 
 useHead({
     title: 'Versions',
@@ -17,14 +17,14 @@ const breadcrumb = [
 
 const { getItems } = useDirectusItems()
 
-const versions = ref<Version[]>([])
+const versions = ref<Release[]>([])
 const loading = ref(false)
 
 async function fetchReleases() {
     loading.value = true
 
     try {
-        versions.value = await getItems<Version>({
+        versions.value = await getItems<Release>({
             collection: 'Releases',
             params: {
                 fields: ['id', 'version', 'description'],

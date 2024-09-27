@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import hljs from 'highlight.js'
 import type { Project } from '~~/types'
 import Button from '~~/components/layout/Button.vue'
+import hljs from 'highlight.js'
 import 'highlight.js/styles/tokyo-night-dark.css'
 
 const route = useRoute()
@@ -145,13 +145,13 @@ useSeoMeta({
                                 class="d-flex justify-space-between mx-md-auto"
                             >
                                 <Button
-                                    :link="project.repo_link"
+                                    :link="project.github_repository"
                                     type="link"
                                     content="Github repo"
                                     target="_blank"
                                 />
                                 <Button
-                                    :link="project.website"
+                                    :link="project.website_link"
                                     type="link"
                                     content="View site"
                                     target="_blank"
@@ -178,12 +178,7 @@ useSeoMeta({
 .project {
     .banner {
         :deep(.v-responsive__sizer) {
-            background: linear-gradient(
-                0deg,
-                #12181b,
-                rgba(18, 18, 18, 0.9) 40%,
-                rgba(18, 18, 18, 0.9)
-            );
+            background: linear-gradient(0deg, #12181b, rgba(18, 18, 18, 0.9) 40%, rgba(18, 18, 18, 0.9));
         }
 
         .v-container {

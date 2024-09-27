@@ -49,7 +49,7 @@ const icon = computed(() => {
     if (!homepage.value)
         return undefined
 
-    return `${config.public.apiUrl}/assets/${homepage.value.icon}`
+    return `${config.public.apiUrl}/assets/${homepage.value.logo}`
 })
 
 onMounted(() => loadHomepageData())
@@ -76,7 +76,7 @@ onMounted(() => loadHomepageData())
                                 />
                             </div>
                             <span class="ml-2">
-                                {{ homepage.fullname }}
+                                {{ homepage.full_name }}
                             </span>
                         </div>
                     </VAppBarTitle>
