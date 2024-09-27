@@ -10,22 +10,22 @@ const featuredProjects = ref<Project[]>([])
 
 async function fetchFeatured() {
     featuredArticles.value = await getItems<Article>({
-        collection: 'Articles',
+        collection: 'articles',
         params: {
             filter: {
                 featured: true,
             },
-            fields: ['title, tags, illustration, slug', 'tags.Tag_id.title'],
+            fields: ['title, tags, illustration, slug', 'tags.tags_id.title'],
         },
     })
 
     featuredProjects.value = await getItems<Project>({
-        collection: 'Project',
+        collection: 'projects',
         params: {
             filter: {
                 featured: true,
             },
-            fields: ['title, tags, illustration, slug', 'tags.Tag_id.title'],
+            fields: ['title, tags, illustration, slug', 'tags.tags_id.title'],
         },
     })
 }

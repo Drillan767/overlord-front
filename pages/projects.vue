@@ -32,7 +32,7 @@ const allProjects = ref<Project[]>([])
 
 const uniqueTags = computed<TagFilter[]>(() => allProjects.value.reduce((acc, project) => {
     project.tags.forEach((tag) => {
-        const tagName = tag.Tag_id.title
+        const tagName = tag.tags_id.title
         const tagIndex = acc.findIndex(a => a.name === tagName)
 
         if (tagIndex > -1) {
@@ -41,7 +41,7 @@ const uniqueTags = computed<TagFilter[]>(() => allProjects.value.reduce((acc, pr
         else {
             acc.push({
                 name: tagName,
-                id: tag.Tag_id.id,
+                id: tag.tags_id.id,
                 count: 1,
             })
         }
@@ -51,7 +51,7 @@ const uniqueTags = computed<TagFilter[]>(() => allProjects.value.reduce((acc, pr
 
 const filteredArticles = computed(() => {
     if (activeTags.value.length > 0)
-        return allProjects.value.filter(a => a.tags.some(t => activeTags.value.includes(t.Tag_id.id)))
+        return allProjects.value.filter(a => a.tags.some(t => activeTags.value.includes(t.tag_id.id)))
 
     return allProjects.value
 })
@@ -66,7 +66,7 @@ async function fetchArticles() {
                 filter: {
                     status: 'Published',
                 },
-                fields: ['title, tags, illustration, slug', 'date_updated', 'tags.Tag_id.*'],
+                fields: ['title, tags, illustration, slug', 'date_updated', 'tags.tag_id.*'],
             },
         })
     }
@@ -162,8 +162,8 @@ onMounted(() => fetchArticles())
                                         <VChip
                                             v-for="(tag, j) in project.tags"
                                             :key="j"
-                                            :text="tag.Tag_id.title"
-                                            :color="activeTags.includes(tag.Tag_id.id) ? 'purple-darken-2' : undefined"
+                                            :text="tag.tags_id.title"
+                                            :color="activeTags.includes(tag.tags_id.id) ? 'purple-darken-2' : undefined"
                                             variant="flat"
                                             density="compact"
                                             class="ml-1"

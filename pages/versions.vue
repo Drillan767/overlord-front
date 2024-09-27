@@ -25,7 +25,7 @@ async function fetchReleases() {
 
     try {
         versions.value = await getItems<Release>({
-            collection: 'Releases',
+            collection: 'releases',
             params: {
                 fields: ['id', 'version', 'description'],
                 sort: '-id',

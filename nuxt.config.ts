@@ -38,22 +38,6 @@ export default defineNuxtConfig({
                 { rel: 'preload', type: 'font/ttf', as: 'font', href: '/fonts/Emelind.ttf', crossorigin: '' },
                 { rel: 'preload', type: 'font/ttf', as: 'font', href: '/fonts/JetBrainsMono-Regular.ttf', crossorigin: '' },
             ],
-
-            script: [{
-                children: `
-                  var _paq = window._paq = window._paq || [];
-                  _paq.push(['trackPageView']);
-                  _paq.push(['enableLinkTracking']);
-                  (function() {
-                      var u="//analytics.josephlevarato.me/";
-                      _paq.push(['setTrackerUrl', u+'matomo.php']);
-                      _paq.push(['setSiteId', '1']);
-                      _paq.push(['HeatmapSessionRecording::disable']);
-                      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-                      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-                  })();
-              `,
-            }],
         },
     },
 

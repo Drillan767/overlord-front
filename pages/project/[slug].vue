@@ -46,7 +46,7 @@ async function fetchProject() {
                 filter: {
                     slug: route.params.slug,
                 },
-                fields: ['*', 'tags.Tag_id.*'],
+                fields: ['*', 'tags.tag_id.*'],
             },
         })
         project.value = data[0]
@@ -110,7 +110,7 @@ useSeoMeta({
                                 <VChip
                                     v-for="(tag, i) in project.tags"
                                     :key="i"
-                                    :text="tag.Tag_id.title"
+                                    :text="tag.tags_id.title"
                                     variant="outlined"
                                     class="mx-1"
                                 />

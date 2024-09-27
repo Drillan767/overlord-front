@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Article } from '~/types'
-import { useDayjs } from '#dayjs'
 
 interface TagFilter {
     id: number
@@ -32,7 +31,7 @@ const allArticles = ref<Article[]>([])
 
 const uniqueTags = computed<TagFilter[]>(() => allArticles.value.reduce((acc, article) => {
     article.tags.forEach((tag) => {
-        const tagName = tag.Tag_id.title
+        const tagName = tag.tags_id.title
         const tagIndex = acc.findIndex(a => a.name === tagName)
 
         if (tagIndex > -1) {
@@ -41,7 +40,7 @@ const uniqueTags = computed<TagFilter[]>(() => allArticles.value.reduce((acc, ar
         else {
             acc.push({
                 name: tagName,
-                id: tag.Tag_id.id,
+                id: tag.tags_id.id,
                 count: 1,
             })
         }
@@ -51,7 +50,7 @@ const uniqueTags = computed<TagFilter[]>(() => allArticles.value.reduce((acc, ar
 
 const filteredArticles = computed(() => {
     if (activeTags.value.length > 0)
-        return allArticles.value.filter(a => a.tags.some(t => activeTags.value.includes(t.Tag_id.id)))
+        return allArticles.value.filter(a => a.tags.some(t => activeTags.value.includes(t.tag_id.id)))
 
     return allArticles.value
 })
@@ -61,12 +60,12 @@ async function fetchArticles() {
 
     try {
         allArticles.value = await getItems<Article>({
-            collection: 'Articles',
+            collection: 'articles',
             params: {
                 filter: {
                     status: 'Published',
                 },
-                fields: ['title, tags, illustration, slug', 'date_updated', 'tags.Tag_id.*'],
+                fields: ['title, tags, illustration, slug', 'date_updated', 'tags.*'],
             },
         })
     }
@@ -162,8 +161,8 @@ onMounted(() => fetchArticles())
                                         <VChip
                                             v-for="(tag, i) in article.tags"
                                             :key="i"
-                                            :text="tag.Tag_id.title"
-                                            :color="activeTags.includes(tag.Tag_id.id) ? 'purple-darken-2' : undefined"
+                                            :text="tag.tags_id.title"
+                                            :color="activeTags.includes(tag.tags_id.id) ? 'purple-darken-2' : undefined"
                                             variant="flat"
                                             density="compact"
                                             class="ml-1"

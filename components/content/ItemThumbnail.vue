@@ -45,7 +45,7 @@ const config = useRuntimeConfig()
                     <VChip
                         v-for="(tag, i) in item.tags"
                         :key="i"
-                        :text="tag.Tag_id.title"
+                        :text="tag.tags_id.title"
                         class="ml-2"
                         variant="outlined"
                     />

@@ -35,7 +35,7 @@ const behavior = computed(() => route.name === 'index' ? 'inverted hide' : undef
 
 async function loadHomepageData() {
     const data = await getSingletonItem<Homepage>({
-        collection: 'Homepage',
+        collection: 'homepage',
     })
 
     homepage.value = data
