@@ -1,24 +1,15 @@
 import process from 'node:process'
 import { defineNuxtConfig } from 'nuxt/config'
-import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 import { version } from './package.json'
+// import '@mdi/font/css/materialdesignicons.css'
+// import '@/assets/styles/vuetify.scss'
 
 export default defineNuxtConfig({
     devtools: {
         enabled: true,
     },
 
-    modules: [
-        'nuxt-directus',
-        '@vee-validate/nuxt',
-        '@vueuse/nuxt',
-        'dayjs-nuxt',
-        (_options, nuxt) => {
-            nuxt.hooks.hook('vite:extendConfig', (config) => {
-                config.plugins?.push(vuetify({ autoImport: true }))
-            })
-        },
-    ],
+    modules: ['nuxt-directus', '@vee-validate/nuxt', '@vueuse/nuxt', 'dayjs-nuxt', 'vuetify-nuxt-module'],
 
     app: {
         head: {
@@ -42,7 +33,6 @@ export default defineNuxtConfig({
     },
 
     css: [
-        'vuetify/lib/styles/main.sass',
         '@/assets/styles/main.scss',
     ],
 
@@ -65,6 +55,31 @@ export default defineNuxtConfig({
     typescript: {
         typeCheck: true,
     },
+    vuetify: {
+        moduleOptions: {
+            styles: {
+                configFile: 'assets/styles/vuetify.scss',
+            },
+        },
+        vuetifyOptions: {
+            theme: {
+                defaultTheme: 'dark',
+            },
+            defaults: {
+                VTextField: {
+                    variant: 'underlined',
+                    color: 'purple-darken-2',
+                },
+                VTextarea: {
+                    variant: 'underlined',
+                    color: 'purple-darken-2',
+                },
+                VCardTitle: {
+                    style: 'white-space: initial;',
+                },
+            },
+        },
+    },
 
     vite: {
         css: {
@@ -73,11 +88,6 @@ export default defineNuxtConfig({
                     silenceDeprecations: ['legacy-js-api'],
                     api: 'modern-compiler',
                 },
-            },
-        },
-        vue: {
-            template: {
-                transformAssetUrls,
             },
         },
     },

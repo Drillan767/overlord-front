@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useGoTo } from 'vuetify'
 import type { Homepage } from '~/types'
 
 const scrollText = 'Demain souar t\'es ché moa tabarnakkk...'

@@ -1,6 +1,6 @@
-import { configure, defineRule } from 'vee-validate'
-import { email, min, required } from '@vee-validate/rules'
 import { localize } from '@vee-validate/i18n'
+import { email, min, required } from '@vee-validate/rules'
+import { configure, defineRule } from 'vee-validate'
 
 export default defineNuxtPlugin(() => {
     // Define the rule globally

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useDisplay } from 'vuetify'
 import type { Homepage } from '~/types'
 
 const navLinks = [
