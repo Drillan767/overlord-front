@@ -40,13 +40,13 @@ async function fetchProject() {
 
     try {
         const data = await getItems<Project>({
-            collection: 'Project',
+            collection: 'projects',
             params: {
                 limit: 1,
                 filter: {
                     slug: route.params.slug,
                 },
-                fields: ['*', 'tags.tag_id.*'],
+                fields: ['*', 'tags.*.*'],
             },
         })
         project.value = data[0]

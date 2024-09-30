@@ -8,7 +8,7 @@ const page = ref<Page>()
 
 async function loadPage() {
     const data = await getItems<Page>({
-        collection: 'Pages',
+        collection: 'pages',
         params: {
             filter: {
                 slug: route.params.slug,

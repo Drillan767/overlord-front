@@ -9,7 +9,7 @@ export default defineNuxtConfig({
         enabled: true,
     },
 
-    modules: ['nuxt-directus', '@vee-validate/nuxt', '@vueuse/nuxt', 'dayjs-nuxt', 'vuetify-nuxt-module'],
+    modules: ['nuxt-directus', '@vee-validate/nuxt', '@vueuse/nuxt', 'dayjs-nuxt', 'vuetify-nuxt-module', '@nuxtjs/mdc', '@nuxt/image'],
 
     app: {
         head: {
