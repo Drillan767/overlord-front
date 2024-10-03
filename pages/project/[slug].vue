@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import type { Project } from '~~/types'
 import Button from '~~/components/layout/Button.vue'
-import hljs from 'highlight.js'
-import 'highlight.js/styles/tokyo-night-dark.css'
 
 const route = useRoute()
 const { getItems } = useDirectusItems()
@@ -61,8 +59,6 @@ async function fetchProject() {
 
 onMounted(async () => {
     await fetchProject()
-
-    document.querySelectorAll<HTMLElement>('pre').forEach(block => hljs.highlightBlock(block))
 })
 
 /*

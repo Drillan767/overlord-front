@@ -1,16 +1,8 @@
 import process from 'node:process'
 import { defineNuxtConfig } from 'nuxt/config'
 import { version } from './package.json'
-// import '@mdi/font/css/materialdesignicons.css'
-// import '@/assets/styles/vuetify.scss'
 
 export default defineNuxtConfig({
-    devtools: {
-        enabled: true,
-    },
-
-    modules: ['nuxt-directus', '@vee-validate/nuxt', '@vueuse/nuxt', 'dayjs-nuxt', 'vuetify-nuxt-module', '@nuxtjs/mdc', '@nuxt/image'],
-
     app: {
         head: {
             titleTemplate: '%s | Joseph Levarato',
@@ -32,9 +24,17 @@ export default defineNuxtConfig({
         },
     },
 
+    compatibilityDate: '2024-09-22',
+
     css: [
         '@/assets/styles/main.scss',
     ],
+
+    devtools: {
+        enabled: true,
+    },
+
+    modules: ['nuxt-directus', '@vee-validate/nuxt', '@vueuse/nuxt', 'dayjs-nuxt', 'vuetify-nuxt-module', '@nuxtjs/mdc', '@nuxt/image'],
 
     runtimeConfig: {
         public: {
@@ -48,13 +48,21 @@ export default defineNuxtConfig({
         },
     },
 
-    build: {
-        transpile: ['vuetify'],
-    },
-
     typescript: {
         typeCheck: true,
     },
+
+    vite: {
+        css: {
+            preprocessorOptions: {
+                sass: {
+                    silenceDeprecations: ['legacy-js-api'],
+                    api: 'modern-compiler',
+                },
+            },
+        },
+    },
+
     vuetify: {
         moduleOptions: {
             styles: {
@@ -80,17 +88,4 @@ export default defineNuxtConfig({
             },
         },
     },
-
-    vite: {
-        css: {
-            preprocessorOptions: {
-                sass: {
-                    silenceDeprecations: ['legacy-js-api'],
-                    api: 'modern-compiler',
-                },
-            },
-        },
-    },
-
-    compatibilityDate: '2024-09-22',
 })

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Project } from '~/types'
 import { useDayjs } from '#dayjs'
+import type { Project } from '~/types'
 
 interface TagFilter {
     id: number

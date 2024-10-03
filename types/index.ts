@@ -2,6 +2,7 @@ export interface Article {
     body: string
     date_created: string
     date_updated?: string
+    reading_time: number
     description: string
     featured: boolean
     id: number
