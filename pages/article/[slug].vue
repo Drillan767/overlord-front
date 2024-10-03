@@ -11,11 +11,6 @@ console.log({ data })
 
 <template>
     <p>Bjr</p>
-    <MDCRenderer
-        v-if="data"
-        :data="data.parsedMarkdown.data"
-        :body="data.parsedMarkdown.body"
-    />
 </template>
 
 <style lang="scss">
