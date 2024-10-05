@@ -2,7 +2,7 @@
 import type { Homepage } from '~/types'
 
 const config = useRuntimeConfig()
-const homepage = useState<Homepage>('homepage')
+const homepage = inject<Homepage>('homepage')
 </script>
 
 <template>
@@ -21,17 +21,12 @@ const homepage = useState<Homepage>('homepage')
                         />
                     </div>
                 </VCol>
-                <MDC
-                    :value="homepage.description"
-                    tag="div"
-                    class="description v-col-md-5 v-col-12"
-                />
-                <!-- <VCol
+                <VCol
                     class="description"
                     cols="12"
                     md="5"
                     v-html="homepage.description"
-                /> -->
+                />
             </VRow>
         </VContainer>
     </section>

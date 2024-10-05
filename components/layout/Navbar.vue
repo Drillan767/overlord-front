@@ -16,9 +16,8 @@ const navLinks = [
     } */
 ]
 
-const homepage = useState<Homepage>('homepage')
+const homepage = inject<Homepage>('homepage')
 
-const { getSingletonItem } = useDirectusItems()
 const { mobile } = useDisplay()
 const route = useRoute()
 const router = useRouter()
@@ -32,26 +31,16 @@ const threshold = computed(() => {
 
 const behavior = computed(() => route.name === 'index' ? 'inverted hide' : undefined)
 
-async function loadHomepageData() {
-    const data = await getSingletonItem<Homepage>({
-        collection: 'homepage',
-    })
-
-    homepage.value = data
-}
-
 function getHome() {
     router.push('/')
 }
 
 const icon = computed(() => {
-    if (!homepage.value)
+    if (!homepage)
         return undefined
 
-    return `${config.public.apiUrl}/assets/${homepage.value.logo}`
+    return `${config.public.apiUrl}/assets/${homepage.logo}`
 })
-
-onMounted(() => loadHomepageData())
 </script>
 
 <template>

@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import type { Homepage } from '~/types'
 
-const scrollText = 'Demain souar t\'es ché moa tabarnakkk...'
+const scrollText = 'Scroll down...'
 
+const homepage = inject<Homepage>('homepage')
 const goTo = useGoTo()
-const homepage = useState<Homepage>('homepage')
 
 const typedText = ref('')
 
 const subtitle = computed(() => {
-    if (!homepage.value)
+    if (!homepage)
         return ''
 
-    return homepage.value.baseline.replaceAll(/_([a-zA-Zéè]*)_/g, (m, g) =>
+    return homepage.baseline.replaceAll(/_([a-zA-Zéè]*)_/g, (m, g) =>
         `<span class="glitch" data-text="${g}">${g}</span>`)
 })
 
@@ -63,7 +63,7 @@ onMounted(() => {
             >
                 {{ typedText }}
             </span>
-            <span v-if="homepage" class="input-cursor font-mono" />
+            <span class="input-cursor font-mono" />
         </div>
     </section>
 </template>

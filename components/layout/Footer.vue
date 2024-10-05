@@ -3,14 +3,14 @@ import type { Homepage } from '~/types'
 
 const router = useRouter()
 const config = useRuntimeConfig()
-const homepage = useState<Homepage>('homepage')
+const homepage = inject<Homepage>('homepage')
 const year = new Date().getFullYear()
 
 const icon = computed(() => {
-    if (!homepage.value)
+    if (!homepage)
         return undefined
 
-    return `${config.public.apiUrl}/assets/${homepage.value.logo}`
+    return `${config.public.apiUrl}/assets/${homepage.logo}`
 })
 
 const navLinks = [
@@ -95,6 +95,24 @@ function getHome() {
                 </VCol>
                 <VCol class="d-flex justify-end flex-column flex-md-row align-center">
                     <VBtn
+                        v-for="(link, i) in homepage.legal"
+                        :key="i"
+                        :to="link.url"
+                        variant="text"
+                    >
+                        {{ link.title }}
+                    </VBtn>
+
+                    <VBtn
+                        v-for="(link, i) in homepage.links"
+                        :key="i"
+                        :href="link.url"
+                        :icon="true"
+                        variant="text"
+                    >
+                        <span class="svg-container" v-html="link.logo" />
+                    </VBtn>
+                    <!--                     <VBtn
                         to="/versions"
                         variant="text"
                     >
@@ -117,7 +135,7 @@ function getHome() {
                         variant="text"
                     >
                         <span class="svg-container" v-html="link.logo" />
-                    </VBtn>
+                    </VBtn> -->
                 </VCol>
             </VRow>
         </VContainer>
@@ -127,5 +145,7 @@ function getHome() {
 <style scoped lang="scss">
 .svg-container :deep(svg) {
     height: 20px;
+    width: 20px;
+    // fill: #fff;
 }
 </style>
