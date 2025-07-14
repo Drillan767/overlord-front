@@ -1,25 +1,25 @@
 basics:
-    name: Joseph Levarato
-    label: Senior Full Stack Developer & Technical Lead
-    image: 'https://josephlevarato.me/images/joseph.jpeg'
-    email: jlevarato@pm.me
-    phone: "+33 6 50 81 64 05"
-    url: https://josephlevarato.me
-    summary: |
-        Senior Full Stack Developer with 7+ years of experience leading technical initiatives and architecting scalable solutions for fintech and enterprise applications.
-        Proven track record of modernizing legacy systems, implementing DevOps practices, and delivering measurable performance improvements. Expertise in Vue.js/React ecosystems, PHP/Laravel backends, and cloud infrastructure.
-    location:
-        postalCode: '69007'
-        city: Lyon
-        countryCode: FR
-        region: Rhône
-    profiles:
-    - network: GitHub
-      username: Drillan767
-      url: https://github.com/Drillan767
-    - network: LinkedIn
-      username: Joseph Levarato
-      url: https://www.linkedin.com/in/josephlevarato
+  name: Joseph Levarato
+  label: Senior Full Stack Developer & Technical Lead
+  image: 'https://josephlevarato.me/images/joseph.jpeg'
+  email: jlevarato@pm.me
+  phone: "+33 6 50 81 64 05"
+  url: https://josephlevarato.me
+  summary: |
+      Senior Full Stack Developer with 7+ years of experience leading technical initiatives and architecting scalable solutions for fintech and enterprise applications.
+      Proven track record of modernizing legacy systems, implementing DevOps practices, and delivering measurable performance improvements. Expertise in Vue.js/React ecosystems, PHP/Laravel backends, and cloud infrastructure.
+  location:
+      postalCode: '69007'
+      city: Lyon
+      countryCode: FR
+      region: Rhône
+  profiles:
+  - network: GitHub
+    username: Drillan767
+    url: https://github.com/Drillan767
+  - network: LinkedIn
+    username: Joseph Levarato
+    url: https://www.linkedin.com/in/josephlevarato
 
 work:
 - name: izyPay

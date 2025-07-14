@@ -1,5 +1,16 @@
+<script setup lang="ts">
+import Hero from '@/components/landing/Hero.vue'
+
+useHead({
+    title: 'Joseph Levarato',
+    titleTemplate: null,
+})
+</script>
+
 <template>
-    <div>
-        <h1>Hello World</h1>
-    </div>
+     <VRow>
+        <VCol>
+            <Hero />
+        </VCol>
+    </VRow>
 </template>
