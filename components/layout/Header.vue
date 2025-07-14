@@ -82,7 +82,7 @@ const isMenuOpen = ref(false)
 
 <style scoped>
 .logo {
-    filter: drop-shadow(0 0 6px hsl(274, 93%, 63%));
+    filter: drop-shadow(0 0 6px rgb(var(--v-theme-primary)));
     animation: pulse 2s infinite;
     margin-left: 1rem;
 }

@@ -1,5 +1,11 @@
 <script setup lang="ts">
+import { useGoTo } from 'vuetify'
 
+const goTo = useGoTo()
+
+function scroll() {
+    goTo('#about')
+}
 </script>
 
 <template>
@@ -21,7 +27,10 @@
             </p>
         </div>
         <div class="mt-8">
-            <VIcon icon="mdi-arrow-down" />
+            <VIcon
+                icon="mdi-arrow-down"
+                @click="scroll"
+            />
         </div>
     </section>
 </template>
@@ -36,7 +45,6 @@
     justify-content: center;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
-    background-color: #000000;
 }
 
 .hero-background-overlay {
