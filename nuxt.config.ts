@@ -48,13 +48,14 @@ export default defineNuxtConfig({
             titleTemplate: '%s | Joseph Levarato',
             htmlAttrs: {
                 lang: 'en',
+                class: 'bg-black',
             },
 
             viewport: 'width=device-width, initial-scale=1',
             charset: 'utf-8',
             meta: [
-                { name: 'msapplication-Tilecolor', content: 'hsl(274, 93%, 63%)' },
-                { name: 'theme-color', content: 'hsl(274, 93%, 63%)' },
+                { name: 'msapplication-Tilecolor', content: 'rgb(var(--v-theme-primary))' },
+                { name: 'theme-color', content: 'rgb(var(--v-theme-primary))' },
                 { name: 'twitter:card', content: 'summary_large_image' },
             ],
 
@@ -65,6 +66,16 @@ export default defineNuxtConfig({
                 { rel: 'preload', type: 'font/ttf', as: 'font', href: '/fonts/JetBrainsMono-Regular.ttf', crossorigin: '' },
             ],
         },
+    },
+
+    content: {
+        build: {
+            markdown: {
+                toc: {
+                    depth: 3,
+                }
+            }
+        }
     },
 
     runtimeConfig: {

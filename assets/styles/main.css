@@ -19,3 +19,7 @@
 .v-layout h6 {
     font-family: var(--font-heading) !important;
 }
+
+p {
+    margin-bottom: 1rem;
+}
