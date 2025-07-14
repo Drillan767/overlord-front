@@ -1,13 +1,16 @@
 {
-  "name": "nuxt-app",
+  "name": "joseph levarato",
   "private": true,
   "type": "module",
+  "version": "1.0.0",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix"
   },
   "dependencies": {
     "@nuxt/content": "3.6.2",
@@ -25,6 +28,7 @@
   },
   "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610",
   "devDependencies": {
+    "@antfu/eslint-config": "^4.16.2",
     "@types/js-yaml": "^4.0.9"
   }
 }
