@@ -1,34 +1,35 @@
 {
-  "name": "joseph levarato",
-  "private": true,
-  "type": "module",
-  "version": "1.0.0",
-  "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "lint": "eslint",
-    "lint:fix": "eslint --fix"
-  },
-  "dependencies": {
-    "@nuxt/content": "3.6.2",
-    "@nuxt/eslint": "1.5.2",
-    "@nuxt/image": "1.10.0",
-    "@vueuse/nuxt": "13.5.0",
-    "better-sqlite3": "^12.2.0",
-    "dayjs-nuxt": "2.1.11",
-    "eslint": "^9.0.0",
-    "js-yaml": "^4.1.0",
-    "nuxt": "^3.17.6",
-    "vue": "^3.5.17",
-    "vue-router": "^4.5.1",
-    "vuetify-nuxt-module": "0.18.7"
-  },
-  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610",
-  "devDependencies": {
-    "@antfu/eslint-config": "^4.16.2",
-    "@types/js-yaml": "^4.0.9"
-  }
+    "name": "joseph-levarato",
+    "type": "module",
+    "version": "1.0.0",
+    "private": true,
+    "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610",
+    "scripts": {
+        "build": "nuxt build",
+        "dev": "nuxt dev",
+        "generate": "nuxt generate",
+        "preview": "nuxt preview",
+        "postinstall": "nuxt prepare",
+        "lint": "eslint",
+        "lint:fix": "eslint --fix"
+    },
+    "dependencies": {
+        "@nuxt/content": "3.6.2",
+        "@nuxt/eslint": "1.5.2",
+        "@nuxt/image": "1.10.0",
+        "@vueuse/nuxt": "13.5.0",
+        "better-sqlite3": "^12.2.0",
+        "dayjs-nuxt": "2.1.11",
+        "eslint": "^9.0.0",
+        "js-yaml": "^4.1.0",
+        "nuxt": "^3.17.6",
+        "vue": "^3.5.17",
+        "vue-router": "^4.5.1",
+        "vuetify-nuxt-module": "0.18.7"
+    },
+    "devDependencies": {
+        "@antfu/eslint-config": "^4.16.2",
+        "@types/js-yaml": "^4.0.9",
+        "eslint-plugin-format": "^1.0.1"
+    }
 }

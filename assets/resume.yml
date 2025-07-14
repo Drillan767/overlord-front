@@ -3,7 +3,7 @@ basics:
   label: Senior Full Stack Developer & Technical Lead
   image: 'https://josephlevarato.me/images/joseph.jpeg'
   email: jlevarato@pm.me
-  phone: "+33 6 50 81 64 05"
+  phone: '+33 6 50 81 64 05'
   url: https://josephlevarato.me
   summary: |
       Senior Full Stack Developer with 7+ years of experience leading technical initiatives and architecting scalable solutions for fintech and enterprise applications.
@@ -25,7 +25,7 @@ work:
 - name: izyPay
   position: Front-end developer
   url: https://izypay.fr
-  startDate: '2023-05-01'
+  startDate: 2023-05-01
   summary: Leading frontend architecture for a fintech platform serving 800+ live events.iption…
   highlights:
   - Spearheaded migration of critical 6-year-old Vue.js application from Options API to Composition API, delivering 40%
@@ -35,8 +35,8 @@ work:
 - name: IDTAG
   position: Lead Developer
   url: https://idutag.fr
-  startDate: '2021-02-01'
-  endDate: '2023-04-01'
+  startDate: 2021-02-01
+  endDate: 2023-04-01
   summary: Technical lead for emergency response systems serving firefighters and public safety.
   highlights:
   - Designed and implemented GitLab CI/CD pipelines across 10+ projects, reducing deployment time by 75% and establishing company-wide DevOps standard
@@ -47,19 +47,19 @@ work:
 - name: Smile
   position: Full Stack Developer
   url: https://smile.fr
-  startDate: '2018-10-01'
-  endDate: '2021-01-01'
+  startDate: 2018-10-01
+  endDate: 2021-01-01
   summary: Technical contributor for digital transformation projects at leading services company
   highlights:
   - Architected and delivered multiple enterprise web applications for major clients including Safran and Glevents, using Drupal 8 and modern JavaScript frameworks
-  - Developed cross-platform cache optimization solutions and implemented infrastructure automation using Ansible across diverse Linux environments 
+  - Developed cross-platform cache optimization solutions and implemented infrastructure automation using Ansible across diverse Linux environments
   - Provided technical expertise for diverse client digital transformation initiatives, adapting solutions to meet specific enterprise requirements
 
 - name: AUSY
   position: Full Stack Developer
   url: https://www.randstaddigital.fr/fr/
-  startDate: '2017-01-01'
-  endDate: '2018-09-01'
+  startDate: 2017-01-01
+  endDate: 2018-09-01
   summary: AUSY is a technology consulting firm that provided my first professional development experience while supporting my Master's degree studies
   highlights:
   - Developed and integrated custom modules for Drupal sites while collaborating with senior developers and completing my Master’s degree
@@ -70,8 +70,8 @@ education:
   url: https://www.ecole-isitech.com/
   area: Software Engineering
   studyType: Master
-  startDate: '2012-09-01'
-  endDate: '2018-09-01'
+  startDate: 2012-09-01
+  endDate: 2018-09-01
   score: 15/20
   courses:
   - Information System Expert
@@ -147,7 +147,7 @@ interests:
 
 projects:
 - name: Bdpressed
-  startDate: '2024-11-01'
+  startDate: 2024-11-01
   description: |
     Website built for an artist to allow her to sell her merch and illustrations.
   highlights:
@@ -156,7 +156,7 @@ projects:
   - Inertia.js
 
 - name: Sarah’s Garden
-  startDate: '2023-06-01'
+  startDate: 2023-06-01
   description: |
     Real time discussion platform allowing users to pick discussion subjects.
   highlights:
@@ -164,8 +164,8 @@ projects:
   - Firebase (DataConnect, Realtime, Storage, Auth)
 
 - name: Orchestral Range Tool
-  startDate: '2024-10-01'
-  endDate: '2024-12-01'
+  startDate: 2024-10-01
+  endDate: 2024-12-01
   description: |
     Allows my composer friend to be able to ensure that all his music notes will fall right where he needs them
   highlights:

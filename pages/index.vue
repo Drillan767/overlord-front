@@ -8,7 +8,7 @@ useHead({
 </script>
 
 <template>
-     <VRow>
+    <VRow>
         <VCol>
             <Hero />
         </VCol>

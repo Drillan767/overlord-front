@@ -1,3 +1,7 @@
+<script setup>
+const isMenuOpen = ref(false)
+</script>
+
 <template>
     <VAppBar
         elevation="0"
@@ -43,11 +47,11 @@
                 class="d-md-none"
                 @click="isMenuOpen = !isMenuOpen"
             >
-                <VIcon :icon="isMenuOpen ? 'mdi-close' : 'mdi-menu'"/>
+                <VIcon :icon="isMenuOpen ? 'mdi-close' : 'mdi-menu'" />
             </VBtn>
         </template>
     </VAppBar>
-    
+
     <!-- Mobile Navigation Menu -->
     <VNavigationDrawer
         v-model="isMenuOpen"
@@ -78,7 +82,3 @@
         </VList>
     </VNavigationDrawer>
 </template>
-
-<script setup>
-const isMenuOpen = ref(false)
-</script>

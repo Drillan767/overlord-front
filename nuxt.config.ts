@@ -1,3 +1,4 @@
+import process from 'node:process'
 import { md3 } from 'vuetify/blueprints'
 import { version } from './package.json'
 
@@ -14,7 +15,7 @@ export default defineNuxtConfig({
         '@nuxt/image',
         '@vueuse/nuxt',
         'dayjs-nuxt',
-        'vuetify-nuxt-module'
+        'vuetify-nuxt-module',
     ],
     vuetify: {
         vuetifyOptions: {
@@ -24,9 +25,9 @@ export default defineNuxtConfig({
                 themes: {
                     dark: {
                         colors: {
-                            primary: 'hsl(274,93%,63%)',
-                            background: '#000000',
-                            surface: '#000000',
+                            'primary': 'hsl(274,93%,63%)',
+                            'background': '#000000',
+                            'surface': '#000000',
                             'surface-variant': '#000000',
                             'on-surface': '#FFFFFF',
                             'on-surface-variant': '#FFFFFF',
@@ -42,8 +43,8 @@ export default defineNuxtConfig({
                 VBtn: {
                     color: 'primary',
                 },
-            }
-        }
+            },
+        },
     },
 
     app: {
