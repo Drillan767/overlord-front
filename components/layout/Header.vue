@@ -14,6 +14,7 @@ const isMenuOpen = ref(false)
                     width="48"
                     height="48"
                     alt="Logo"
+                    class="logo"
                 />
             </NuxtLink>
         </template>
@@ -58,27 +59,31 @@ const isMenuOpen = ref(false)
         location="top"
         temporary
         class="d-md-none"
-        :width="300"
     >
         <VList>
             <VListItem
-                to="/"
+                to="/articles"
+                title="Articles"
                 @click="isMenuOpen = false"
-            >
-                <VListItemTitle>Articles</VListItemTitle>
-            </VListItem>
+            />
             <VListItem
-                to="/"
+                to="/projects"
+                title="Projects"
                 @click="isMenuOpen = false"
-            >
-                <VListItemTitle>Projects</VListItemTitle>
-            </VListItem>
+            />
             <VListItem
-                to="/"
+                to="/curriculum-vitae"
+                title="CV"
                 @click="isMenuOpen = false"
-            >
-                <VListItemTitle>CV</VListItemTitle>
-            </VListItem>
+            />
         </VList>
     </VNavigationDrawer>
 </template>
+
+<style scoped>
+.logo {
+    filter: drop-shadow(0 0 6px hsl(274, 93%, 63%));
+    animation: pulse 2s infinite;
+    margin-left: 1rem;
+}
+</style>

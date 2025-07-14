@@ -7,7 +7,7 @@ export default defineNuxtConfig({
     compatibilityDate: '2025-05-15',
     devtools: { enabled: true },
     css: [
-        '@/assets/main.css',
+        '@/assets/styles/main.css',
     ],
     modules: [
         '@nuxt/content',
@@ -32,10 +32,6 @@ export default defineNuxtConfig({
                             'on-surface': '#FFFFFF',
                             'on-surface-variant': '#FFFFFF',
                         },
-                        variables: {
-                            'heading-font-family': 'Emelind',
-                            'body-font-family': 'Space Grotesk',
-                        },
                     },
                 },
             },
@@ -57,8 +53,8 @@ export default defineNuxtConfig({
             viewport: 'width=device-width, initial-scale=1',
             charset: 'utf-8',
             meta: [
-                { name: 'msapplication-Tilecolor', content: '#312b5e' },
-                { name: 'theme-color', content: '#312b5e' },
+                { name: 'msapplication-Tilecolor', content: 'hsl(274, 93%, 63%)' },
+                { name: 'theme-color', content: 'hsl(274, 93%, 63%)' },
                 { name: 'twitter:card', content: 'summary_large_image' },
             ],
 

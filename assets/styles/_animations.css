@@ -1,0 +1,11 @@
+@keyframes pulse {
+    0% {
+        filter: drop-shadow(0 0 3px hsl(274, 93%, 63%));
+    }
+    50% {
+        filter: drop-shadow(0 0 6px hsl(274, 93%, 63%));
+    }
+    100% {
+        filter: drop-shadow(0 0 3px hsl(274, 93%, 63%));
+    }
+}
