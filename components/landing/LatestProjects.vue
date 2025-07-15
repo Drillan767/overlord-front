@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Preview from '@/components/content/Preview.vue'
 
-const { data: articles } = await useAsyncData('articles', () => queryCollection('articles')
+const { data: projects } = await useAsyncData('projects', () => queryCollection('projects')
     .order('date', 'DESC')
     .limit(3)
     .all()
@@ -9,7 +9,7 @@ const { data: articles } = await useAsyncData('articles', () => queryCollection(
 </script>
 
 <template>
-    <section id="latest-articles" class="mb-16">
+    <section id="latest-projects" class="mb-16">
         <VContainer>
             <VRow>
                 <VCol
@@ -18,9 +18,9 @@ const { data: articles } = await useAsyncData('articles', () => queryCollection(
                 >
                     <h2
                         class="text-h2 text-center text-md-start layers glitch"
-                        data-text="Latest articles"
+                        data-text="Featured projects"
                     >
-                        Latest articles
+                        Featured projects
                     </h2>
                 </VCol>
                 <VCol
@@ -40,12 +40,12 @@ const { data: articles } = await useAsyncData('articles', () => queryCollection(
             </VRow>
             <VRow>
                 <VCol
-                    v-for="article in articles"
-                    :key="article.id"
+                    v-for="project in projects"
+                    :key="project.id"
                     cols="12"
                     md="4"
                 >
-                    <Preview :content="article" />
+                    <Preview :content="project" />
                 </VCol>
             </VRow>
         </VContainer>
