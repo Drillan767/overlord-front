@@ -1,11 +1,20 @@
 <script setup>
 const isMenuOpen = ref(false)
+
+const scrolled = ref(false)
+
+onMounted(() => {
+    window.addEventListener('scroll', () => {
+        scrolled.value = window.scrollY > 100
+    })
+})
 </script>
 
 <template>
     <VAppBar
         elevation="0"
-        class="px-4 bg-black"
+        class="navbar"
+        :class="{ 'scrolled': scrolled }"
     >
         <template #default>
             <NuxtLink to="/" class="d-flex align-center">
@@ -24,7 +33,6 @@ const isMenuOpen = ref(false)
                 <VBtn
                     variant="text"
                     to="/articles"
-                    exact
                 >
                     Articles
                 </VBtn>
@@ -81,8 +89,22 @@ const isMenuOpen = ref(false)
 </template>
 
 <style scoped>
+.navbar {
+    transition: all 0.3s ease-in-out;
+    background-color: rgb(0, 0, 0);
+    padding: 0 1rem;
+    border-bottom: 1px solid transparent;
+}
+
+.navbar.scrolled {
+    border-color: rgb(var(--v-theme-primary));
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(20px);
+}
+
 .logo {
     filter: drop-shadow(0 0 6px rgb(var(--v-theme-primary)));
+    /* _animations.css */
     animation: pulse 2s infinite;
     margin-left: 1rem;
 }
