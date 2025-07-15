@@ -29,6 +29,7 @@ const { data: projects } = await useAsyncData('projects', () => queryCollection(
                     class="d-flex justify-center justify-md-end align-center"
                 >
                     <VBtn
+                        to="/projects"
                         variant="outlined"
                         color="primary"
                         append-icon="mdi-arrow-right"

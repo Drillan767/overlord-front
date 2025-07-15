@@ -19,7 +19,7 @@ onMounted(() => {
         <template #default>
             <NuxtLink to="/" class="d-flex align-center">
                 <VImg
-                    src="/images/logo.svg"
+                    src="/icons/logo.svg"
                     width="48"
                     height="48"
                     alt="Logo"

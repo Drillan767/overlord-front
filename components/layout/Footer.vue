@@ -35,15 +35,15 @@ const year = dayjs().year()
 
         <div class="d-flex align-center justify-center ga-4 flex-wrap flex-grow-1 py-3">
             <a href="https://github.com/drillan767" target="_blank">
-                <VImg src="/images/github.svg" alt="github" width="24" height="24" />
+                <VImg src="/icons/github.svg" alt="github" width="24" height="24" />
             </a>
 
             <a href="https://x.com/jlevarato" target="_blank">
-                <VImg src="/images/x.svg" alt="x (twitter)" width="24" height="24" />
+                <VImg src="/icons/x.svg" alt="x (twitter)" width="24" height="24" />
             </a>
 
             <a href="https://www.linkedin.com/in/josephlevarato/" target="_blank" class="d-flex align-center justify-center">
-                <VImg src="/images/linkedin.svg" alt="linkedin" width="24" height="24" />
+                <VImg src="/icons/linkedin.svg" alt="linkedin" width="24" height="24" />
             </a>
         </div>
 
