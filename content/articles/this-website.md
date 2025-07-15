@@ -1,7 +1,7 @@
 ---
 title: Playing around Taurus
 description: I had the opportunity to develop a "real" project for a friend, that required Taurus. Here are some return on experience
-image: '/content/playing-around-taurus.png'
+image: 'https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixlib=rb-4.0.3'
 date: 2024-12-15
 tags:
 - Rust
