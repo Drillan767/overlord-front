@@ -10,7 +10,7 @@ export default antfu(
         },
     },
     {
-        files: ['**/*.vue'],
+        files: ['app/**/*.vue'],
         rules: {
             'vue/no-v-text-v-html-on-component': ['off'],
         },
