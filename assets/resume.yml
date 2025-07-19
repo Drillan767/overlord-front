@@ -1,0 +1,173 @@
+basics:
+  name: Joseph Levarato
+  label: Senior Full Stack Developer & Technical Lead
+  image: 'https://josephlevarato.me/images/joseph.jpeg'
+  email: jlevarato@pm.me
+  phone: '+33 6 50 81 64 05'
+  url: https://josephlevarato.me
+  summary: |
+      Senior Full Stack Developer with 7+ years of experience leading technical initiatives and architecting scalable solutions for fintech and enterprise applications.
+      Proven track record of modernizing legacy systems, implementing DevOps practices, and delivering measurable performance improvements. Expertise in Vue.js/React ecosystems, PHP/Laravel backends, and cloud infrastructure.
+  location:
+      postalCode: '69007'
+      city: Lyon
+      countryCode: FR
+      region: Rhône
+  profiles:
+  - network: GitHub
+    username: Drillan767
+    url: https://github.com/Drillan767
+  - network: LinkedIn
+    username: Joseph Levarato
+    url: https://www.linkedin.com/in/josephlevarato
+
+work:
+- name: izyPay
+  position: Front-end developer
+  url: https://izypay.fr
+  startDate: 2023-05-01
+  summary: Leading frontend architecture for a fintech platform serving 800+ live events.iption…
+  highlights:
+  - Spearheaded migration of critical 6-year-old Vue.js application from Options API to Composition API, delivering 40%
+  - Architected QR code-based virtual receipt platform, transforming hash data into readable receipts for seamless user experience
+  - Drove adoption of modern frontend practices and established coding standards for the platform
+
+- name: IDTAG
+  position: Lead Developer
+  url: https://idutag.fr
+  startDate: 2021-02-01
+  endDate: 2023-04-01
+  summary: Technical lead for emergency response systems serving firefighters and public safety.
+  highlights:
+  - Designed and implemented GitLab CI/CD pipelines across 10+ projects, reducing deployment time by 75% and establishing company-wide DevOps standard
+  - Architected modular microcontroller integration, reducing system load by 45% and improving application response time by 30%
+  - Established comprehensive testing framework with 100+ functional tests running in parallel, ensuring system reliability for critical safety applications
+  - Drove modernization through Laravel 8-10 migrations and Vue 3/Nuxt 3 adoption
+
+- name: Smile
+  position: Full Stack Developer
+  url: https://smile.fr
+  startDate: 2018-10-01
+  endDate: 2021-01-01
+  summary: Technical contributor for digital transformation projects at leading services company
+  highlights:
+  - Architected and delivered multiple enterprise web applications for major clients including Safran and Glevents, using Drupal 8 and modern JavaScript frameworks
+  - Developed cross-platform cache optimization solutions and implemented infrastructure automation using Ansible across diverse Linux environments
+  - Provided technical expertise for diverse client digital transformation initiatives, adapting solutions to meet specific enterprise requirements
+
+- name: AUSY
+  position: Full Stack Developer
+  url: https://www.randstaddigital.fr/fr/
+  startDate: 2017-01-01
+  endDate: 2018-09-01
+  summary: AUSY is a technology consulting firm that provided my first professional development experience while supporting my Master's degree studies
+  highlights:
+  - Developed and integrated custom modules for Drupal sites while collaborating with senior developers and completing my Master’s degree
+  - Contributed to agile development processes and established version control best practices
+
+education:
+- institution: ISITECH
+  url: https://www.ecole-isitech.com/
+  area: Software Engineering
+  studyType: Master
+  startDate: 2012-09-01
+  endDate: 2018-09-01
+  score: 15/20
+  courses:
+  - Information System Expert
+
+skills:
+- name: Programming Languages
+  level: Senior
+  keywords:
+  - JavaScript
+  - PHP
+  - HTML5 / CSS / SCSS
+- name: Frontend Development
+  level: Senior
+  keywords:
+  - Vue 3 / Nuxt 3
+  - React
+  - RESTful API designs
+  - GraphQL
+  - API security and authentication
+
+- name: Database management
+  level: Senior
+  keywords:
+  - SQL (MySQL, PostgreSQL)
+  - Supabase
+  - Firebase DataConnect
+  - Firebase Realtime
+  - Database optimization and query performance
+
+- name: DevOps & Infrastructure
+  level: Senior
+  keywords:
+  - Linux environments (Ubuntu, Debian, Alpine)
+  - GitLab CI/CD
+  - Docker containerization
+  - Github actions
+  - Server administration and configuration
+
+- name: Tools & Methodologies
+  level: Senior
+  keywords:
+  - GIT version control
+  - Agile development
+  - CI/CD implementation
+
+languages:
+- language: French
+  fluency: Native speaker
+- language: English
+  fluency: Fluent
+
+interests:
+- name: Lego building
+  keywords:
+  - Star Wars
+  - Helmets
+  - Paintings
+- name: Video games
+  keywords:
+  - Final Fantasy XIV
+  - Monster Hunter
+  - Skyrim
+- name: Swimming
+  keywords:
+  - breaststroke
+  - backstroke
+  - freestyle
+- name: Side projects
+  keywords:
+  - Open source
+  - CI/CD
+  - SaaS
+
+projects:
+- name: Bdpressed
+  startDate: 2024-11-01
+  description: |
+    Website built for an artist to allow her to sell her merch and illustrations.
+  highlights:
+  - Laravel backend
+  - Vue 3 front-end
+  - Inertia.js
+
+- name: Sarah’s Garden
+  startDate: 2023-06-01
+  description: |
+    Real time discussion platform allowing users to pick discussion subjects.
+  highlights:
+  - Vue 3
+  - Firebase (DataConnect, Realtime, Storage, Auth)
+
+- name: Orchestral Range Tool
+  startDate: 2024-10-01
+  endDate: 2024-12-01
+  description: |
+    Allows my composer friend to be able to ensure that all his music notes will fall right where he needs them
+  highlights:
+  - Tauri (Rust backend / Vue 3 front-end)
+  - Standalone application

@@ -1,131 +1,61 @@
 <script setup lang="ts">
-import type { Homepage } from '~/types'
+const dayjs = useDayjs()
 
-const router = useRouter()
-const config = useRuntimeConfig()
-const homepage = useState<Homepage>('homepage')
-const year = new Date().getFullYear()
-
-const icon = computed(() => {
-    if (!homepage.value)
-        return undefined
-
-    return `${config.public.apiUrl}/assets/${homepage.value.icon}`
-})
-
-const navLinks = [
-    {
-        title: 'Articles',
-        to: '/articles',
-    },
-    {
-        title: 'Projects',
-        to: '/projects',
-    },
-/*     {
-        title: 'Gaming',
-        to: '/test'
-    } */
-]
-
-function getHome() {
-    router.push('/')
-}
+const year = dayjs().year()
 </script>
 
 <template>
-    <VFooter v-if="homepage">
-        <VContainer>
-            <VRow>
-                <VCol class="text-h4 d-flex align-center">
-                    <div>
-                        <VImg
-                            :src="icon"
-                            :width="32"
-                            :height="32"
-                            class="cursor-pointer"
-                            @click="getHome"
-                        />
-                    </div>
-                    <h6 class="ml-2">
-                        {{ homepage.fullname }}
-                    </h6>
-                </VCol>
-                <VSpacer />
-                <VCol class="d-none d-md-flex justify-end">
-                    <VBtn
-                        v-for="(link, i) in navLinks"
-                        :key="i"
-                        :to="link.to"
-                        class="mr-2"
-                        variant="text"
-                    >
-                        {{ link.title }}
-                    </VBtn>
-                </VCol>
+    <VFooter class="flex-column footer">
+        <div class="d-flex align-center justify-center ga-2 flex-wrap flex-grow-1 py-3">
+            <VBtn
+                variant="text"
+                to="/"
+            >
+                Home
+            </VBtn>
+            <VBtn
+                variant="text"
+                to="/articles"
+            >
+                Articles
+            </VBtn>
+            <VBtn
+                variant="text"
+                to="/projects"
+            >
+                Projects
+            </VBtn>
+            <VBtn
+                variant="text"
+                to="/curriculum-vitae"
+            >
+                CV
+            </VBtn>
+        </div>
 
-                <VCol class="d-flex d-md-none justify-end">
-                    <VMenu>
-                        <template #activator="{ props: menu }">
-                            <VBtn
-                                v-bind="menu"
-                                variant="outlined"
-                            >
-                                <VIcon icon="mdi-menu" />
-                            </VBtn>
-                        </template>
+        <div class="d-flex align-center justify-center ga-4 flex-wrap flex-grow-1 py-3">
+            <a href="https://github.com/drillan767" target="_blank">
+                <VImg src="/icons/github.svg" alt="github" width="24" height="24" />
+            </a>
 
-                        <VList>
-                            <VListItem
-                                v-for="(link, i) in navLinks"
-                                :key="i"
-                                :to="link.to"
-                                :title="link.title"
-                            />
-                        </VList>
-                    </VMenu>
-                </VCol>
-            </VRow>
-            <VDivider class="my-5" />
-            <VRow>
-                <VCol cols="12" md="4">
-                    <span>
-                        © {{ year }} {{ homepage.fullname }}. All Rights Reserved.
-                    </span>
-                </VCol>
-                <VCol class="d-flex justify-end flex-column flex-md-row align-center">
-                    <VBtn
-                        to="/versions"
-                        variant="text"
-                    >
-                        Versions
-                    </VBtn>
-                    <VBtn
-                        v-for="(link, i) in homepage.legal"
-                        :key="i"
-                        :to="link.url"
-                        variant="text"
-                    >
-                        {{ link.title }}
-                    </VBtn>
+            <a href="https://x.com/jlevarato" target="_blank">
+                <VImg src="/icons/x.svg" alt="x (twitter)" width="24" height="24" />
+            </a>
 
-                    <VBtn
-                        v-for="(link, i) in homepage.links"
-                        :key="i"
-                        :href="link.url"
-                        :icon="true"
-                        variant="text"
-                    >
-                        <span class="svg-container" v-html="link.svg" />
-                    </VBtn>
-                </VCol>
-            </VRow>
-        </VContainer>
+            <a href="https://www.linkedin.com/in/josephlevarato/" target="_blank" class="d-flex align-center justify-center">
+                <VImg src="/icons/linkedin.svg" alt="linkedin" width="24" height="24" />
+            </a>
+        </div>
+
+        <div class="flex-1-0-100 text-center mt-2 pb-6">
+            {{ year }} — <strong>Joseph Levarato</strong>
+        </div>
+
     </VFooter>
 </template>
 
-<style scoped lang="scss">
-.svg-container :deep(svg) {
-    height: 20px;
+<style scoped>
+:deep(.v-img) {
+    filter: invert(1);
 }
 </style>

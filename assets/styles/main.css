@@ -1,0 +1,30 @@
+@import '_fonts.css';
+@import '_animations.css';
+@import '_glitches.css';
+
+:root {
+    --font-heading: 'Emelind', sans-serif;
+    --font-body: 'Space Grotesk', sans-serif;
+}
+
+.v-layout {
+    font-family: var(--font-body) !important;
+}
+
+.v-layout h1,
+.v-layout h2,
+.v-layout h3,
+.v-layout h4,
+.v-layout h5,
+.v-layout h6 {
+    font-family: var(--font-heading) !important;
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}

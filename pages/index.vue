@@ -1,25 +1,22 @@
 <script setup lang="ts">
-useHead({
-    title: 'Landing',
-})
+import Hero from '@/components/landing/Hero.vue'
+import About from '@/components/landing/About.vue'
+import LatestArticles from '@/components/landing/LatestArticles.vue'
+import LatestProjects from '@/components/landing/LatestProjects.vue'
 
-/* useSeoMeta({
-    ogTitle: fullname,
-    ogType: 'website',
-    ogImage: url + '/icons/logo.svg',
-    description: baseline.replace(/_/g, ''),
-    ogDescription: baseline.replace(/_/g, ''),
-    twitterTitle: fullname,
-    twitterImage: url + '/icons/logo.svg',
-    twitterDescription: baseline.replace(/_/g, '')
-}) */
+useHead({
+    title: 'Joseph Levarato',
+    titleTemplate: null,
+})
 </script>
 
 <template>
-    <VMain>
-        <LandingViewport />
-        <LandingAbout />
-        <LandingFeatured />
-        <LandingContactForm />
-    </VMain>
+    <VRow>
+        <VCol>
+            <Hero />
+            <About />
+            <LatestArticles />
+            <LatestProjects />
+        </VCol>
+    </VRow>
 </template>

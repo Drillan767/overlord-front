@@ -1,34 +1,61 @@
 import process from 'node:process'
-import { defineNuxtConfig } from 'nuxt/config'
-import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
+import { md3 } from 'vuetify/blueprints'
 import { version } from './package.json'
 
 export default defineNuxtConfig({
-    devtools: {
-        enabled: true,
-    },
-
+    ssr: true,
+    compatibilityDate: '2025-05-15',
+    devtools: { enabled: true },
+    css: [
+        '@/assets/styles/main.css',
+    ],
     modules: [
-        'nuxt-directus',
-        '@vee-validate/nuxt',
+        '@nuxt/content',
+        '@nuxt/eslint',
+        '@nuxt/image',
         '@vueuse/nuxt',
         'dayjs-nuxt',
-        (_options, nuxt) => {
-            nuxt.hooks.hook('vite:extendConfig', (config) => {
-                config.plugins?.push(vuetify({ autoImport: true }))
-            })
-        },
+        'vuetify-nuxt-module',
     ],
+    vuetify: {
+        vuetifyOptions: {
+            blueprint: md3,
+            theme: {
+                defaultTheme: 'dark',
+                themes: {
+                    dark: {
+                        colors: {
+                            'primary': 'hsl(274,93%,63%)',
+                            'background': '#000000',
+                            'surface': '#000000',
+                            'surface-variant': '#000000',
+                            'on-surface': '#FFFFFF',
+                            'on-surface-variant': '#FFFFFF',
+                        },
+                    },
+                },
+            },
+            defaults: {
+                VBtn: {
+                    color: 'primary',
+                },
+            },
+        },
+    },
 
     app: {
         head: {
             titleTemplate: '%s | Joseph Levarato',
+            htmlAttrs: {
+                lang: 'en',
+                class: 'bg-black',
+            },
 
             viewport: 'width=device-width, initial-scale=1',
             charset: 'utf-8',
             meta: [
-                { name: 'msapplication-Tilecolor', content: '#312b5e' },
-                { name: 'theme-color', content: '#312b5e' },
+                { name: 'msapplication-Tilecolor', content: 'rgb(var(--v-theme-primary))' },
+                { name: 'theme-color', content: 'rgb(var(--v-theme-primary))' },
                 { name: 'twitter:card', content: 'summary_large_image' },
             ],
 
@@ -38,51 +65,23 @@ export default defineNuxtConfig({
                 { rel: 'preload', type: 'font/ttf', as: 'font', href: '/fonts/Emelind.ttf', crossorigin: '' },
                 { rel: 'preload', type: 'font/ttf', as: 'font', href: '/fonts/JetBrainsMono-Regular.ttf', crossorigin: '' },
             ],
-
-            script: [{
-                children: `
-                    var _paq = window._paq = window._paq || [];
-                    _paq.push(['trackPageView']);
-                    _paq.push(['enableLinkTracking']);
-                    (function() {
-                        var u="//analytics.josephlevarato.me/";
-                        _paq.push(['setTrackerUrl', u+'matomo.php']);
-                        _paq.push(['setSiteId', '1']);
-                        _paq.push(['HeatmapSessionRecording::disable']);
-                        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-                        g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-                    })();
-                `,
-            }],
         },
     },
 
-    css: [
-        'vuetify/lib/styles/main.sass',
-        '@/assets/styles/main.scss',
-    ],
+    content: {
+        build: {
+            markdown: {
+                toc: {
+                    depth: 3,
+                }
+            }
+        }
+    },
 
     runtimeConfig: {
         public: {
-            apiUrl: process.env.API_URL || 'localhost:8055',
             url: process.env.URL || 'http://localhost:3000',
             version,
-            hcSitekey: process.env.HCAPTCHA_SITEKEY,
-            directus: {
-                url: process.env.API_URL || 'localhost:8055',
-            },
-        },
-    },
-
-    build: {
-        transpile: ['vuetify'],
-    },
-
-    vite: {
-        vue: {
-            template: {
-                transformAssetUrls,
-            },
         },
     },
 })
