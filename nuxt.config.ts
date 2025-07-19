@@ -73,9 +73,9 @@ export default defineNuxtConfig({
             markdown: {
                 toc: {
                     depth: 3,
-                }
-            }
-        }
+                },
+            },
+        },
     },
 
     runtimeConfig: {
