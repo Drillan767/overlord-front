@@ -26,21 +26,23 @@ const dayjs = useDayjs()
         >
             <VHover v-slot="{ isHovering: imageHovering, props: imageHover }">
                 <div v-bind="imageHover" class="image-wrapper">
-                    <VImg
-                        :src="content.image"
-                        :alt="content.title"
-                        :class="{ 'image-hover': imageHovering }"
-                        max-height="275"
-                        class="preview-image"
-                        cover
-                    />
+                    <NuxtLink :to="content.path">
+                        <VImg
+                            :src="content.image"
+                            :alt="content.title"
+                            :class="{ 'image-hover': imageHovering }"
+                            max-height="275"
+                            class="preview-image"
+                            cover
+                        />
 
-                    <VOverlay
-                        :model-value="imageHovering ?? false"
-                        contained
-                        scrim="rgba(98, 0, 238, 0.5)"
-                        class="overlay-transition"
-                    />
+                        <VOverlay
+                            :model-value="imageHovering ?? false"
+                            contained
+                            scrim="rgba(98, 0, 238, 0.5)"
+                            class="overlay-transition"
+                        />
+                    </NuxtLink>
                 </div>
             </VHover>
 

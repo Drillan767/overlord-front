@@ -2,10 +2,6 @@
 import { useGoTo } from 'vuetify'
 
 const goTo = useGoTo()
-
-function scroll() {
-    goTo('#about')
-}
 </script>
 
 <template>
@@ -29,7 +25,7 @@ function scroll() {
         <div class="mt-8">
             <VIcon
                 icon="mdi-arrow-down"
-                @click="scroll"
+                @click="goTo('#about')"
             />
         </div>
     </section>
@@ -53,7 +49,7 @@ function scroll() {
     overflow: hidden;
 }
 
-[class^="hero-bg-blur-"] {
+[class^='hero-bg-blur-'] {
     position: absolute;
     border-radius: 50%;
     border-radius: 50%;
@@ -84,27 +80,26 @@ function scroll() {
 }
 
 .hero-subtitle {
-    margin-bottom: 2rem; 
+    margin-bottom: 2rem;
     font-size: 1.25rem;
-    line-height: 1.75rem; 
+    line-height: 1.75rem;
 }
 
-@media (min-width: 768px) { 
+@media (min-width: 768px) {
     .hero-title {
         font-size: 3.75rem;
-        line-height: 1; 
+        line-height: 1;
     }
 
     .hero-subtitle {
         font-size: 1.5rem;
-        line-height: 2rem; 
+        line-height: 2rem;
     }
 }
-@media (min-width: 1024px) { 
+@media (min-width: 1024px) {
     .hero-title {
         font-size: 4.5rem;
-        line-height: 1; 
+        line-height: 1;
     }
 }
-
 </style>
