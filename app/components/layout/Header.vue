@@ -76,11 +76,6 @@ onMounted(() => {
                 title="Projects"
                 @click="isMenuOpen = false"
             />
-            <VListItem
-                to="/curriculum-vitae"
-                title="CV"
-                @click="isMenuOpen = false"
-            />
         </VList>
     </VNavigationDrawer>
 </template>
