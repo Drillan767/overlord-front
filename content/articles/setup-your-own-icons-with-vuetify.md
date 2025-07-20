@@ -1,26 +1,176 @@
----
-title: Playing around Taurus
-description: I had the opportunity to develop a "real" project for a friend, that required Taurus. Here are some return on experience
-image: 'https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixlib=rb-4.0.3'
-date: 2024-12-15
-tags:
-- Rust
-- Vuetify
-- Vue 3
----
+Vuetify 3 has made lots of changes from Vuetify 2, and obviously, icon management is one of them.
 
-## Intro
+By default, Vuetify 3 uses the Material Design Icon, but has the [documentation](https://vuetifyjs.com/en/features/icon-fonts/#installing-icon-fonts) to help anyone use another icon set.
 
-I'm baby gentrify cloud bread four loko tousled celiac intelligentsia. Pug sus hexagon ascot. Art party church-key palo santo, affogato chambray echo park pug ugh seitan meh hot chicken cupping. Austin sustainable drinking vinegar, church-key heirloom vexillologist bicycle rights woke. Locavore chicharrones jawn DIY literally. Tumeric ramps umami woke.
+However, things tend to be more difficult if you have your own set of SVG icons that doesn't come from any library.
 
-Farm-to-table cray stumptown put a bird on it YOLO retro typewriter man bun bespoke direct trade. Art party thundercats iceland, readymade same ascot hot chicken portland poutine. Ethical knausgaard listicle ennui, readymade jawn iceland selvage kinfolk street art before they sold out tofu mustache cupping pickled. Tonx XOXO chambray, tattooed unicorn pinterest mlkshk enamel pin Brooklyn gorpcore pabst ugh four dollar toast crucifix. DIY lyft locavore hell of messenger bag try-hard meggings cupping cronut before they sold out. Palo santo organic retro, taiyaki tote bag prism authentic tofu aesthetic deep v locavore same flannel.
+For this, you have 2 possibilities:
 
-## The project itself
+## Display your icons as a SVG (alias strategy)
 
-Ennui biodiesel franzen, godard vape iceland narwhal deep v mixtape actually JOMO direct trade. Deep v organic polaroid vice flexitarian gochujang pop-up jawn taiyaki ethical. Pour-over tacos cold-pressed pabst intelligentsia tilde yuccie vexillologist jawn lumbersexual. Neutra XOXO tumblr leggings. Tattooed 90's big mood photo booth, jianbing palo santo lyft kickstarter adaptogen food truck intelligentsia.
+This solution is the fastest way to display anything custom, but it comes with a few drowbacks:
 
-Pitchfork humblebrag lomo tattooed craft beer grailed beard. Succulents street art fit skateboard. Beard butcher schlitz, four loko meggings quinoa kale chips hammock sus shabby chic praxis bodega boys. Put a bird on it live-edge butcher grailed coloring book.
+1. The SVG icon must be a square of 24x24px and have a viewBox of `0 0 24 24`. Otherwise, the icon will be cropped to fit this requirement.
+2. Your custom icon will only be callable with a "$" sign before it. Meaning, an icon called ie "add-image" will only display with the following syntax:
 
-## Conclusion
+```vue [app.vue]
+<v-icon icon="$add-image" />
+```
 
-Locavore blog photo booth pitchfork vape williamsburg sustainable roof party DSA brunch solarpunk chia. Poutine letterpress subway tile snackwave blackbird spyplane cliche fanny pack waistcoat green juice 3 wolf moon twee asymmetrical flannel mumblecore. Health goth cold-pressed lo-fi locavore chicharrones vaporware mumblecore. Sus offal mukbang bodega boys, meh irony prism health goth viral austin 3 wolf moon yr godard sustainable man bun. Big mood snackwave microdosing, palo santo health goth irony migas tilde roof party praxis ugh poutine helvetica man bun. Gochujang quinoa cred, chartreuse YOLO squid irony DSA. 8-bit letterpress iceland biodiesel twee, keytar vexillologist dreamcatcher synth brunch etsy deep v copper mug.
+3. The icon itself will render as a SVG markup in your HTML. The only "risk" I can think of is if you have a CSS rule targeting SVG markups.
+
+If you have no problem with these concerns and only have a few icons, then this is how you do it:
+
+1. Import Vuetify's default aliases
+
+```ts [src/plugins/vuetify.ts]
+import { aliases } from 'vuetify/iconsets/mdi';
+```
+
+2. Create a variable that's an object containing dynamic keys and arrays of strings as values, and spread the default aliases from vuetify in it.
+
+```ts [src/plugins/vuetify.ts]
+const customAliases = {
+  ...aliases,
+  'custom-icon': [
+    'M7.54 19h-2.54v-6h0.25c0.024 0.001...',
+    'M15.46 9.14c-0.070-0.005-0.152-0.007-0.235-0.007s-0.165...',
+    'M21 19.24c-0.286-0.948-1.004-1.686-1.919-1.994l-0.021-0.839...',
+  ],
+  'other-icon': [
+    'M19.8 5.3c-0.1 0.7-0.1 1.3-0.2 2-0.3 1.5-1...'
+  ],
+  // Other icons...
+};
+```
+
+As you can see, the particularity is that you need to copy your SVG's different `<path>`'s `d` attribute and paste it one after the other.
+
+Once done, add your aliases to your Vuetify configuration:
+
+```ts [src/plugins/vuetify.ts]
+export default const vuetify = createVuetify({
+  // Your other configuration
+  icons: {
+    defaultSet: 'mdi',
+    aliases: {
+      ...customAliases,
+    },
+    sets: {
+      mdi,
+    },
+  },
+});
+```
+
+Once your server refreshes, all your new icons will be available with a $ before their name.
+
+## Display your icon as a font (iconSet strategy)
+
+This solution is slightly longer to setup, but it allows more icons to be loaded
+
+1. Generate an SVG icon set from IcoMoon.
+
+IcoMoon is a web app where you can upload SVG files (or IcoMoon configurations), and you can download them as font, with autogenerated (s)css. Do do so, follow [this tutorial](https://redcrackle.com/blog/using-icomoon-convert-svg-icons-icon-fonts/). Please note that the "preferences" button in the "Generate fonts" tab allows you to customize some of the generated css files, such as if you want a scss file instead, prefix/suffix classes, etc.
+
+As specified at the end of the tutorial, the downloaded files contain a directory named "fonts" with your SVG converted to fonts, 2 (s)css files (variables and styles), one readme, a html/css example of implementation and a readme file.
+
+The files we need are the font directory, the generated (s)css files and the json file. Simply put them in your assets directory alongside other style files. Mine looks like so:
+
+```bash [bash]
+assets/
+| exported-font/
+| - variables.scss
+| | fonts/
+| | - exported-font.svg
+| | - exported-font.woff
+| |  - exported-font.ttf
+| - exported-font_icomoon.com.json
+| - style.scss
+```
+
+We now need to import the style file, declare a new icon set, and register it to Vuetify.
+
+1. Import the style file
+
+```ts [src/plugins/vuetify.ts]
+// We'll need this h() function in the next step.
+import { h } from 'vue';
+import '@/assets/fonts/exported-font/style.scss';
+```
+
+2. Declare the icon set
+
+```ts [src/plugins/vuetify.ts]
+const importedIcons = {
+  component: (props) => {
+    return h('i', { class: `imi-${props.icon}` });
+  },
+};
+```
+
+In my example, let's say I defined my prefix class for my icons as "imi-" (for "**im**ported **i**cons). This small functions loops through all the icons you defined in IcoMoon, (say, "custom-icon" and "other-icon", and applies a prefix icon. This is useful in my project, but you can simply return `props.icon` otherwise.
+
+Also, the `i` passed as first parameter will generate all your icons inside a `<i>` markup, just like the default MDI icons.
+
+3. Registering the icon set
+
+Update your configuration like follows:
+
+```text [src/plugins/vuetify.ts]
+export default const vuetify = createVuetify({
+  // Your other configuration
+  icons: {
+    defaultSet: 'mdi',
+    sets: {
+      mdi,
+      imi: importedIcons,
+    },
+  },
+});
+```
+
+As stated in Vuetify's documentation, you can define which icon set is the default one. If not set, "mdi", will be the one by default.
+
+Your custom font is now available with the following markup:
+
+```vue [src/app.vue]
+<v-icon icon="imi:custom-icon" />
+```
+
+That's all! By the way, both the alias and the icon set strategy allow you to specify your icon through Vuetify's component props!
+
+```vue [src/app.vue]
+<!-- With the alias strategy  -->
+<v-list-item prepend-icon="$custom-icon" title="Alias method" />
+<!-- With the icon set strategy -->
+<v-list-item prepend-icon="imi:custom-icon" title="Alias method" />
+```
+
+## Why this tutorial felt necessary?
+
+I found myself in a situation where I needed to migrate a Vue 2 / Vuetify 2 project to a Vue 3 / Vuetify 3 version, and all the custom icons we had in it weren't working anymore, showing a small rectangle with characters in it.
+
+At first, I avoided the problem by using the aliases system (took me a while to figure out how it worked), but then we quickly realized all the drawbacks, and the required fix was to downsize ALL the icons, making them appear smaller than how they looked in Vuetify 2.
+
+Then I took some more time to find an explanation to why the custom icons would not simply display, and TL;DR, the following css rules was the main culprit:
+
+```css [main.css]
+.mdi::before {
+  display: inline-block;
+  font: 24px/1 Material Design Icons;
+  font-size: inherit;
+  text-rendering: auto;
+  line-height: inherit;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+```
+
+These css rules does not exist in Vuetify 2. The `mdi` class does absolutely nothing.
+
+However, removing it from the markup in Vuetify 3 via my browser would break all the default icons, but my custom ones would finally show up.
+
+As I told you earlier, the default icon set is mdi, and Vuetify translates this by adding a `mdi` class to all `<v-icon>` components, *unless* you specify another set.
+
+After that, it was kind of easy to understand what needed to be done, but I felt this tutorial was even more required after how unclear the instructions from Vuetify were.
