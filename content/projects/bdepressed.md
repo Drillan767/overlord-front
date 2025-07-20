@@ -2,7 +2,7 @@
 title: Bédéprimée
 description: E-commerce website for an artist that sells pins, stickers and artworks of her own creation!
 image: 'https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixlib=rb-4.0.3'
-date: 2025-03-15
+date: 2024-10-10
 tags:
 - Laravel
 - Vuetify

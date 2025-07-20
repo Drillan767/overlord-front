@@ -2,7 +2,7 @@
 title: L'allée des Fées
 description: Some website.
 image: 'https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixlib=rb-4.0.3'
-date: 2025-03-15
+date: 2024-11-20
 tags:
 - Laravel
 - InertiaJS
