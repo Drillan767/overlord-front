@@ -3,6 +3,7 @@ import Preview from '@/components/content/Preview.vue'
 
 const { data: projects } = await useAsyncData('projects', () => queryCollection('projects')
     .order('date', 'DESC')
+    .select('id', 'title', 'description', 'image', 'date', 'tags', 'path')
     .limit(3)
     .all())
 </script>

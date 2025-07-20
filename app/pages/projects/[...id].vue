@@ -14,19 +14,19 @@ const originalContent = ref<string>('')
 const isEasyReading = ref(false)
 
 function toggleEasyReading() {
-    const articleElement = document.querySelector('.article-content')
-    if (!articleElement)
+    const projectElement = document.querySelector('.project-content')
+    if (!projectElement)
         return
 
     if (!isEasyReading.value) {
         // Store original content and switch to easy reading
-        originalContent.value = articleElement.innerHTML
-        articleElement.innerHTML = easyReading(originalContent.value)
+        originalContent.value = projectElement.innerHTML
+        projectElement.innerHTML = easyReading(originalContent.value)
         isEasyReading.value = true
     }
     else {
         // Restore original content
-        articleElement.innerHTML = originalContent.value
+        projectElement.innerHTML = originalContent.value
         isEasyReading.value = false
     }
 }
@@ -101,9 +101,35 @@ function toggleEasyReading() {
             <VCol cols="12" md="8">
                 <ContentRenderer
                     :value="project!"
-                    class="article-content"
+                    class="project-content"
                     tag="article"
                 />
+            </VCol>
+        </VRow>
+        <VRow>
+            <VCol class="links">
+                <VBtn
+                    v-if="project?.source"
+                    :href="project?.source"
+                    target="_blank"
+                    variant="flat"
+                    prepend-icon="mdi-github"
+                    color="primary"
+                    rounded="lg"
+                >
+                    Check the source code
+                </VBtn>
+                <VBtn
+                    v-if="project?.link"
+                    :href="project?.link"
+                    target="_blank"
+                    variant="flat"
+                    prepend-icon="mdi-open-in-new"
+                    color="primary"
+                    rounded="lg"
+                >
+                    Check the live demo
+                </VBtn>
             </VCol>
         </VRow>
     </VContainer>
@@ -113,5 +139,17 @@ function toggleEasyReading() {
 .description {
     font-size: 1.25rem;
     line-height: 1.75rem;
+}
+
+@media (max-width: 768px) {
+    .links {
+        flex-direction: column;
+    }
+}
+
+.links {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
 }
 </style>

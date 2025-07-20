@@ -1,6 +1,7 @@
 <script setup>
-const isMenuOpen = ref(false)
+const route = useRoute()
 
+const isMenuOpen = ref(false)
 const scrolled = ref(false)
 
 onMounted(() => {
@@ -31,12 +32,14 @@ onMounted(() => {
         <template #append>
             <div class="d-none d-md-flex align-center ga-4">
                 <VBtn
+                    :active="route.path.startsWith('/articles')"
                     variant="text"
                     to="/articles"
                 >
                     Articles
                 </VBtn>
                 <VBtn
+                    :active="route.path.startsWith('/projects')"
                     variant="text"
                     to="/projects"
                 >
