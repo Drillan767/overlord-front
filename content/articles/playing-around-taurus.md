@@ -5,9 +5,9 @@ description: I had the opportunity to develop a "real" project for a friend,
 image: https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixlib=rb-4.0.3
 date: 2024-12-15
 tags:
-- Rust
-- Vuetify
-- Vue 3
+  - Rust
+  - Vuetify
+  - Vue 3
 ---
 
 ## Intro
