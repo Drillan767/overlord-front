@@ -1,6 +1,6 @@
 export default defineNuxtPlugin(() => {
     const config = useRuntimeConfig()
-    const url = config.public.url
+    const url = config.app.baseURL
 
     // Set dynamic meta tags that depend on the URL
     useHead({
@@ -8,6 +8,7 @@ export default defineNuxtPlugin(() => {
             // Open Graph
             { property: 'og:image', content: `${url}/images/joseph.jpeg` },
             { property: 'og:url', content: url },
+            { property: 'og:logo', content: `${url}/icons/logo.svg` },
 
             // Twitter Card
             { name: 'twitter:image', content: `${url}/images/joseph.jpeg` },
