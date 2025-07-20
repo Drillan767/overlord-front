@@ -18,7 +18,7 @@ const activeTag = ref<string>()
 
 const tagsList = computed<string[]>(() => {
     if (!articles.value)
-        return [] as string[]
+        return []
     return articles.value.reduce<string[]>((acc, article) => {
         article.tags.forEach((tag) => {
             if (!acc.includes(tag)) {
