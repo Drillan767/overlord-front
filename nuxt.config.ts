@@ -66,12 +66,10 @@ export default defineNuxtConfig({
                 { property: 'og:site_name', content: 'Joseph Levarato' },
                 { property: 'og:title', content: 'Joseph Levarato - Full-stack Developer' },
                 { property: 'og:description', content: 'Full-stack developer specializing in Vue.js, Rust, and modern web technologies. Articles, projects, and insights about software development.' },
-                { property: 'og:image', content: `${process.env.URL}/images/joseph.jpeg` },
                 { property: 'og:image:width', content: '1200' },
                 { property: 'og:image:height', content: '630' },
                 { property: 'og:image:alt', content: 'Joseph Levarato - Full-stack Developer' },
-                { property: 'og:url', content: process.env.URL },
-                { property: 'og:locale', content: 'en_US' },
+                { property: 'og:locale', content: 'en_UK' },
 
                 // Twitter Card
                 { name: 'twitter:card', content: 'summary_large_image' },
@@ -79,7 +77,6 @@ export default defineNuxtConfig({
                 { name: 'twitter:creator', content: '@Drillan767' },
                 { name: 'twitter:title', content: 'Joseph Levarato - Full-stack Developer' },
                 { name: 'twitter:description', content: 'Full-stack developer specializing in Vue.js, Rust, and modern web technologies. Articles, projects, and insights about software development.' },
-                { name: 'twitter:image', content: `${process.env.URL}/images/joseph.jpeg` },
                 { name: 'twitter:image:alt', content: 'Joseph Levarato - Full-stack Developer' },
 
                 // Theme and App
@@ -91,13 +88,9 @@ export default defineNuxtConfig({
 
                 // Additional SEO
                 { name: 'keywords', content: 'Joseph Levarato, Full-stack Developer, Vue.js, Rust, TypeScript, Web Development, Software Engineering' },
-                { name: 'canonical', content: process.env.URL },
             ],
 
             link: [
-                { rel: 'icon', type: 'image/svg+xml', href: `${process.env.URL}/icons/logo.svg` },
-                { rel: 'apple-touch-icon', href: `${process.env.URL}/icons/logo.svg` },
-                { rel: 'manifest', href: `${process.env.URL}/manifest.json` },
                 { rel: 'preload', type: 'font/ttf', as: 'font', href: '/fonts/SpaceGrotesk-Light.ttf', crossorigin: '' },
                 { rel: 'preload', type: 'font/ttf', as: 'font', href: '/fonts/Emelind.ttf', crossorigin: '' },
                 { rel: 'preload', type: 'font/ttf', as: 'font', href: '/fonts/JetBrainsMono-Regular.ttf', crossorigin: '' },
