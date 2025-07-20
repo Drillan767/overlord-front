@@ -1,6 +1,4 @@
-import process from 'node:process'
 import { md3 } from 'vuetify/blueprints'
-import { version } from './package.json'
 
 export default defineNuxtConfig({
     ssr: true,
@@ -131,13 +129,6 @@ export default defineNuxtConfig({
                     ],
                 },
             },
-        },
-    },
-
-    runtimeConfig: {
-        public: {
-            url: process.env.URL || 'http://localhost:3000',
-            version,
         },
     },
 })
