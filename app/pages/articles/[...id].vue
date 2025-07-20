@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useGoTo } from 'vuetify'
+import easyReading from '@/utils/easyReading'
 
 const goTo = useGoTo()
 const route = useRoute()
@@ -44,31 +45,25 @@ const toc = computed(() => {
     })
 })
 
-const articleContentRef = ref<HTMLElement>()
 const originalContent = ref<string>('')
 const isEasyReading = ref(false)
 
 function toggleEasyReading() {
-    if (!articleContentRef.value)
+    const articleElement = document.querySelector('.article-content')
+    if (!articleElement)
         return
 
     if (!isEasyReading.value) {
         // Store original content and switch to easy reading
-        originalContent.value = articleContentRef.value.innerHTML
-        articleContentRef.value.innerHTML = transformToEasyReading(originalContent.value)
+        originalContent.value = articleElement.innerHTML
+        articleElement.innerHTML = easyReading(originalContent.value)
         isEasyReading.value = true
     }
     else {
         // Restore original content
-        articleContentRef.value.innerHTML = originalContent.value
+        articleElement.innerHTML = originalContent.value
         isEasyReading.value = false
     }
-}
-
-function transformToEasyReading(html: string) {
-    // Your transformation logic here
-    // Example: increase font size, adjust line height, etc.
-    return html.replace(/<p>/g, '<p style="font-size: 1.2em; line-height: 1.8;">')
 }
 </script>
 
@@ -129,7 +124,6 @@ function transformToEasyReading(html: string) {
         <VRow justify="center">
             <VCol cols="12" md="8">
                 <ContentRenderer
-                    ref="articleContentRef"
                     :value="article!"
                     class="article-content"
                     tag="article"
