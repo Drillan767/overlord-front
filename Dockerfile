@@ -1,4 +1,4 @@
-FROM node:lts-slim AS base
+FROM node:22-alpine AS base
 
 WORKDIR /src
 
@@ -7,7 +7,8 @@ FROM base AS build
 
 COPY --link package.json yarn.lock ./
 
-RUN yarn install --frozen-lockfile
+RUN apk add --no-cache curl && \
+    yarn install --frozen-lockfile
 
 COPY --link . .
 
