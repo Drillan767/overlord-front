@@ -4,7 +4,7 @@ const { data: about } = await useAsyncData('about', () => queryCollection('about
 
 <template>
     <section id="about" class="about-section">
-       <VContainer>
+        <VContainer>
             <VRow class="mb-8">
                 <VCol>
                     <h2 class="text-h2 text-center">
@@ -48,13 +48,12 @@ const { data: about } = await useAsyncData('about', () => queryCollection('about
                     </VCard>
                 </VCol>
             </VRow>
-       </VContainer>
+        </VContainer>
     </section>
 </template>
 
 <style scoped>
 .about-section {
-    max-width: 1400px;
     margin: auto;
     min-height: 100vh;
     display: flex;

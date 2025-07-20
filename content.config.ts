@@ -1,4 +1,4 @@
-import { defineContentConfig, defineCollection, z } from '@nuxt/content'
+import { defineCollection, defineContentConfig, z } from '@nuxt/content'
 
 export default defineContentConfig({
     collections: {
@@ -32,5 +32,13 @@ export default defineContentConfig({
                 link: z.string().nullable(),
             }),
         }),
-    }
+        releases: defineCollection({
+            type: 'page',
+            source: 'releases/*.md',
+            schema: z.object({
+                version: z.string(),
+                description: z.string(),
+            }),
+        }),
+    },
 })

@@ -20,6 +20,16 @@
     font-family: var(--font-heading) !important;
 }
 
+@media (min-width: 1920px) {
+    .v-container:not(.v-container--fluid) {
+        max-width: 1400px !important;
+    }
+}
+
+.v-toolbar .v-btn--active {
+    color: rgb(var(--v-theme-primary)) !important;
+}
+
 p {
     margin-bottom: 1rem;
 }

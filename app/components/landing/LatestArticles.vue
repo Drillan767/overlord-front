@@ -3,9 +3,9 @@ import Preview from '@/components/content/Preview.vue'
 
 const { data: articles } = await useAsyncData('articles', () => queryCollection('articles')
     .order('date', 'DESC')
+    .select('id', 'title', 'description', 'image', 'date', 'tags', 'path')
     .limit(3)
-    .all()
-)
+    .all())
 </script>
 
 <template>

@@ -19,27 +19,31 @@ const dayjs = useDayjs()
     <VHover v-slot="{ isHovering, props: hover }">
         <VCard
             v-bind="hover"
+            :class="{ 'preview-card-hover': isHovering }"
             variant="flat"
             class="border-sm border-grey-darken-2 preview-card"
-            :class="{ 'preview-card-hover': isHovering }"
+            min-height="540"
+            tag="article"
         >
             <VHover v-slot="{ isHovering: imageHovering, props: imageHover }">
                 <div v-bind="imageHover" class="image-wrapper">
-                    <VImg
-                        :src="content.image"
-                        :alt="content.title"
-                        :class="{ 'image-hover': imageHovering }"
-                        max-height="275"
-                        class="preview-image"
-                        cover
-                    />
+                    <NuxtLink :to="content.path">
+                        <VImg
+                            :src="content.image"
+                            :alt="content.title"
+                            :class="{ 'image-hover': imageHovering }"
+                            max-height="275"
+                            class="preview-image"
+                            cover
+                        />
 
-                    <VOverlay
-                        :model-value="imageHovering ?? false"
-                        contained
-                        scrim="rgba(98, 0, 238, 0.5)"
-                        class="overlay-transition"
-                    />
+                        <VOverlay
+                            :model-value="imageHovering ?? false"
+                            contained
+                            scrim="rgba(98, 0, 238, 0.5)"
+                            class="overlay-transition"
+                        />
+                    </NuxtLink>
                 </div>
             </VHover>
 
@@ -47,13 +51,20 @@ const dayjs = useDayjs()
                 <NuxtLink :to="content.path">
                     <h2>
                         {{ content.title }}
-                    </h2> 
+                    </h2>
                 </NuxtLink>
 
                 <div class="mb-6">
-                    <time>
-                        {{ dayjs(content.date).fromNow() }}
-                    </time>
+                    <VTooltip
+                        :text="dayjs(content.date).format('D MMMM YYYY')"
+                        location="bottom"
+                    >
+                        <template #activator="{ props: tooltip }">
+                            <time v-bind="tooltip">
+                                {{ dayjs(content.date).fromNow() }}
+                            </time>
+                        </template>
+                    </VTooltip>
                 </div>
 
                 <p>
@@ -113,14 +124,18 @@ time {
 }
 
 .preview-card {
-    transition: all 0.3s, border-color 0.3s;
+    transition:
+        all 0.3s,
+        border-color 0.3s;
     border: 1px solid var(--v-theme-grey-darken-2);
 }
 
 .preview-card-hover {
     margin-top: -5px;
     border-color: rgb(var(--v-theme-primary));
-    box-shadow: 0 0 0 1px rgba(var(--v-theme-primary), 0.5), 0 0 16px 4px rgba(var(--v-theme-primary), 0.4);
+    box-shadow:
+        0 0 0 1px rgba(var(--v-theme-primary), 0.5),
+        0 0 16px 4px rgba(var(--v-theme-primary), 0.4);
 }
 
 h2:hover {
