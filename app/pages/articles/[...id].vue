@@ -114,6 +114,7 @@ function toggleEasyReading() {
                         :to="`/articles?tag=${tag}`"
                         :color="isHovering ? 'primary' : 'default'"
                         variant="text"
+                        class="me-2"
                         prepend-icon="mdi-tag"
                     />
                 </VHover>
