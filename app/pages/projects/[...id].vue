@@ -1,6 +1,8 @@
 <script setup lang="ts">
-const route = useRoute()
 import easyReading from '@/utils/easyReading'
+
+const route = useRoute()
+const config = useRuntimeConfig()
 
 const { data: project } = await useAsyncData('project', () => queryCollection('projects')
     .where('path', '=', route.path)
@@ -33,6 +35,28 @@ function toggleEasyReading() {
 </script>
 
 <template>
+    <Head v-if="project">
+        <Title>{{ project.title }}</Title>
+        <Meta name="description" :content="project.seo?.description" />
+        <Meta name="keywords" :content="project.tags.join(', ')" />
+        <Meta property="og:type" content="article" />
+        <Meta property="og:title" :content="project.title" />
+        <Meta property="og:description" :content="project.seo?.description" />
+        <Meta property="og:image" :content="project?.image" />
+        <Meta property="og:url" :content="`${config.public.url}${route.path}`" />
+        <Meta property="article:published_time" :content="project.date" />
+        <Meta property="article:author" content="Joseph Levarato" />
+        <Meta property="article:section" :content="project.tags[0]" />
+        <Meta property="article:tag" :content="project.tags.join(', ')" />
+        <Meta name="twitter:card" content="summary_large_image" />
+        <Meta name="twitter:title" :content="project.title" />
+        <Meta name="twitter:description" :content="project.seo?.description" />
+        <Meta name="twitter:image" :content="project?.image" />
+        <Meta name="twitter:url" :content="`${config.public.url}${route.path}`" />
+        <Meta name="twitter:site" content="@josephlevarato" />
+        <Meta name="twitter:creator" content="@josephlevarato" />
+        <Meta name="twitter:image:alt" :content="project.title" />
+    </Head>
     <VContainer>
         <VRow>
             <VCol>
