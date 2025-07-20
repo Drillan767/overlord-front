@@ -1,3 +1,14 @@
+---
+title: L'allée des Fées
+description: Some website.
+image: 'https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixlib=rb-4.0.3'
+date: 2025-03-15
+tags:
+- Laravel
+- InertiaJS
+- Vue 3
+---
+
 This project is a Laravel-based platform on which users can register to attend lessons.
 
 There are many particularities about this project:

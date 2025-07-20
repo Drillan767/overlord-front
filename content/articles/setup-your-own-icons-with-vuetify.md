@@ -1,3 +1,15 @@
+---
+title: Playing around Taurus
+description: I had the opportunity to develop a "real" project for a friend,
+  that required Taurus. Here are some return on experience
+image: https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixlib=rb-4.0.3
+date: 2024-12-15
+tags:
+- Rust
+- Vuetify
+- Vue 3
+---
+
 Vuetify 3 has made lots of changes from Vuetify 2, and obviously, icon management is one of them.
 
 By default, Vuetify 3 uses the Material Design Icon, but has the [documentation](https://vuetifyjs.com/en/features/icon-fonts/#installing-icon-fonts) to help anyone use another icon set.

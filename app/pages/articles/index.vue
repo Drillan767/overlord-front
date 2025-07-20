@@ -20,6 +20,8 @@ const tagsList = computed<string[]>(() => {
     if (!articles.value)
         return []
     return articles.value.reduce<string[]>((acc, article) => {
+        if (!article.tags)
+            return acc
         article.tags.forEach((tag) => {
             if (!acc.includes(tag)) {
                 acc.push(tag)
@@ -46,7 +48,7 @@ onBeforeMount(() => {
         <VRow>
             <VCol>
                 <h1
-                    class="text-h2 text-center text-md-start layers glitch"
+                    class="text-h2 text-center text-md-start mb-4 layers glitch"
                     data-text="Articles"
                 >
                     Articles

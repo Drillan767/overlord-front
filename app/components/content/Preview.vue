@@ -22,6 +22,7 @@ const dayjs = useDayjs()
             :class="{ 'preview-card-hover': isHovering }"
             variant="flat"
             class="border-sm border-grey-darken-2 preview-card"
+            min-height="540"
             tag="article"
         >
             <VHover v-slot="{ isHovering: imageHovering, props: imageHover }">
@@ -54,9 +55,16 @@ const dayjs = useDayjs()
                 </NuxtLink>
 
                 <div class="mb-6">
-                    <time>
-                        {{ dayjs(content.date).fromNow() }}
-                    </time>
+                    <VTooltip
+                        :text="dayjs(content.date).format('D MMMM YYYY')"
+                        location="bottom"
+                    >
+                        <template #activator="{ props: tooltip }">
+                            <time v-bind="tooltip">
+                                {{ dayjs(content.date).fromNow() }}
+                            </time>
+                        </template>
+                    </VTooltip>
                 </div>
 
                 <p>
