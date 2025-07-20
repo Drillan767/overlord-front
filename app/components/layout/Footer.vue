@@ -25,12 +25,6 @@ const year = dayjs().year()
             >
                 Projects
             </VBtn>
-            <VBtn
-                variant="text"
-                to="/curriculum-vitae"
-            >
-                CV
-            </VBtn>
         </div>
 
         <div class="d-flex align-center justify-center ga-4 flex-wrap flex-grow-1 py-3">

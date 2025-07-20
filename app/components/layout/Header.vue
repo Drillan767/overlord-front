@@ -45,12 +45,6 @@ onMounted(() => {
                 >
                     Projects
                 </VBtn>
-                <VBtn
-                    variant="text"
-                    to="/curriculum-vitae"
-                >
-                    CV
-                </VBtn>
             </div>
 
             <VBtn
