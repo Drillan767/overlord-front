@@ -8,6 +8,7 @@ interface Props {
         date: string
         tags: string[]
     }
+    activeTag?: string
 }
 
 defineProps<Props>()
@@ -76,7 +77,7 @@ const dayjs = useDayjs()
                         v-for="tag in content.tags"
                         :key="tag"
                         :text="tag"
-                        variant="tonal"
+                        :variant="activeTag === tag ? 'flat' : 'tonal'"
                         color="primary"
                         size="small"
                         rounded="xl"
@@ -84,16 +85,15 @@ const dayjs = useDayjs()
                     />
                 </div>
 
-                <div class="d-flex justify-end">
-                    <VBtn
-                        :to="content.path"
-                        variant="text"
-                        color="primary"
-                        append-icon="mdi-arrow-right"
-                    >
-                        Read more
-                    </VBtn>
-                </div>
+                <VBtn
+                    :to="content.path"
+                    class="cta"
+                    variant="text"
+                    color="primary"
+                    append-icon="mdi-arrow-right"
+                >
+                    Read more
+                </VBtn>
             </VCardText>
         </VCard>
     </VHover>
@@ -140,5 +140,11 @@ time {
 
 h2:hover {
     color: rgb(var(--v-theme-primary));
+}
+
+.cta {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
 }
 </style>

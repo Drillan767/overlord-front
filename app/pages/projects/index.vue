@@ -103,6 +103,7 @@ onBeforeMount(() => {
             >
                 <Preview
                     :content="project"
+                    :active-tag="activeTag"
                 />
             </VCol>
         </VRow>

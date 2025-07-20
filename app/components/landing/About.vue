@@ -7,7 +7,10 @@ const { data: about } = await useAsyncData('about', () => queryCollection('about
         <VContainer>
             <VRow class="mb-8">
                 <VCol>
-                    <h2 class="text-h2 text-center">
+                    <h2
+                        class="text-h2 text-center layers glitch"
+                        data-text="About me"
+                    >
                         About me
                     </h2>
                 </VCol>
@@ -18,7 +21,7 @@ const { data: about } = await useAsyncData('about', () => queryCollection('about
                         <VHover v-slot="{ isHovering, props }">
                             <div v-bind="props" class="image-wrapper">
                                 <VImg
-                                    src="http://localhost:3000/images/joseph.jpeg"
+                                    src="/images/joseph.jpeg"
                                     alt="About me"
                                     class="about-image"
                                     :class="{ 'about-image-hover': isHovering }"
