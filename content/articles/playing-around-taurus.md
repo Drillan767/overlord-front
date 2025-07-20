@@ -1,12 +1,13 @@
 ---
 title: Playing around Taurus
-description: I had the opportunity to develop a "real" project for a friend, that required Taurus. Here are some return on experience
-image: 'https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixlib=rb-4.0.3'
+description: I had the opportunity to develop a "real" project for a friend,
+  that required Taurus. Here are some return on experience
+image: https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixlib=rb-4.0.3
 date: 2024-12-15
 tags:
-- Rust
-- Vuetify
-- Vue 3
+  - Rust
+  - Vuetify
+  - Vue 3
 ---
 
 ## Intro
@@ -22,6 +23,5 @@ Ennui biodiesel franzen, godard vape iceland narwhal deep v mixtape actually JOM
 Pitchfork humblebrag lomo tattooed craft beer grailed beard. Succulents street art fit skateboard. Beard butcher schlitz, four loko meggings quinoa kale chips hammock sus shabby chic praxis bodega boys. Put a bird on it live-edge butcher grailed coloring book.
 
 ## Conclusion
-
 
 Locavore blog photo booth pitchfork vape williamsburg sustainable roof party DSA brunch solarpunk chia. Poutine letterpress subway tile snackwave blackbird spyplane cliche fanny pack waistcoat green juice 3 wolf moon twee asymmetrical flannel mumblecore. Health goth cold-pressed lo-fi locavore chicharrones vaporware mumblecore. Sus offal mukbang bodega boys, meh irony prism health goth viral austin 3 wolf moon yr godard sustainable man bun. Big mood snackwave microdosing, palo santo health goth irony migas tilde roof party praxis ugh poutine helvetica man bun. Gochujang quinoa cred, chartreuse YOLO squid irony DSA. 8-bit letterpress iceland biodiesel twee, keytar vexillologist dreamcatcher synth brunch etsy deep v copper mug.
