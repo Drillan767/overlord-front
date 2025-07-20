@@ -71,6 +71,11 @@ export default defineNuxtConfig({
     content: {
         build: {
             markdown: {
+                remarkPlugins: {
+                    'remark-reading-time': {
+                        wordPerMinute: 200,
+                    },
+                },
                 toc: {
                     depth: 3,
                 },
