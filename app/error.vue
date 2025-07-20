@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import type { NuxtError } from '#app'
 
-defineProps({
+const props = defineProps({
     error: Object as () => NuxtError,
+})
+
+useHead({
+    title: () => `Error ${props.error?.statusCode}`,
 })
 
 const handleError = () => clearError({ redirect: '/' })
@@ -11,18 +15,16 @@ const handleError = () => clearError({ redirect: '/' })
 <template>
     <VContainer>
         <VRow>
-            <VCol>
+            <VCol class="h-screen d-flex align-center justify-center">
                 <VEmptyState
                     :title="error?.statusCode === 404 ? 'No idea what you were looking for.' : 'Uh... It wasn\'t supposed to do that.'"
                     action-text="Go back home"
                     @click:action="handleError"
                 >
                     <template #headline>
-
-                         <h1
+                        <h1
                             :data-text="error?.statusCode"
-                            class="text-h2 text-center layers glitch"
-                            
+                            class="text-center layers glitch"
                         >
                             {{ error?.statusCode }}
                         </h1>
@@ -31,10 +33,4 @@ const handleError = () => clearError({ redirect: '/' })
             </VCol>
         </VRow>
     </VContainer>
-    <div>
-        <h2>{{ error?.statusCode }}</h2>
-        <button @click="handleError">
-            Clear errors
-        </button>
-    </div>
 </template>
