@@ -69,6 +69,14 @@ export default defineNuxtConfig({
     },
 
     content: {
+        preview: {
+            api: 'https://api.nuxt.studio',
+            gitInfo: {
+                name: 'Overlord Front',
+                owner: 'Joseph Levarato',
+                url: 'https://github.com/Drillan767/overlord-front',
+            },
+        },
         build: {
             markdown: {
                 remarkPlugins: {
@@ -78,6 +86,19 @@ export default defineNuxtConfig({
                 },
                 toc: {
                     depth: 3,
+                },
+                highlight: {
+                    preload: [
+                        'bash',
+                        'css',
+                        'scss',
+                        'typescript',
+                        'vue',
+                        'vue-html',
+                        'php',
+                        'go',
+                        'rust',
+                    ],
                 },
             },
         },
