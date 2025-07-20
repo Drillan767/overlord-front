@@ -14,7 +14,7 @@ onMounted(() => {
     <VAppBar
         elevation="0"
         class="navbar"
-        :class="{ 'scrolled': scrolled }"
+        :class="{ scrolled }"
     >
         <template #default>
             <NuxtLink to="/" class="d-flex align-center">

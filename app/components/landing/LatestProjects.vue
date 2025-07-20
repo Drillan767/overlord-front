@@ -4,8 +4,7 @@ import Preview from '@/components/content/Preview.vue'
 const { data: projects } = await useAsyncData('projects', () => queryCollection('projects')
     .order('date', 'DESC')
     .limit(3)
-    .all()
-)
+    .all())
 </script>
 
 <template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Hero from '@/components/landing/Hero.vue'
 import About from '@/components/landing/About.vue'
+import Hero from '@/components/landing/Hero.vue'
 import LatestArticles from '@/components/landing/LatestArticles.vue'
 import LatestProjects from '@/components/landing/LatestProjects.vue'
 

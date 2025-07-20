@@ -50,7 +50,6 @@ const year = dayjs().year()
         <div class="flex-1-0-100 text-center mt-2 pb-6">
             {{ year }} — <strong>Joseph Levarato</strong>
         </div>
-
     </VFooter>
 </template>
 
