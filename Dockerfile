@@ -7,8 +7,7 @@ FROM base AS build
 
 COPY --link package.json yarn.lock ./
 
-RUN apk add --no-cache curl && \
-    yarn install --frozen-lockfile
+RUN yarn install --frozen-lockfile
 
 COPY --link . .
 
@@ -16,6 +15,9 @@ RUN yarn build
 
 # Run
 FROM base
+
+# Install curl for health checks
+RUN apk add --no-cache curl
 
 ENV NODE_ENV=production
 ENV NUXT_HOST=0.0.0.0
