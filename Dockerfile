@@ -5,6 +5,9 @@ WORKDIR /src
 # Build
 FROM base AS build
 
+ARG URL
+ENV NUXT_PUBLIC_URL=${URL}
+
 COPY --link package.json yarn.lock ./
 
 RUN yarn install --frozen-lockfile

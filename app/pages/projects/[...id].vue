@@ -43,7 +43,7 @@ function toggleEasyReading() {
         <Meta property="og:title" :content="project.title" />
         <Meta property="og:description" :content="project.seo?.description" />
         <Meta property="og:image" :content="project?.image" />
-        <Meta property="og:url" :content="`${config.app.baseURL}${route.path}`" />
+        <Meta property="og:url" :content="`${config.public.url}${route.path}`" />
         <Meta property="article:published_time" :content="project.date" />
         <Meta property="article:author" content="Joseph Levarato" />
         <Meta property="article:section" :content="project.tags[0]" />
@@ -52,7 +52,7 @@ function toggleEasyReading() {
         <Meta name="twitter:title" :content="project.title" />
         <Meta name="twitter:description" :content="project.seo?.description" />
         <Meta name="twitter:image" :content="project?.image" />
-        <Meta name="twitter:url" :content="`${config.app.baseURL}${route.path}`" />
+        <Meta name="twitter:url" :content="`${config.public.url}${route.path}`" />
         <Meta name="twitter:site" content="@josephlevarato" />
         <Meta name="twitter:creator" content="@josephlevarato" />
         <Meta name="twitter:image:alt" :content="project.title" />
