@@ -1,3 +1,4 @@
+import process from 'node:process'
 import { md3 } from 'vuetify/blueprints'
 
 export default defineNuxtConfig({
@@ -129,6 +130,11 @@ export default defineNuxtConfig({
                     ],
                 },
             },
+        },
+    },
+    runtimeConfig: {
+        public: {
+            url: process.env.NUXT_PUBLIC_URL || 'http://localhost:3000',
         },
     },
 })

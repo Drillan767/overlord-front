@@ -1,6 +1,6 @@
 export default defineNuxtPlugin(() => {
     const config = useRuntimeConfig()
-    const url = config.app.baseURL
+    const url = config.public.url
 
     // Set dynamic meta tags that depend on the URL
     useHead({
