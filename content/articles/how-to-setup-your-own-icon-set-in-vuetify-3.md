@@ -2,7 +2,7 @@
 title: How to setup your own icon set in Vuetify 3
 description: "How to use custom SVG icons in Vuetify 3: alias strategy, font
   generation with IcoMoon, and hybrid approaches with practical examples."
-image: https://unsplash.com/fr/photos/livre-blanc-_zKxPsGOGKg?ixlib=rb-4.0.3
+image: https://images.unsplash.com/photo-1506729623306-b5a934d88b53
 date: 2024-12-14
 tags:
   - Vue 3
