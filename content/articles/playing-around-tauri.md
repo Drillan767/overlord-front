@@ -25,51 +25,51 @@ The main configuration entrypoint is a file located in the `src-tauri/` named `t
 
 ```json [src-tauri/tauri.conf.json]
 {
-  "$schema": "https://schema.tauri.app/config/2",
-  "productName": "Orchestral Range Tool",
-  "version": "0.2.2",
-  "identifier": "com.orchestral-range-tool.app",
-  "build": {
-    "beforeDevCommand": "yarn dev",
-    "devUrl": "http://localhost:1420",
-    "beforeBuildCommand": "yarn build",
-    "frontendDist": "../dist"
-  },
-  "app": {
-    "windows": [
-      {
-        "title": "Orchestral Range Tool",
-        "width": 1600,
-        "height": 900
-      }
-    ],
-    "security": {
-      "csp": null
+    "$schema": "https://schema.tauri.app/config/2",
+    "productName": "Orchestral Range Tool",
+    "version": "0.2.2",
+    "identifier": "com.orchestral-range-tool.app",
+    "build": {
+        "beforeDevCommand": "yarn dev",
+        "devUrl": "http://localhost:1420",
+        "beforeBuildCommand": "yarn build",
+        "frontendDist": "../dist"
+    },
+    "app": {
+        "windows": [
+            {
+                "title": "Orchestral Range Tool",
+                "width": 1600,
+                "height": 900
+            }
+        ],
+        "security": {
+            "csp": null
+        }
+    },
+    "bundle": {
+        "createUpdaterArtifacts": true,
+        "active": true,
+        "targets": "all",
+        "icon": [
+            "icons/32x32.png",
+            "icons/128x128.png",
+            "icons/128x128@2x.png",
+            "icons/icon.icns",
+            "icons/icon.ico"
+        ]
+    },
+    "plugins": {
+        "updater": {
+            "pubkey": "somePubKey",
+            "endpoints": [
+                "http://localhost:8000/orchestral-range-tool/{{target}}/{{current_version}}"
+            ],
+            "windows": {
+                "installMode": "basicUi"
+            }
+        }
     }
-  },
-  "bundle": {
-    "createUpdaterArtifacts": true,
-    "active": true,
-    "targets": "all",
-    "icon": [
-      "icons/32x32.png",
-      "icons/128x128.png",
-      "icons/128x128@2x.png",
-      "icons/icon.icns",
-      "icons/icon.ico"
-    ]
-  },
-  "plugins": {
-    "updater": {
-      "pubkey": "somePubKey",
-      "endpoints": [
-        "http://localhost:8000/orchestral-range-tool/{{target}}/{{current_version}}"
-      ],
-      "windows": {
-        "installMode": "basicUi"
-      }
-    }
-  }
 }
 ```
 
@@ -77,9 +77,7 @@ As you can see, a lot of "basic" stuff is handled here, such as the program's ic
 
 For example, you can define a function in rust, and "invoke" it from the front-end, like so:
 
-```text
-// src-tauri/src/lib.rs
-
+```rust [src-tauri/src/lib.rs]
 #[tauri::command]
 fn my_custom_command() {
   println!("I was invoked from JavaScript!");
@@ -88,9 +86,7 @@ fn my_custom_command() {
 
 Then add it to the list of available commands in the `lib.rs` file from Rust, which is the equivalent of `main.ts` from Vite:
 
-```text
-// src-tauri/src/lib.rs
-
+```rust [src-tauri/src/lib.rs]
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
   tauri::Builder::default()
@@ -102,22 +98,20 @@ pub fn run() {
 
 Finally, you can "invoke" it from the front, like so:
 
-```ts
-// src/main.ts
+```ts [src/main.ts]
+import { invoke } from '@tauri-apps/api/core'
 
-import { invoke } from '@tauri-apps/api/core';
-
-const invoke = window.__TAURI__.core.invoke;
+const invoke = window.__TAURI__.core.invoke
 
 // Invoke the command
-invoke('my_custom_command');
+invoke('my_custom_command')
 ```
 
 This allows you to interact with the device you're on, to generate PDFs, connect to a local database, whatever you feel like doing.
 
 The other way around allows the user to, for example, receive notifications from something that went on in the background. Tauri's documentation describes a way to inform Vite that the user logged in successfully to their account, so it can redirect the user to their dashboard:
 
-```text
+```rust [src-tauri/src/lib.rs]
 use tauri::{AppHandle, Emitter};
 
 #[tauri::command]
@@ -130,18 +124,18 @@ fn login(app: AppHandle, user: String, password: String) {
 
 Then "simply" listen to it from Vite:
 
-```ts
-import { listen } from '@tauri-apps/api/event';
+```ts [src/main.ts]
+import { listen } from '@tauri-apps/api/event'
 
 interface AuthResult {
-  result: 'loggedIn' | 'invalidCredentials'
+    result: 'loggedIn' | 'invalidCredentials'
 }
 
 listen<AuthResult>('login-result', (event) => {
-  console.log(
-    `Result from login is ${event.payload.result}`
-  );
-});
+    console.log(
+        `Result from login is ${event.payload.result}`
+    )
+})
 ```
 
 My knowledge of Rust is rather limited, and I didn't have any need for any Rust interaction, so I didn't interact with the Rust side at all, and focused on the Vite (and Vue 3 + Vuetify 3) part. If you want more details on it, check out the [project itself](/projects/orchestral-range-tool)!
