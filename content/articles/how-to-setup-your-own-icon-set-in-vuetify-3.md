@@ -26,9 +26,10 @@ This solution is the fastest way to display anything custom, but it comes with a
 1. The SVG icon must be a square of 24x24px and have a viewBox of `0 0 24 24`. Otherwise, the icon will be cropped to fit this requirement.
 2. Your custom icon will only be callable with a "$" sign before it. Meaning, an icon called ie "add-image" will only display with the following syntax:
 
-```vue [app.vue]
-<!-- src/app.vue -->
-<v-icon icon="$add-image" />
+```vue [src/app.vue]
+<template>
+  <v-icon icon="$add-image" />
+</template>
 ```
 
 3. The icon itself will render as a SVG markup in your HTML. The only "risk" I can think of is if you have a CSS rule targeting SVG markups.
@@ -38,14 +39,12 @@ If you have no problem with these concerns and only have a few icons, then this 
 1. Import Vuetify's default aliases
 
 ```ts [src/plugins/vuetify.ts]
-// src/plugins/vuetify.ts
 import { aliases } from 'vuetify/iconsets/mdi'
 ```
 
 2. Create a variable that's an object containing dynamic keys and arrays of strings as values, and spread the default aliases from vuetify in it.
 
 ```ts [src/plugins/vuetify.ts]
-// src/plugins/vuetify.ts
 const customAliases = {
     ...aliases,
     'add-image': [
@@ -65,7 +64,6 @@ As you can see, the particularity is that you need to copy your SVG's different 
 Once done, add your aliases to your Vuetify configuration:
 
 ```ts [src/plugins/vuetify.ts]
-// src/plugins/vuetify.ts
 export default const vuetify = createVuetify({
   // Your other configuration
   icons: {
@@ -94,7 +92,7 @@ As specified at the end of the tutorial, the downloaded files contain a director
 
 The files we need are the font directory, the generated (s)css files and the json file. Simply put them in your assets directory alongside other style files. Mine looks like so:
 
-```bash [bash]
+```bash
 assets/
 | exported-font/
 | - variables.scss
@@ -111,7 +109,6 @@ We now need to import the style file, declare a new icon set, and register it to
 1. Import the style file
 
 ```ts [src/plugins/vuetify.ts]
-// src/plugins/vuetify.ts
 // We'll need this h() function in the next step.
 import { h } from 'vue'
 import '@/assets/fonts/exported-font/style.scss'
@@ -122,7 +119,6 @@ import '@/assets/fonts/exported-font/style.scss'
 In my example, let's say I defined my prefix class for my icons as "imi-" (for "**im**ported **i**cons).
 
 ```ts [src/plugins/vuetify.ts]
-// src/plugins/vuetify.ts
 const importedIcons = {
     component: (props) => {
         return h('i', { class: `imi-${props.icon}` })
@@ -139,7 +135,6 @@ Also, the `i` passed as first parameter will generate all your icons inside a `<
 Update your configuration like follows:
 
 ```ts [src/plugins/vuetify.ts]
-// src/plugins/vuetify.ts
 export default const vuetify = createVuetify({
   // Your other configuration
   icons: {
@@ -157,20 +152,21 @@ As stated in Vuetify's documentation, you can define which icon set is the defau
 Your custom font is now available with the following markup:
 
 ```vue [src/app.vue]
-<!-- src/app.vue -->
-<v-icon icon="imi:custom-icon" />
+<template>
+  <v-icon icon="imi:custom-icon" />
+</template>
 ```
 
 That's all! By the way, both the alias and the icon set strategy allow you to specify your icon through Vuetify's component props!
 
 ```vue [src/app.vue]
-<!-- src/app.vue -->
+<template>
+  <!-- With the alias strategy  -->
+  <v-list-item prepend-icon="$custom-icon" title="Alias method" />
 
-<!-- With the alias strategy  -->
-<v-list-item prepend-icon="$custom-icon" title="Alias method" />
-
-<!-- With the icon set strategy -->
-<v-list-item prepend-icon="imi:custom-icon" title="Alias method" />
+  <!-- With the icon set strategy -->
+  <v-list-item prepend-icon="imi:custom-icon" title="Icon set method" />
+</template>
 ```
 
 ## Bonus: iconSet, with external svgs
@@ -180,7 +176,6 @@ Let's say that you couldn't manage to generate one specific icon with IcoMoon, o
 1. Create a new Vue file with just your SVG inside
 
 ```vue [src/components/icons/CustomIcon.vue]
-<!-- src/components/icons/CustomIcon.vue -->
 <template>
     <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -197,9 +192,7 @@ Let's say that you couldn't manage to generate one specific icon with IcoMoon, o
 
 2. Edit your `importedIcon` 's component function
 
-```ts [src/plugins/vuetify]
-// src/plugins/vuetify.ts
-
+```ts [src/plugins/vuetify.ts]
 // Recommended imports
 import type { IconProps, IconSet } from 'vuetify'
 // The icon you just created
@@ -226,10 +219,10 @@ const importedIcons: IconSet = {
 Now these new icons will be available with the syntax you'd expect:
 
 ```vue [src/app.vue]
-<!-- src/app.vue -->
-<v-icon icon="imi:custom-icon" />
-
-<v-icon icon="imi:some-other-icon" />
+<template>
+  <v-icon icon="imi:custom-icon" />
+  <v-icon icon="imi:some-other-icon" />
+</template>
 ```
 
 ## Why this tutorial felt necessary?
@@ -240,8 +233,7 @@ At first, I avoided the problem by using the aliases system (took me a while to 
 
 Then I took some more time to find an explanation to why the custom icons would not simply display, and TL;DR, the following css rules was the main culprit:
 
-```css [main.css]
-/* vuetify.css */
+```css [vuetify.css]
 .mdi::before {
     display: inline-block;
     font: 24px/1 Material Design Icons;
