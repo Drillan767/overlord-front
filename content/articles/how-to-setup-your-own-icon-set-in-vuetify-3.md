@@ -27,6 +27,7 @@ This solution is the fastest way to display anything custom, but it comes with a
 2. Your custom icon will only be callable with a "$" sign before it. Meaning, an icon called ie "add-image" will only display with the following syntax:
 
 ```vue [app.vue]
+<!-- src/app.vue -->
 <v-icon icon="$add-image" />
 ```
 
@@ -37,12 +38,14 @@ If you have no problem with these concerns and only have a few icons, then this 
 1. Import Vuetify's default aliases
 
 ```ts [src/plugins/vuetify.ts]
+// src/plugins/vuetify.ts
 import { aliases } from 'vuetify/iconsets/mdi'
 ```
 
 2. Create a variable that's an object containing dynamic keys and arrays of strings as values, and spread the default aliases from vuetify in it.
 
 ```ts [src/plugins/vuetify.ts]
+// src/plugins/vuetify.ts
 const customAliases = {
     ...aliases,
     'add-image': [
@@ -62,6 +65,7 @@ As you can see, the particularity is that you need to copy your SVG's different 
 Once done, add your aliases to your Vuetify configuration:
 
 ```ts [src/plugins/vuetify.ts]
+// src/plugins/vuetify.ts
 export default const vuetify = createVuetify({
   // Your other configuration
   icons: {
@@ -107,6 +111,7 @@ We now need to import the style file, declare a new icon set, and register it to
 1. Import the style file
 
 ```ts [src/plugins/vuetify.ts]
+// src/plugins/vuetify.ts
 // We'll need this h() function in the next step.
 import { h } from 'vue'
 import '@/assets/fonts/exported-font/style.scss'
@@ -117,6 +122,7 @@ import '@/assets/fonts/exported-font/style.scss'
 In my example, let's say I defined my prefix class for my icons as "imi-" (for "**im**ported **i**cons).
 
 ```ts [src/plugins/vuetify.ts]
+// src/plugins/vuetify.ts
 const importedIcons = {
     component: (props) => {
         return h('i', { class: `imi-${props.icon}` })
@@ -132,7 +138,8 @@ Also, the `i` passed as first parameter will generate all your icons inside a `<
 
 Update your configuration like follows:
 
-```text [src/plugins/vuetify.ts]
+```ts [src/plugins/vuetify.ts]
+// src/plugins/vuetify.ts
 export default const vuetify = createVuetify({
   // Your other configuration
   icons: {
@@ -150,12 +157,15 @@ As stated in Vuetify's documentation, you can define which icon set is the defau
 Your custom font is now available with the following markup:
 
 ```vue [src/app.vue]
+<!-- src/app.vue -->
 <v-icon icon="imi:custom-icon" />
 ```
 
 That's all! By the way, both the alias and the icon set strategy allow you to specify your icon through Vuetify's component props!
 
 ```vue [src/app.vue]
+<!-- src/app.vue -->
+
 <!-- With the alias strategy  -->
 <v-list-item prepend-icon="$custom-icon" title="Alias method" />
 
@@ -165,47 +175,50 @@ That's all! By the way, both the alias and the icon set strategy allow you to sp
 
 ## Bonus: iconSet, with external svgs
 
-Let's say that you couldn't manage to generate one specific icon with IcoMoon, or that you just don't want to go through the hassle of generate a whole new icon set just for one added icon ; you have the SVG file, you need it *right away*, but you still want to use your custom `imi-` set. There's a possibility for that!
+Let's say that you couldn't manage to generate one specific icon with IcoMoon, or that you just don't want to go through the hassle of generate a whole new icon set just for one added icon ; you have the SVG file, you need it _right away_, but you still want to use your custom `imi-` set. There's a possibility for that!
 
 1. Create a new Vue file with just your SVG inside
 
 ```vue [src/components/icons/CustomIcon.vue]
+<!-- src/components/icons/CustomIcon.vue -->
 <template>
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="28"
-    height="28"
-    viewBox="0 0 28 28"
-  >
-    <path fill="#373f51" d="M17.151 3.445l6.613 6.513-6.613 6.505z" />
-    <path fill="#2cc4a7" d="M15.597 3.445v21.109l-6.542-14.602z" />
-    <path fill="#adffed" d="M9.448 4.793l-5.212 5.16 11.361 14.602-6.542-14.602z" />
-  </svg>
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="28"
+        height="28"
+        viewBox="0 0 28 28"
+    >
+        <path fill="#373f51" d="M17.151 3.445l6.613 6.513-6.613 6.505z" />
+        <path fill="#2cc4a7" d="M15.597 3.445v21.109l-6.542-14.602z" />
+        <path fill="#adffed" d="M9.448 4.793l-5.212 5.16 11.361 14.602-6.542-14.602z" />
+    </svg>
 </template>
 ```
 
 2. Edit your `importedIcon` 's component function
 
 ```ts [src/plugins/vuetify]
+// src/plugins/vuetify.ts
+
 // Recommended imports
-import type { IconSet, IconProps } from 'vuetify';
+import type { IconProps, IconSet } from 'vuetify'
 // The icon you just created
-import CustomIcon from '@/components/icon/CustomIcon.vue';
-import SomeOtherIcon from '@/components/icon/SomeOtherIcon.vue';
+import CustomIcon from '@/components/icon/CustomIcon.vue'
+import SomeOtherIcon from '@/components/icon/SomeOtherIcon.vue'
 
 const importedIcons: IconSet = {
-  component: (props: IconProps) => {
-    switch(props.icon) {
-      case 'custom-icon':
-        return h(CustomIcon);
-      case 'some-other-icon':
-        return h(SomeOtherIcon);
-      // This doesn't change:
-      default:
-        return h('i', { class: `imi-${props.icon}` });
-    }
-  },
-};
+    component: (props: IconProps) => {
+        switch (props.icon) {
+            case 'custom-icon':
+                return h(CustomIcon)
+            case 'some-other-icon':
+                return h(SomeOtherIcon)
+                // This doesn't change:
+            default:
+                return h('i', { class: `imi-${props.icon}` })
+        }
+    },
+}
 ```
 
 3. Use your new icons!
@@ -213,7 +226,9 @@ const importedIcons: IconSet = {
 Now these new icons will be available with the syntax you'd expect:
 
 ```vue [src/app.vue]
+<!-- src/app.vue -->
 <v-icon icon="imi:custom-icon" />
+
 <v-icon icon="imi:some-other-icon" />
 ```
 
@@ -226,6 +241,7 @@ At first, I avoided the problem by using the aliases system (took me a while to 
 Then I took some more time to find an explanation to why the custom icons would not simply display, and TL;DR, the following css rules was the main culprit:
 
 ```css [main.css]
+/* vuetify.css */
 .mdi::before {
     display: inline-block;
     font: 24px/1 Material Design Icons;
@@ -241,7 +257,7 @@ These CSS rules does not exist in Vuetify 2. The `mdi` class didn't have any pro
 
 However, removing it from the markup in Vuetify 3 via my browser would break all the default icons, but my custom ones would finally show up. The culprit was obviously the `font:` rule that allows mdi icons to display properly.
 
-As I told you earlier, the default icon set is mdi, and Vuetify translates this by adding a `mdi` class to all `<v-icon>` components, *unless* you specify another set.
+As I told you earlier, the default icon set is mdi, and Vuetify translates this by adding a `mdi` class to all `<v-icon>` components, _unless_ you specify another set.
 
 After that, it was kind of easy to understand what needed to be done, but I felt this tutorial was even more required after how unclear the instructions from Vuetify were.
 
