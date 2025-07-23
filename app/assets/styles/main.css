@@ -20,6 +20,13 @@
     font-family: var(--font-heading) !important;
 }
 
+pre.shiki.catppuccin-macchiato {
+    background-color: #24273a;
+    margin: 1rem 0;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
 @media (min-width: 1920px) {
     .v-container:not(.v-container--fluid) {
         max-width: 1400px !important;

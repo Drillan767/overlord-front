@@ -117,6 +117,7 @@ export default defineNuxtConfig({
                     depth: 3,
                 },
                 highlight: {
+                    theme: 'catppuccin-macchiato',
                     preload: [
                         'bash',
                         'css',
