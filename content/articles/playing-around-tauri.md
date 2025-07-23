@@ -1,5 +1,5 @@
 ---
-title: Playing around Taurus
+title: Playing around Tauri
 description: I had the opportunity to develop a "real" project for a friend,
   that required Taurus. Here are some return on experience
 image: https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixlib=rb-4.0.3
