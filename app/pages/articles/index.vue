@@ -99,6 +99,9 @@ onBeforeMount(() => {
             <VCol
                 v-for="article in filteredArticles"
                 :key="article.id"
+                cols="12"
+                sm="6"
+                md="4"
             >
                 <Preview
                     :content="article"
