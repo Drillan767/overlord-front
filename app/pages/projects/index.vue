@@ -98,8 +98,8 @@ onBeforeMount(() => {
                 v-for="project in filteredProjects"
                 :key="project.id"
                 cols="12"
-                md="6"
-                lg="4"
+                sm="6"
+                md="4"
             >
                 <Preview
                     :content="project"
