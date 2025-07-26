@@ -2,6 +2,13 @@
 const dayjs = useDayjs()
 
 const year = dayjs().year()
+
+const { data: releases } = await useAsyncData('releases', () => queryCollection('releases')
+    .order('version', 'DESC')
+    .limit(1)
+    .all())
+
+const latestRelease = computed(() => releases.value?.[0])
 </script>
 
 <template>
@@ -43,6 +50,15 @@ const year = dayjs().year()
 
         <div class="flex-1-0-100 text-center mt-2 pb-6">
             {{ year }} — <strong>Joseph Levarato</strong>
+            <div v-if="latestRelease" class="text-caption mt-1">
+                Latest version:
+                <NuxtLink
+                    to="/releases"
+                    class="text-decoration-none text-primary"
+                >
+                    {{ latestRelease.version }}
+                </NuxtLink>
+            </div>
         </div>
     </VFooter>
 </template>

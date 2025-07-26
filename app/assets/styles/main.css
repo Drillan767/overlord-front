@@ -20,6 +20,14 @@
     font-family: var(--font-heading) !important;
 }
 
+ul {
+    margin: 0.5rem 0;
+}
+
+li {
+    list-style-position: inside;
+}
+
 pre.shiki.catppuccin-macchiato {
     background-color: #24273a;
     margin: 1rem 0;
