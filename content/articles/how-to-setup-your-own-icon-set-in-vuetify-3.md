@@ -1,7 +1,7 @@
 ---
 title: How to setup your own icon set in Vuetify 3
 description: "How to use custom SVG icons in Vuetify 3: alias strategy, font
-  generation with IcoMoon, and hybrid approaches with practical examples."
+  generation, and hybrid approaches with practical examples."
 image: https://images.unsplash.com/photo-1506729623306-b5a934d88b53
 date: 2024-12-14
 tags:
@@ -171,7 +171,7 @@ That's all! By the way, both the alias and the icon set strategy allow you to sp
 
 ## Bonus: iconSet, with external svgs
 
-Let's say that you couldn't manage to generate one specific icon with IcoMoon, or that you just don't want to go through the hassle of generate a whole new icon set just for one added icon ; you have the SVG file, you need it _right away_, but you still want to use your custom `imi-` set. There's a possibility for that!
+Let's say that you couldn't manage to generate one specific icon with IcoMoon, or that you just don't want to go through the hassle of generate a whole new icon set just for one added icon ; you have the SVG file, you need it *right away*, but you still want to use your custom `imi-` set. There's a possibility for that!
 
 1. Create a new Vue file with just your SVG inside
 
@@ -249,7 +249,7 @@ These CSS rules does not exist in Vuetify 2. The `mdi` class didn't have any pro
 
 However, removing it from the markup in Vuetify 3 via my browser would break all the default icons, but my custom ones would finally show up. The culprit was obviously the `font:` rule that allows mdi icons to display properly.
 
-As I told you earlier, the default icon set is mdi, and Vuetify translates this by adding a `mdi` class to all `<v-icon>` components, _unless_ you specify another set.
+As I told you earlier, the default icon set is mdi, and Vuetify translates this by adding a `mdi` class to all `<v-icon>` components, *unless* you specify another set.
 
 After that, it was kind of easy to understand what needed to be done, but I felt this tutorial was even more required after how unclear the instructions from Vuetify were.
 

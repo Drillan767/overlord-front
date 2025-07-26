@@ -1,11 +1,11 @@
-# Who I Am
+## Who I Am
 
-I'm Joseph Levarato, a passionate Full Stack Web Developer with over 5 years of experience in creating beautiful, functional websites and applications. I specialize in modern JavaScript frameworks, responsive design, and creating seamless user experiences.
+I'm Joseph Levarato, a 32-year-old Full Stack Web Developer with over 7 years of building websites and applications. I work with Vue, Nuxt, Node.js, TypeScript, modern CSS frameworks, Laravel, and I enjoy working with DevOps tools whenever I can. This portfolio is where I showcase projects I've built and share articles about things I've learned (mostly so I don't forget them later).
 
-# My Expertise
+## What Drives Me
 
-My technical toolkit includes React, Node.js, TypeScript, and modern CSS frameworks. I'm passionate about clean code, performance optimization, and creating intuitive user interfaces that solve real problems.
+There's nothing quite like watching someone use a tool you built and seeing that moment when they realise how much it actually helps them. That's the dopamine hit that keeps me coding. I think websites should be both gorgeous and functional  though what counts as "gorgeous" is obviously up to each person.
 
-# My Philosophy
+## What You'll Find Here
 
-I believe that great software is built at the intersection of technical excellence and thoughtful design. I approach every project with a focus on delivering value through elegant solutions that are both beautiful and functional.
+Projects that solve real problems, articles documenting my learning process, and hopefully some useful insights for fellow developers. I focus on clean code and performance because slow, broken things aren't beautiful no matter how they look.
