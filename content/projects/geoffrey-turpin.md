@@ -1,12 +1,13 @@
 ---
 title: Geoffrey Turpin
-description: E-commerce website for an artist that sells pins, stickers and artworks of her own creation!
-image: 'https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixlib=rb-4.0.3'
+description: E-commerce website for an artist that sells pins, stickers and
+  artworks of her own creation!
+image: /images/geoffrey.png
 date: 2024-09-05
+source: https://github.com/Drillan767/geoffrey-turpin
+link: https://www.geoffreyturpin.fr/
 tags:
-- Laravel
-- Vuetify
-- Vue 3
+  - Laravel
 ---
 
 This is an old project for my good friend Geoffrey Turpin, a musician and composer and currently working as a sound designer.

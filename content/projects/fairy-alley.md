@@ -1,12 +1,14 @@
 ---
 title: L'allée des Fées
 description: Some website.
-image: 'https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixlib=rb-4.0.3'
+image: /images/adf.png
 date: 2024-11-20
+source: https://github.com/Drillan767/fairy-alley
+link: https://alleedesfees.fr
 tags:
-- Laravel
-- InertiaJS
-- Vue 3
+  - Laravel
+  - InertiaJS
+  - Vue 3
 ---
 
 This project is a Laravel-based platform on which users can register to attend lessons.
