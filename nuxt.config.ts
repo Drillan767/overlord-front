@@ -100,11 +100,6 @@ export default defineNuxtConfig({
     content: {
         preview: {
             api: 'https://api.nuxt.studio',
-            gitInfo: {
-                name: 'Overlord Front',
-                owner: 'Drillan767',
-                url: 'https://github.com/Drillan767/overlord-front',
-            },
         },
         build: {
             markdown: {
